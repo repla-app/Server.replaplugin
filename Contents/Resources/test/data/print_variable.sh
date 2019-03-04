@@ -2,4 +2,5 @@
 
 set -e
 
-echo $TEST_VARIABLE
+echo "$TEST_VARIABLE"
+echo "$TEST_VARIABLE" >&2

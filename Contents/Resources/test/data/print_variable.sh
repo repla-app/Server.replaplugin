@@ -2,5 +2,5 @@
 
 set -e
 
-echo "$TEST_VARIABLE"
-echo "$TEST_VARIABLE" >&2
+echo -n "$TEST_VARIABLE"
+echo -n "$TEST_VARIABLE_TWO" >&2

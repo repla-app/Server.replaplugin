@@ -13,8 +13,7 @@ module Repla
 
       command = command.to_s
       unless environment.nil?
-        command = "env #{Shellwords.escape(environment)}"\
-          " #{command}"
+        command = "env #{environment} #{command}"
       end
       pipe = IO.popen(command)
       while (line = pipe.gets)

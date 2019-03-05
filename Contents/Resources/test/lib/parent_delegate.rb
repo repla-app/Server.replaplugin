@@ -5,12 +5,12 @@ class ParentDelegate
     @process_line_blocks = []
   end
 
-  def add_process_line_block(block)
+  def add_process_line_block(&block)
     @process_line_blocks.push(block)
   end
 
   def process_line(text)
     block = @process_line_blocks.delete_at(0)
-    block(text) unless block.nil?
+    block.call(text) unless block.nil?
   end
 end

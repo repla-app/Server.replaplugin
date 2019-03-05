@@ -1,5 +1,7 @@
 require 'Shellwords'
 
+require 'open3'
+
 module Repla
   # Parent
   class Parent
@@ -12,12 +14,30 @@ module Repla
       return if command.nil?
 
       command = command.to_s
-      unless environment.nil?
-        command = "env #{environment} #{command}"
-      end
-      pipe = IO.popen(command)
-      while (line = pipe.gets)
-        @delegate.process_line(line) unless @delegate.nil?
+      command = "env #{environment} #{command}" unless environment.nil?
+      # pipe = IO.popen(command)
+      # while (line = pipe.gets)
+      #   @delegate.process_line(line) unless @delegate.nil?
+      # end
+
+      Open3.popen3(command) do |stdin, stdout, stderr, thread|
+        stdin.sync = true
+        stdout.sync = true
+        stderr.sync = true
+
+        Thread.new do
+          stdout.each do |l|
+            @delegate.process_line(l) unless @delegate.nil?
+          end
+        end
+
+        Thread.new do
+          stderr.each do |l|
+            puts "error l = #{l}"
+          end
+        end
+
+        thread.join
       end
     end
   end

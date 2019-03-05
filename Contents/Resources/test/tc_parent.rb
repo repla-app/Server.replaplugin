@@ -11,8 +11,10 @@ class TestParent < Minitest::Test
     delegate = ParentDelegate.new
     parent = Repla::Parent.new(delegate)
     delegate.add_process_output_block do |text|
-      # TODO: Need to also test standard error
       assert_equal(text, TEST_ENV_VALUE)
+    end
+    delegate.add_process_error_block do |text|
+      assert_equal(text, TEST_ENV_VALUE_TWO)
     end
     parent.run_command(PRINT_VARIABLE_PATH, TEST_ENV)
   end

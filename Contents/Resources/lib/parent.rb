@@ -29,7 +29,7 @@ module Repla
 
         Thread.new do
           stderr.each do |l|
-            puts "error l = #{l}"
+            @delegate.process_error(l) unless @delegate.nil?
           end
         end
 

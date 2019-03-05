@@ -15,10 +15,6 @@ module Repla
 
       command = command.to_s
       command = "env #{environment} #{command}" unless environment.nil?
-      # pipe = IO.popen(command)
-      # while (line = pipe.gets)
-      #   @delegate.process_line(line) unless @delegate.nil?
-      # end
 
       Open3.popen3(command) do |stdin, stdout, stderr, thread|
         stdin.sync = true

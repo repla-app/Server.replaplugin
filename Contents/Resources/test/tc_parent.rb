@@ -10,7 +10,7 @@ class TestParent < Minitest::Test
   def test_parent
     delegate = ParentDelegate.new
     parent = Repla::Parent.new(delegate)
-    delegate.add_process_line_block do |text|
+    delegate.add_process_output_block do |text|
       # TODO: Need to also test standard error
       assert_equal(text, TEST_ENV_VALUE)
     end

@@ -23,7 +23,7 @@ module Repla
 
         Thread.new do
           stdout.each do |l|
-            @delegate.process_line(l) unless @delegate.nil?
+            @delegate.process_output(l) unless @delegate.nil?
           end
         end
 

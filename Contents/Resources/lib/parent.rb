@@ -12,7 +12,7 @@ module Repla
       return if command.nil?
 
       command = command.to_s
-      unless env.nil?
+      unless environment.nil?
         command = "env #{Shellwords.escape(environment)}"\
           " #{command}"
       end

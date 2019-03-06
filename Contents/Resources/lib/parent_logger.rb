@@ -1,10 +1,9 @@
-require_relative '../bundle/bundler/setup.rb'
-# require 'repla'
+require_relative '../bundle/bundler/setup'
 require 'repla/logger'
 
 # Repla
 module Repla
-  # Parent lgoger
+  # Parent logger
   class ParentLogger
     attr_reader :logger
 

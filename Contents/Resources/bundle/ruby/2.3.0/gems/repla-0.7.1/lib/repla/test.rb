@@ -10,6 +10,8 @@ module Repla
     LIB_DIRECTORY = File.join(TEST_DIRECTORY, 'lib')
     HELPER_FILE = File.join(LIB_DIRECTORY, 'helper')
     VIEW_HELPER_FILE = File.join(LIB_DIRECTORY, 'view_helper')
+    LOG_HELPER_FILE = File.join(File.dirname(__FILE__),
+                                'logger/test/lib/log_helper')
 
     # Test Assets
     def self.html_file(filename)

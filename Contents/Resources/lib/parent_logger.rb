@@ -4,11 +4,11 @@ require 'repla/logger'
 
 # Repla
 module Repla
-  attr_reader :logger
-
   # Parent lgoger
   class ParentLogger
-    def initiliaze
+    attr_reader :logger
+
+    def initialize
       @logger = Repla::Logger.new
     end
 

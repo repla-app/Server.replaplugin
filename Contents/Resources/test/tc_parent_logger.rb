@@ -23,15 +23,23 @@ class TestParent < Minitest::Test
   end
 
   def test_parent_logger
+    # Message
     message = TEST_ENV_VALUE
-    test_log_helper = Repla::Test::LogHelper.new(@logger.window_id,
-                                                 @logger.view_id)
-    @parent_logger.process_output(TEST_ENV_VALUE)
+    @parent_logger.process_output(message)
     sleep Repla::Test::TEST_PAUSE_TIME
-    test_message = test_log_helper.last_log_message
-    assert_equal(message, test_message)
-    test_class = test_log_helper.last_log_class
+    last = @test_log_helper.last_log_message
+    assert_equal(message, last)
+    test_class = @test_log_helper.last_log_class
     assert_equal('message', test_class)
-    @parent_logger.process_error(TEST_ENV_VALUE_TWO)
+
+    # Error
+    error = TEST_ENV_VALUE_TWO
+    refute_equal(message, error)
+    @parent_logger.process_error(error)
+    sleep Repla::Test::TEST_PAUSE_TIME
+    last = @test_log_helper.last_log_message
+    assert_equal(error, last)
+    test_class = @test_log_helper.last_log_class
+    assert_equal('error', test_class)
   end
 end

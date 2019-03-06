@@ -2,7 +2,10 @@ require_relative '../bundle/bundler/setup.rb'
 # require 'repla'
 require 'repla/logger'
 
+# Repla
 module Repla
+  attr_reader :logger
+
   # Parent lgoger
   class ParentLogger
     def initiliaze

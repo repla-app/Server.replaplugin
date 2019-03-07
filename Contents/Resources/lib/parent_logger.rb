@@ -14,20 +14,20 @@ module Repla
     end
 
     def process_output(text)
-      # TODO: Needs to look for URL here
+      url = self.class.url_from_line(line)
+      @view.load_url(url) if !url.empty?
       @logger.info(text)
     end
 
     def process_error(text)
-      # TODO: Needs to look for URL here
+      url = self.class.url_from_line(line)
+      @view.load_url(url) if !url.empty?
       @logger.error(text)
     end
 
     require 'uri'
-    def self.process_line(line)
-      if string.scan(URI.regexp)
-
-      end
+    def self.url_from_line(line)
+      line[URI::DEFAULT_PARSER.make_regexp]
     end
   end
 end

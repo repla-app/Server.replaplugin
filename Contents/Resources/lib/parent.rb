@@ -33,8 +33,6 @@ module Repla
           end
         end
         @pid = wait_thr.pid
-        @pgid = Process.getpgid(@pid)
-        @wait_thr = wait_thr
         wait_thr.value
       end
     end

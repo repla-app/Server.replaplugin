@@ -1,10 +1,8 @@
 #!/usr/bin/env ruby
 
 require 'minitest/autorun'
-require_relative '../bundle/bundler/setup'
-require 'repla/test'
+require_relative 'lib/test_setup'
 require Repla::Test::LOG_HELPER_FILE
-require_relative 'lib/test_constants'
 require_relative '../lib/parent_logger'
 
 class TestParentLoggerClass < Minitest::Test
@@ -23,8 +21,7 @@ class TestParentLoggerClass < Minitest::Test
   end
 end
 
-# Test parent
-class TestParentLogger < Minitest::Test
+class TestLogger < Minitest::Test
   def setup
     @parent_logger = Repla::ParentLogger.new
     @logger = @parent_logger.logger
@@ -38,7 +35,7 @@ class TestParentLogger < Minitest::Test
     window.close
   end
 
-  def test_parent_logger
+  def test_logging
     # Message
     message = TEST_ENV_VALUE
     @parent_logger.process_output(message)
@@ -57,5 +54,23 @@ class TestParentLogger < Minitest::Test
     assert_equal(error, last)
     test_class = @test_log_helper.last_log_class
     assert_equal('error', test_class)
+  end
+end
+
+class TestServer < Minitest::Test
+  def setup
+    @parent_logger = Repla::ParentLogger.new
+    @parent = Repla::Parent.new(@parent_logger)
+    @parent.run_command(Repla::Test::SEVER_PATH,
+                        Repla::TEST::TEST_SERVER_ENV)
+  end
+
+  def teardown
+    window = Repla::Window.new(@parent_logger.logger.window_id)
+    window.close
+  end
+
+  def test_server
+    puts 'Got here'
   end
 end

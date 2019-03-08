@@ -4,6 +4,7 @@ require 'minitest/autorun'
 require_relative 'lib/test_setup'
 require Repla::Test::LOG_HELPER_FILE
 require_relative '../lib/parent_logger'
+require_relative '../lib/parent'
 
 class TestParentLoggerClass < Minitest::Test
   def test_url_from_line
@@ -61,8 +62,8 @@ class TestServer < Minitest::Test
   def setup
     @parent_logger = Repla::ParentLogger.new
     @parent = Repla::Parent.new(@parent_logger)
-    @parent.run_command(Repla::Test::SEVER_PATH,
-                        Repla::TEST::TEST_SERVER_ENV)
+    @parent.run_command(SERVER_PATH,
+                        TEST_SERVER_ENV)
   end
 
   def teardown

@@ -64,6 +64,7 @@ end
 class TestServer < Minitest::Test
   def setup
     @parent_logger = Repla::ParentLogger.new
+    @parent_logger.logger.show
     @parent = Repla::Parent.new(SERVER_PATH, TEST_SERVER_ENV, @parent_logger)
     @thread = Thread.new do
       @parent.run

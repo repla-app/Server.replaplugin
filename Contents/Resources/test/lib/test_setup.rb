@@ -1,4 +1,4 @@
-require_relative '../bundle/bundler/setup'
+require_relative '../../bundle/bundler/setup'
 require 'repla/test'
 
 PRINT_VARIABLE_PATH = File.expand_path(File.join(File.dirname(__FILE__),

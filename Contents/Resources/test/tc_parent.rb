@@ -3,7 +3,7 @@
 require 'minitest/autorun'
 require_relative '../lib/parent.rb'
 require_relative 'lib/parent_delegate'
-require_relative 'lib/test_constants'
+require_relative 'lib/test_setup'
 
 # Test parent
 class TestParent < Minitest::Test

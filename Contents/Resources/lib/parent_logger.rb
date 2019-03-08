@@ -15,13 +15,13 @@ module Repla
 
     def process_output(text)
       url = self.class.url_from_line(text)
-      @view.load_url(url) if url.nil?
+      @view.load_url(url) unless url.nil?
       @logger.info(text)
     end
 
     def process_error(text)
       url = self.class.url_from_line(text)
-      @view.load_url(url) if url.nil?
+      @view.load_url(url) unless url.nil?
       @logger.error(text)
     end
 

@@ -64,17 +64,20 @@ end
 class TestServer < Minitest::Test
   def setup
     @parent_logger = Repla::ParentLogger.new
-    @parent = Repla::Parent.new(@parent_logger)
-    @parent.run_command(SERVER_PATH,
-                        TEST_SERVER_ENV)
+    @parent = Repla::Parent.new(SERVER_PATH, TEST_SERVER_ENV, @parent_logger)
+    @thread = Thread.new do
+      @parent.run
+    end
+    sleep Repla::Test::TEST_PAUSE_TIME
   end
 
   def teardown
     window = Repla::Window.new(@parent_logger.logger.window_id)
     window.close
+    @parent.stop
   end
 
   def test_server
-    puts 'Got here'
+    puts "Got here"
   end
 end

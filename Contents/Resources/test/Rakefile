@@ -12,13 +12,13 @@ namespace :server do
   task tests: [:clean_up]
 
   task :test_parent do
-    parser_tests_file = File.join(File.dirname(__FILE__), 'tc_parent.rb')
-    ruby Shellwords.escape(parser_tests_file)
+    tests_file = File.join(File.dirname(__FILE__), 'tc_parent.rb')
+    ruby Shellwords.escape(tests_file)
   end
 
   task test_parent_logger: [:test_parent] do
-    parser_tests_file = File.join(File.dirname(__FILE__), 'tc_parent_logger.rb')
-    ruby Shellwords.escape(parser_tests_file)
+    tests_file = File.join(File.dirname(__FILE__), 'tc_parent_logger.rb')
+    ruby Shellwords.escape(tests_file)
   end
 
   task clean_up: [:test_parent_logger] do

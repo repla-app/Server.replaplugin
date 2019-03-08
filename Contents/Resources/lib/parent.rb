@@ -2,37 +2,45 @@ require 'Shellwords'
 
 require 'open3'
 
+# Repla
 module Repla
   # Parent
   class Parent
-    attr_writer :delegate
-    def initialize(delegate)
+    def initialize(command, environment, delegate)
       @delegate = delegate
+
+      @command = command.to_s
+      @command = "env #{environment} #{command}" unless environment.nil?
     end
 
-    def run_command(command, environment)
-      return if command.nil?
+    def run
+      return if @command.nil?
 
-      command = command.to_s
-      command = "env #{environment} #{command}" unless environment.nil?
-
-      Open3.popen3(command) do |stdin, stdout, stderr, thread|
+      Open3.popen3(@command) do |stdin, stdout, stderr, wait_thr|
         stdin.sync = true
         stdout.sync = true
         stderr.sync = true
 
         Thread.new do
-          stdout.each do |l|
-            @delegate.process_output(l) unless @delegate.nil?
+          stdout.each do |line|
+            @delegate.process_output(line) unless @delegate.nil?
           end
         end
 
         Thread.new do
-          stderr.each do |l|
-            @delegate.process_error(l) unless @delegate.nil?
+          stderr.each do |line|
+            @delegate.process_error(line) unless @delegate.nil?
           end
         end
+        @pid = wait_thr.pid
+        @pgid = Process.getpgid(@pid)
+        @wait_thr = wait_thr
+        wait_thr.value
       end
+    end
+
+    def stop
+      Process.kill(:TERM, @pid)
     end
   end
 end

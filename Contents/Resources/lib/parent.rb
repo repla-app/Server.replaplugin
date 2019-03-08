@@ -32,8 +32,6 @@ module Repla
             @delegate.process_error(l) unless @delegate.nil?
           end
         end
-
-        thread.join
       end
     end
   end

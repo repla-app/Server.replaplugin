@@ -10,7 +10,7 @@ module Repla
 
     def initialize
       @logger = Repla::Logger.new
-      @view = Repla::View(@logger.window_id)
+      @view = Repla::View.new(@logger.window_id)
     end
 
     def process_output(text)

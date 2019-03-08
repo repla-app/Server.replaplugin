@@ -7,6 +7,16 @@ require Repla::Test::LOG_HELPER_FILE
 require_relative 'lib/test_constants'
 require_relative '../lib/parent_logger'
 
+class TestParent < Minitest::Test
+  def test_url_from_line
+    good_url = 'http://www.google.com'
+    line_with_good_url = "Here is a URL #{good_url}"
+    ParentLogger.url_from_line(good_url)
+    line_with_local_url = 'http://127.0.0.1'
+    bad_url = 'asdf'
+  end
+end
+
 # Test parent
 class TestParent < Minitest::Test
   def setup

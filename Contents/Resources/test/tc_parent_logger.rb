@@ -6,6 +6,7 @@ require Repla::Test::LOG_HELPER_FILE
 require_relative '../lib/parent_logger'
 require_relative '../lib/parent'
 
+# Test parent logger class
 class TestParentLoggerClass < Minitest::Test
   def test_url_from_line
     good_url = 'http://www.google.com'
@@ -22,6 +23,7 @@ class TestParentLoggerClass < Minitest::Test
   end
 end
 
+# Test logger
 class TestLogger < Minitest::Test
   def setup
     @parent_logger = Repla::ParentLogger.new
@@ -58,6 +60,7 @@ class TestLogger < Minitest::Test
   end
 end
 
+# Test server
 class TestServer < Minitest::Test
   def setup
     @parent_logger = Repla::ParentLogger.new

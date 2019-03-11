@@ -67,7 +67,7 @@ class TestServer < Minitest::Test
     @parent_logger.logger.show
     @window = Repla::Window.new(@parent_logger.logger.window_id)
     @parent = Repla::Parent.new(SERVER_PATH, TEST_SERVER_ENV, @parent_logger)
-    @thread = Thread.new do
+    Thread.new do
       @parent.run
     end
     sleep Repla::Test::TEST_PAUSE_TIME

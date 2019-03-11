@@ -21,6 +21,11 @@ namespace :server do
     ruby Shellwords.escape(tests_file)
   end
 
-  task clean_up: [:test_parent_logger] do
+  task test_server: [:test_parent_logger] do
+    tests_file = File.join(File.dirname(__FILE__), 'tc_server.rb')
+    ruby Shellwords.escape(tests_file)
+  end
+
+  task clean_up: [:test_server] do
   end
 end

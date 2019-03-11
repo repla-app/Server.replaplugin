@@ -10,9 +10,8 @@ class TestServer < Minitest::Test
                                            '../server.rb'))
 
   def setup
-    # command = "#{Shellwords.escape(SERVER_FILE)} \"#{SERVER_PATH}\""\
-    #   " #{Shellwords.escape(TEST_SERVER_ENV)}"
     @pid = spawn(SERVER_FILE, SERVER_PATH, TEST_SERVER_ENV)
+    sleep Repla::Test::TEST_PAUSE_TIME
     window_id = Repla::Test::Helper.window_id
     @window = Repla::Window.new(window_id)
   end

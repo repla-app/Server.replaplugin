@@ -29,6 +29,7 @@ class TestServer < Minitest::Test
   end
 end
 
+# Test server without environment
 class TestServerNoEnv < Minitest::Test
   SERVER_FILE = File.expand_path(File.join(File.dirname(__FILE__),
                                            '../server.rb'))

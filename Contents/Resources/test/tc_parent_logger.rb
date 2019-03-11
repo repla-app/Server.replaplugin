@@ -13,13 +13,21 @@ class TestParentLoggerClass < Minitest::Test
     line_with_good_url = "Here is a URL #{good_url}"
     url = Repla::ParentLogger.send(:url_from_line, line_with_good_url)
     assert_equal(good_url, url)
+
     local_url = 'http://127.0.0.1'
     line_with_local_url = "#{local_url} is a local URL"
     url = Repla::ParentLogger.send(:url_from_line, line_with_local_url)
     assert_equal(local_url, url)
+
     line_with_no_url = 'This line doesn\'t have any URLs'
     url = Repla::ParentLogger.send(:url_from_line, line_with_no_url)
     assert_nil(url)
+
+    local_url_with_port = 'http://127.0.0.1:5000'
+    line_with_local_url_with_port = "Here is a URL #{local_url_with_port}"
+    url = Repla::ParentLogger.send(:url_from_line,
+                                   line_with_local_url_with_port)
+    assert_equal(local_url_with_port, url)
   end
 end
 

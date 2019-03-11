@@ -1,0 +1,31 @@
+require_relative '../bundle/bundler/setup'
+
+require 'repla/test'
+require Repla::Test::HELPER_FILE
+require Repla::Test::REPLA_FILE
+
+require 'shellwords'
+
+task default: ['server:tests']
+
+namespace :server do
+  task tests: [:clean_up]
+
+  task :test_parent do
+    tests_file = File.join(File.dirname(__FILE__), 'tc_parent.rb')
+    ruby Shellwords.escape(tests_file)
+  end
+
+  task test_parent_logger: [:test_parent] do
+    tests_file = File.join(File.dirname(__FILE__), 'tc_parent_logger.rb')
+    ruby Shellwords.escape(tests_file)
+  end
+
+  task test_server: [:test_parent_logger] do
+    tests_file = File.join(File.dirname(__FILE__), 'tc_server.rb')
+    ruby Shellwords.escape(tests_file)
+  end
+
+  task clean_up: [:test_server] do
+  end
+end

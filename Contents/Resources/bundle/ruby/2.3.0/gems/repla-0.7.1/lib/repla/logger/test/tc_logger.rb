@@ -3,8 +3,6 @@
 require 'minitest/autorun'
 
 require_relative 'lib/test_setup'
-
-require_relative 'lib/test_log_helper'
 require_relative '../../logger'
 
 # Test constants
@@ -38,11 +36,11 @@ class TestUnintializedLogger < Minitest::Test
     # `window_id` because those run the logger. This test should test logging a
     # message and running the logger itself simultaneously. This is why the
     # `LogHelper` is intialized after logging the message.
-    test_view_helper = LogHelper.new(@logger.window_id, @logger.view_id)
-
-    test_message = test_view_helper.last_log_message
+    test_log_helper = Repla::Test::LogHelper.new(@logger.window_id,
+                                                 @logger.view_id)
+    test_message = test_log_helper.last_log_message
     assert_equal(message, test_message, 'The messages should match')
-    test_class = test_view_helper.last_log_class
+    test_class = test_log_helper.last_log_class
     assert_equal('message', test_class, 'The classes should match')
   end
 end
@@ -52,7 +50,8 @@ class TestLogger < Minitest::Test
   def setup
     @logger = Repla::Logger.new
     @logger.show
-    @test_view_helper = LogHelper.new(@logger.window_id, @logger.view_id)
+    @test_log_helper = Repla::Test::LogHelper.new(@logger.window_id,
+                                                  @logger.view_id)
   end
 
   def teardown
@@ -67,11 +66,11 @@ class TestLogger < Minitest::Test
     message = 'Testing log error'
     @logger.error(message)
     sleep Repla::Test::TEST_PAUSE_TIME # Pause for output to be processed
-    test_message = @test_view_helper.last_log_message
+    test_message = @test_log_helper.last_log_message
     assert_equal(message, test_message)
-    test_class = @test_view_helper.last_log_class
+    test_class = @test_log_helper.last_log_class
     assert_equal('error', test_class)
-    result_count = @test_view_helper.number_of_log_messages
+    result_count = @test_log_helper.number_of_log_messages
     test_count += 1
     assert_equal(test_count, result_count)
 
@@ -79,11 +78,11 @@ class TestLogger < Minitest::Test
     message = 'Testing log message'
     @logger.info(message)
     sleep Repla::Test::TEST_PAUSE_TIME # Pause for output to be processed
-    test_message = @test_view_helper.last_log_message
+    test_message = @test_log_helper.last_log_message
     assert_equal(message, test_message)
-    test_class = @test_view_helper.last_log_class
+    test_class = @test_log_helper.last_log_class
     assert_equal('message', test_class)
-    result_count = @test_view_helper.number_of_log_messages
+    result_count = @test_log_helper.number_of_log_messages
     test_count += 1
     assert_equal(test_count, result_count)
 
@@ -92,11 +91,11 @@ class TestLogger < Minitest::Test
     message = Repla::Logger::ERROR_PREFIX.rstrip
     @logger.info(message)
     sleep Repla::Test::TEST_PAUSE_TIME # Pause for output to be processed
-    test_message = @test_view_helper.last_log_message
+    test_message = @test_log_helper.last_log_message
     assert_equal(message, test_message)
-    test_class = @test_view_helper.last_log_class
+    test_class = @test_log_helper.last_log_class
     assert_equal('message', test_class)
-    result_count = @test_view_helper.number_of_log_messages
+    result_count = @test_log_helper.number_of_log_messages
     test_count += 1
     assert_equal(test_count, result_count)
 
@@ -105,28 +104,28 @@ class TestLogger < Minitest::Test
     message = Repla::Logger::MESSAGE_PREFIX.rstrip
     @logger.info(message)
     sleep Repla::Test::TEST_PAUSE_TIME # Pause for output to be processed
-    test_message = @test_view_helper.last_log_message
+    test_message = @test_log_helper.last_log_message
     assert_equal(message, test_message)
-    test_class = @test_view_helper.last_log_class
+    test_class = @test_log_helper.last_log_class
     assert_equal('message', test_class)
-    result_count = @test_view_helper.number_of_log_messages
+    result_count = @test_log_helper.number_of_log_messages
     test_count += 1
     assert_equal(test_count, result_count)
 
     # Test Blank Spaces
     @logger.info("  \t")
     sleep Repla::Test::TEST_PAUSE_TIME # Pause for output to be processed
-    test_message = @test_view_helper.last_log_message
+    test_message = @test_log_helper.last_log_message
     assert_equal(message, test_message)
-    test_class = @test_view_helper.last_log_class
+    test_class = @test_log_helper.last_log_class
     assert_equal('message', test_class)
 
     # Test Empty String
     @logger.info('')
     sleep Repla::Test::TEST_PAUSE_TIME # Pause for output to be processed
-    test_message = @test_view_helper.last_log_message
+    test_message = @test_log_helper.last_log_message
     assert_equal(message, test_message)
-    test_class = @test_view_helper.last_log_class
+    test_class = @test_log_helper.last_log_class
     assert_equal('message', test_class)
 
     # TODO: Also add the following tests the `Log.replabundle`
@@ -139,11 +138,11 @@ class TestLogger < Minitest::Test
     # message = "\t Testing log message"
     # @logger.info(message + "\t ")
     # sleep Repla::Test::TEST_PAUSE_TIME # Pause for output to be processed
-    # test_message = @test_view_helper.last_log_message
+    # test_message = @test_log_helper.last_log_message
     # assert_equal(message, test_message, "The messages should match")
-    # test_class = @test_view_helper.last_log_class
+    # test_class = @test_log_helper.last_log_class
     # assert_equal("message", test_class, "The classes should match")
-    # result_count = @test_view_helper.number_of_log_messages
+    # result_count = @test_log_helper.number_of_log_messages
     # test_count += 1
     # assert_equal(test_count, result_count)
   end
@@ -157,11 +156,11 @@ Line 3
 '
     @logger.info(message)
     sleep Repla::Test::TEST_PAUSE_TIME * 2 # Pause for output to be processed
-    result_count = @test_view_helper.number_of_log_messages
+    result_count = @test_log_helper.number_of_log_messages
     assert_equal(result_count, 3, 'The number of log messages should match')
 
     (1..3).each do |i|
-      result = @test_view_helper.log_message_at_index(i - 1)
+      result = @test_log_helper.log_message_at_index(i - 1)
       test_result = "Line #{i}"
       assert_equal(result,
                    test_result,

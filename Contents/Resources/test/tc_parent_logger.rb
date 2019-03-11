@@ -65,6 +65,7 @@ class TestServer < Minitest::Test
   def setup
     @parent_logger = Repla::ParentLogger.new
     @parent_logger.logger.show
+    @window = Repla::Window.new(@parent_logger.logger.window_id)
     @parent = Repla::Parent.new(SERVER_PATH, TEST_SERVER_ENV, @parent_logger)
     @thread = Thread.new do
       @parent.run
@@ -73,12 +74,15 @@ class TestServer < Minitest::Test
   end
 
   def teardown
-    window = Repla::Window.new(@parent_logger.logger.window_id)
-    window.close
+    @window.close
     @parent.stop
   end
 
   def test_server
-    puts "Got here"
+    javascript = File.read(Repla::Test::TITLE_JAVASCRIPT_FILE)
+
+    @window.load_file(Repla::Test::INDEX_HTML_FILE)
+    result = @window.do_javascript(javascript)
+    assert_equal(result, Repla::Test::INDEX_HTML_TITLE)
   end
 end

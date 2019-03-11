@@ -4,7 +4,7 @@ require_relative 'parent_logger'
 module Repla
   # Runner
   class Runner
-    def initialize
+    def initialize(command, environment)
       parent_logger = ParentLogger.new
       @parent = Parent.new(command, environment, parent_logger)
     end

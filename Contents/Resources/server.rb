@@ -14,4 +14,8 @@ exit 1 unless command
 environment = ARGV[1]
 
 runner = Repla::Server::Runner.new(command, environment)
+trap "SIGINT" do
+  runner.stop
+end
+
 runner.run

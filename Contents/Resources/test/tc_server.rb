@@ -17,8 +17,8 @@ class TestServer < Minitest::Test
   end
 
   def teardown
-    Process.kill(:TERM, @pid)
     @window.close
+    Process.kill(:INT, @pid)
   end
 
   def test_server

@@ -13,6 +13,10 @@ module Repla
       def run
         @parent.run
       end
+
+      def stop
+        @parent.stop
+      end
     end
   end
 end

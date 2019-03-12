@@ -21,7 +21,6 @@ class TestParent < Minitest::Test
       error_ran = true
     end
     parent.run
-    sleep Repla::Test::TEST_PAUSE_TIME
     assert(output_ran)
     assert(error_ran)
   end

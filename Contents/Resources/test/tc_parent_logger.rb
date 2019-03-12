@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 
 require 'minitest/autorun'
-require 'Shellwords'
 require_relative 'lib/test_setup'
 require Repla::Test::LOG_HELPER_FILE
 require_relative '../lib/parent_logger'
@@ -102,8 +101,7 @@ class TestServerPathAndArg < Minitest::Test
     @parent_logger = Repla::ParentLogger.new
     @parent_logger.logger.show
     @window = Repla::Window.new(@parent_logger.logger.window_id)
-    command = "#{SERVER_COMMAND} #{Shellwords.escape(SERVER_ROOT)}"
-    @parent = Repla::Parent.new(command,
+    @parent = Repla::Parent.new(SERVER_COMMAND_ARG,
                                 TEST_SERVER_PATH_ENV,
                                 @parent_logger)
     Thread.new do

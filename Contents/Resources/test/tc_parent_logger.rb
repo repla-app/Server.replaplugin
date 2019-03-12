@@ -94,3 +94,32 @@ class TestServer < Minitest::Test
     assert_equal(result, Repla::Test::INDEX_HTML_TITLE)
   end
 end
+
+# Test server path
+class TestServerPathAndArg < Minitest::Test
+  def setup
+    @parent_logger = Repla::ParentLogger.new
+    @parent_logger.logger.show
+    @window = Repla::Window.new(@parent_logger.logger.window_id)
+    @parent = Repla::Parent.new(SERVER_COMMAND_ARG,
+                                TEST_SERVER_PATH_ENV,
+                                @parent_logger)
+    Thread.new do
+      @parent.run
+    end
+    sleep Repla::Test::TEST_PAUSE_TIME
+  end
+
+  def teardown
+    @window.close
+    @parent.stop
+  end
+
+  def test_server_path_and_arg
+    javascript = File.read(Repla::Test::TITLE_JAVASCRIPT_FILE)
+
+    @window.load_file(Repla::Test::INDEX_HTML_FILE)
+    result = @window.do_javascript(javascript)
+    assert_equal(result, Repla::Test::INDEX_HTML_TITLE)
+  end
+end

@@ -4,6 +4,10 @@ set -e
 
 trap 'kill $(jobs -p)' EXIT
 
+if [[ -n "$1" ]]; then
+  SERVER_PATH="$1"
+fi
+
 if [[ -z "$SERVER_PATH" ]]; then
   SERVER_PATH="."
 fi

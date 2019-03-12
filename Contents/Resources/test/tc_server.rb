@@ -37,7 +37,7 @@ class TestServerNoEnv < Minitest::Test
   def setup
     @pid = spawn(SERVER_FILE,
                  SERVER_PATH,
-                 chdir: Repla::Test::TEST_HTML_DIRECTORY.to_s)
+                 chdir: SERVER_ROOT)
     sleep Repla::Test::TEST_PAUSE_TIME
     window_id = Repla::Test::Helper.window_id
     @window = Repla::Window.new(window_id)

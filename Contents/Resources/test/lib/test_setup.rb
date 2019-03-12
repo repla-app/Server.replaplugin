@@ -8,7 +8,9 @@ SERVER_DIR = File.expand_path(File.join(File.dirname(__FILE__),
                                         '../data/'))
 SERVER_PATH = File.join(SERVER_DIR,
                         SERVER_COMMAND)
-TEST_SERVER_ENV = "SERVER_ROOT=\"#{Repla::Test::TEST_HTML_DIRECTORY}\"".freeze
+TEST_SERVER_PATH_ENV = "PATH=\"#{SERVER_DIR}:$PATH\"".freeze
+SERVER_ROOT = Repla::Test::TEST_HTML_DIRECTORY
+TEST_SERVER_ENV = "SERVER_ROOT=\"#{SERVER_ROOT}\"".freeze
 TEST_ENV_KEY = 'TEST_VARIABLE'.freeze
 TEST_ENV_KEY_TWO = 'TEST_VARIABLE_TWO'.freeze
 TEST_ENV_VALUE = 'A test string'.freeze

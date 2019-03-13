@@ -2,5 +2,8 @@
 
 set -e
 
-echo -n "$TEST_VARIABLE"
-echo -n "$TEST_VARIABLE_TWO" >&2
+echo "$TEST_VARIABLE"
+echo "$TEST_VARIABLE_TWO" >&2
+# The new lines help flush the `STDOUT` and `STDERR` caches
+echo
+echo >&2

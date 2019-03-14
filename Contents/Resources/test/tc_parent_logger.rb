@@ -36,11 +36,13 @@ class TestParentLoggerClass < Minitest::Test
     assert_equal(real_example_url, url)
   end
 
+  # Mock logger
   class MockLogger
     def error(text); end
 
     def info(text); end
   end
+  # Mock view
   class MockView
     attr_reader :failed
     def initialize
@@ -110,7 +112,9 @@ class TestServer < Minitest::Test
     @parent_logger = Repla::Server::ParentLogger.new
     @parent_logger.logger.show
     @window = Repla::Window.new(@parent_logger.logger.window_id)
-    @parent = Repla::Server::Parent.new(SERVER_PATH, TEST_SERVER_ENV, @parent_logger)
+    @parent = Repla::Server::Parent.new(SERVER_PATH,
+                                        TEST_SERVER_ENV,
+                                        @parent_logger)
     Thread.new do
       @parent.run
     end

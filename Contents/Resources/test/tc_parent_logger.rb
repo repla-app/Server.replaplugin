@@ -45,6 +45,7 @@ class TestParentLoggerClass < Minitest::Test
   # Mock view
   class MockView
     attr_reader :failed
+    attr_reader :called
     def initialize
       @called = false
       @failed = false
@@ -62,6 +63,7 @@ class TestParentLoggerClass < Minitest::Test
     real_example_url = 'http://127.0.0.1:4000/'
     line_with_real_example_url = "Server address: #{real_example_url}"
     parent_logger.process_output(line_with_real_example_url)
+    assert(mock_view.called)
     local_url_with_port = 'http://127.0.0.1:5000'
     line_with_local_url_with_port = "Here is a URL #{local_url_with_port}"
     parent_logger.process_output(line_with_local_url_with_port)

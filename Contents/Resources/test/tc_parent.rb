@@ -7,28 +7,36 @@ require_relative 'lib/test_setup'
 
 # Test parent
 class TestParent < Minitest::Test
+  TEST_OUTPUT_COUNT = 40
   def test_parent
     delegate = ParentDelegate.new
     parent = Repla::Server::Parent.new(PRINT_VARIABLE_PATH, TEST_ENV, delegate)
-    output_ran = false
-    delegate.add_process_output_block do |text|
-      text.chomp!
-      assert_equal(text, TEST_ENV_VALUE)
-      output_ran = true
+    test_output_count = TEST_OUTPUT_COUNT
+    output_count = 0
+    (1..test_output_count).each do |_|
+      delegate.add_process_output_block do |text|
+        text.chomp!
+        assert_equal(text, TEST_ENV_VALUE)
+        output_count += 1
+      end
     end
-    error_ran = false
-    delegate.add_process_error_block do |text|
-      text.chomp!
-      assert_equal(text, TEST_ENV_VALUE_TWO)
-      error_ran = true
+    test_error_count = TEST_OUTPUT_COUNT
+    error_count = 0
+    (1..test_error_count).each do |_|
+      delegate.add_process_error_block do |text|
+        text.chomp!
+        assert_equal(text, TEST_ENV_VALUE_TWO)
+        error_count += 1
+      end
     end
     parent.run
     count = 0
-    until (error_ran && output_ran) || count > 10
+    until (output_count == test_output_count &&
+        error_count == test_error_count) || count > 4
       sleep(1)
       count += 1
     end
-    assert(output_ran)
-    assert(error_ran)
+    assert_equal(output_count, test_output_count)
+    assert_equal(error_count, test_error_count)
   end
 end

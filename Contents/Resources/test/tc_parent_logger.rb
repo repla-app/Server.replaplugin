@@ -35,6 +35,36 @@ class TestParentLoggerClass < Minitest::Test
                                    line_with_real_example_url)
     assert_equal(real_example_url, url)
   end
+
+  class MockLogger
+    def error(text); end
+
+    def info(text); end
+  end
+  class MockView
+    attr_reader :failed
+    def initialize
+      @called = false
+      @failed = false
+    end
+
+    def load_url(_url)
+      @failed = true if @called
+      @called = true
+    end
+  end
+
+  def test_multiple_urls
+    mock_view = MockView.new
+    parent_logger = Repla::Server::ParentLogger.new(MockLogger.new, mock_view)
+    real_example_url = 'http://127.0.0.1:4000/'
+    line_with_real_example_url = "Server address: #{real_example_url}"
+    parent_logger.process_output(line_with_real_example_url)
+    local_url_with_port = 'http://127.0.0.1:5000'
+    line_with_local_url_with_port = "Here is a URL #{local_url_with_port}"
+    parent_logger.process_output(line_with_local_url_with_port)
+    assert(!mock_view.failed)
+  end
 end
 
 # Test logger

@@ -26,13 +26,13 @@ class TestParentLoggerClass < Minitest::Test
     local_url_with_port = 'http://127.0.0.1:5000'
     line_with_local_url_with_port = "Here is a URL #{local_url_with_port}"
     url = Repla::Server::ParentLogger.send(:url_from_line,
-                                   line_with_local_url_with_port)
+                                           line_with_local_url_with_port)
     assert_equal(local_url_with_port, url)
 
     real_example_url = 'http://127.0.0.1:4000/'
     line_with_real_example_url = "Server address: #{real_example_url}"
     url = Repla::Server::ParentLogger.send(:url_from_line,
-                                   line_with_real_example_url)
+                                           line_with_real_example_url)
     assert_equal(real_example_url, url)
   end
 
@@ -138,8 +138,8 @@ class TestServerPathAndArg < Minitest::Test
     @parent_logger.logger.show
     @window = Repla::Window.new(@parent_logger.logger.window_id)
     @parent = Repla::Server::Parent.new(SERVER_COMMAND_ARG,
-                                TEST_SERVER_PATH_ENV,
-                                @parent_logger)
+                                        TEST_SERVER_PATH_ENV,
+                                        @parent_logger)
     Thread.new do
       @parent.run
     end

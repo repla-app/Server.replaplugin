@@ -17,7 +17,7 @@ module Repla
 
       def process_output(text)
         url = self.class.url_from_line(text)
-        if !url.nil? && @loaded_url
+        if !url.nil? && !@loaded_url
           @view.load_url(url)
           @loaded_url = true
         end
@@ -26,7 +26,7 @@ module Repla
 
       def process_error(text)
         url = self.class.url_from_line(text)
-        if !url.nil? && @loaded_url
+        if !url.nil? && !@loaded_url
           @view.load_url(url)
           @loaded_url = true
         end

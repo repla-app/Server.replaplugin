@@ -11,27 +11,27 @@ class TestParentLoggerClass < Minitest::Test
   def test_url_from_line
     good_url = 'http://www.google.com'
     line_with_good_url = "Here is a URL #{good_url}"
-    url = Repla::ParentLogger.send(:url_from_line, line_with_good_url)
+    url = Repla::Server::ParentLogger.send(:url_from_line, line_with_good_url)
     assert_equal(good_url, url)
 
     local_url = 'http://127.0.0.1'
     line_with_local_url = "#{local_url} is a local URL"
-    url = Repla::ParentLogger.send(:url_from_line, line_with_local_url)
+    url = Repla::Server::ParentLogger.send(:url_from_line, line_with_local_url)
     assert_equal(local_url, url)
 
     line_with_no_url = 'This line doesn\'t have any URLs'
-    url = Repla::ParentLogger.send(:url_from_line, line_with_no_url)
+    url = Repla::Server::ParentLogger.send(:url_from_line, line_with_no_url)
     assert_nil(url)
 
     local_url_with_port = 'http://127.0.0.1:5000'
     line_with_local_url_with_port = "Here is a URL #{local_url_with_port}"
-    url = Repla::ParentLogger.send(:url_from_line,
+    url = Repla::Server::ParentLogger.send(:url_from_line,
                                    line_with_local_url_with_port)
     assert_equal(local_url_with_port, url)
 
     real_example_url = 'http://127.0.0.1:4000/'
     line_with_real_example_url = "Server address: #{real_example_url}"
-    url = Repla::ParentLogger.send(:url_from_line,
+    url = Repla::Server::ParentLogger.send(:url_from_line,
                                    line_with_real_example_url)
     assert_equal(real_example_url, url)
   end
@@ -70,7 +70,7 @@ end
 # Test logger
 class TestLogger < Minitest::Test
   def setup
-    @parent_logger = Repla::ParentLogger.new
+    @parent_logger = Repla::Server::ParentLogger.new
     @logger = @parent_logger.logger
     @logger.show
     @test_log_helper = Repla::Test::LogHelper.new(@logger.window_id,
@@ -107,10 +107,10 @@ end
 # Test server
 class TestServer < Minitest::Test
   def setup
-    @parent_logger = Repla::ParentLogger.new
+    @parent_logger = Repla::Server::ParentLogger.new
     @parent_logger.logger.show
     @window = Repla::Window.new(@parent_logger.logger.window_id)
-    @parent = Repla::Parent.new(SERVER_PATH, TEST_SERVER_ENV, @parent_logger)
+    @parent = Repla::Server::Parent.new(SERVER_PATH, TEST_SERVER_ENV, @parent_logger)
     Thread.new do
       @parent.run
     end
@@ -134,10 +134,10 @@ end
 # Test server path
 class TestServerPathAndArg < Minitest::Test
   def setup
-    @parent_logger = Repla::ParentLogger.new
+    @parent_logger = Repla::Server::ParentLogger.new
     @parent_logger.logger.show
     @window = Repla::Window.new(@parent_logger.logger.window_id)
-    @parent = Repla::Parent.new(SERVER_COMMAND_ARG,
+    @parent = Repla::Server::Parent.new(SERVER_COMMAND_ARG,
                                 TEST_SERVER_PATH_ENV,
                                 @parent_logger)
     Thread.new do

@@ -22,19 +22,24 @@ module Repla
           stdout.sync = true
           stderr.sync = true
 
-          Thread.new do
+          output_thread = Thread.new do
             stdout.each do |line|
               @delegate.process_output(line) unless @delegate.nil?
             end
           end
 
-          Thread.new do
+          error_thread = Thread.new do
             stderr.each do |line|
               @delegate.process_error(line) unless @delegate.nil?
             end
           end
           @pid = wait_thr.pid
           wait_thr.value
+          # Make sure all output gets processed before existing
+          stdout.flush
+          stderr.flush
+          output_thread.join
+          error_thread.join
         end
       end
 

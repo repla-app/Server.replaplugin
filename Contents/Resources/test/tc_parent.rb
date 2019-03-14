@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby
+#!/System/Library/Frameworks/Ruby.framework/Versions/2.3/usr/bin/ruby
 
 require 'minitest/autorun'
 require_relative '../lib/parent.rb'
@@ -9,7 +9,7 @@ require_relative 'lib/test_setup'
 class TestParent < Minitest::Test
   def test_parent
     delegate = ParentDelegate.new
-    parent = Repla::Parent.new(PRINT_VARIABLE_PATH, TEST_ENV, delegate)
+    parent = Repla::Server::Parent.new(PRINT_VARIABLE_PATH, TEST_ENV, delegate)
     output_ran = false
     delegate.add_process_output_block do |text|
       text.chomp!

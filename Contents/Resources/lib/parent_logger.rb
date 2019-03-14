@@ -28,7 +28,9 @@ module Repla
     require 'uri'
     # `private_class_method`
     def self.url_from_line(line)
-      line[URI::DEFAULT_PARSER.make_regexp]
+      # This is more correct, but it makes has false positives for our use case
+      # like `address:` line[URI::DEFAULT_PARSER.make_regexp]
+      line[Regexp.new(/https?:\/\/[\S]+/)]
     end
   end
 end

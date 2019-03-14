@@ -28,6 +28,12 @@ class TestParentLoggerClass < Minitest::Test
     url = Repla::ParentLogger.send(:url_from_line,
                                    line_with_local_url_with_port)
     assert_equal(local_url_with_port, url)
+
+    real_example_url = 'http://127.0.0.1:4000/'
+    line_with_real_example_url = "Server address: #{real_example_url}"
+    url = Repla::ParentLogger.send(:url_from_line,
+                                   line_with_real_example_url)
+    assert_equal(real_example_url, url)
   end
 end
 

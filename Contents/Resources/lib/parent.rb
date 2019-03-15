@@ -7,11 +7,15 @@ module Repla
   module Server
     # Parent
     class Parent
+      COMMAND_FILE = File.join(File.dirname(__FILE__), '../data/command.sh')
       def initialize(command, environment, delegate)
         @delegate = delegate
-
-        @command = command.to_s
-        @command = "env #{environment} #{command}" unless environment.nil?
+        @command = if environment.nil?
+                     command.to_s
+                   else
+                     "#{COMMAND_FILE} \"#{environment}\""\
+                       " #{command}"
+                   end
       end
 
       def run

@@ -16,5 +16,4 @@ process_env() {
 
 env_arg=$(process_env "$env")
 
-eval "env $env_arg $command"
-# echo "env $env_arg $command"
+eval "env $env_arg \"$command\""

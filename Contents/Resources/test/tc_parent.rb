@@ -42,12 +42,18 @@ class TestParent < Minitest::Test
 
   def test_parent_real_env
     delegate = ParentDelegate.new
-    parent = Repla::Server::Parent.new(PRINT_VARIABLE_NO_ERROR_PATH,
+    argument_output = 'the first line'
+    command = "#{PRINT_VARIABLE_NO_ERROR_PATH} #{argument_output}"
+    parent = Repla::Server::Parent.new(command,
                                        TEST_REAL_ENV,
                                        delegate)
     test_output_count = TEST_OUTPUT_COUNT
-
-    # return
+    argument_output_success = false
+    delegate.add_process_output_block do |text|
+      text.chomp!
+      assert_equal(argument_output, text)
+      argument_output_success = true
+    end
 
     output_count = 0
     (1..test_output_count).each do |_|
@@ -63,7 +69,8 @@ class TestParent < Minitest::Test
     end
     parent.run
     count = 0
-    until output_count == test_output_count || count > 4
+    until (output_count == test_output_count &&
+        argument_output_success) || count > 4
       sleep(1)
       count += 1
     end

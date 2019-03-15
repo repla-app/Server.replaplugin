@@ -14,7 +14,7 @@ module Repla
                      command.to_s
                    else
                      "#{COMMAND_FILE} \"#{environment}\""\
-                       " #{command}"
+                       " \"#{command}\""
                    end
       end
 

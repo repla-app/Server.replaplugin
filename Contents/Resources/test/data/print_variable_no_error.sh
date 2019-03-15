@@ -2,6 +2,7 @@
 
 set -e
 
+echo "$@"
 echo "$FZF_ALT_C_COMMAND"
 echo "$FZF_ALT_C_COMMAND"
 echo "$FZF_ALT_C_COMMAND"

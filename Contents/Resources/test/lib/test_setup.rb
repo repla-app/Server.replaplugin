@@ -2,14 +2,17 @@ require_relative '../../bundle/bundler/setup'
 require 'repla/test'
 require 'Shellwords'
 
-PRINT_VARIABLE_PATH = File.expand_path(File.join(File.dirname(__FILE__),
-                                                 '../data/print_variable.sh'))
+TEST_DATA_DIR = File.join(File.dirname(__FILE__), '../data/')
+PRINT_VARIABLE_PATH = File.expand_path(File.join(TEST_DATA_DIR,
+                                                 'print_variable.sh'))
+PRINT_VARIABLE_NO_ERROR_PATH = File.expand_path(File.join(TEST_DATA_DIR,
+                                                          'print_variable_'\
+                                                          'no_error.sh'))
 SERVER_ROOT = Repla::Test::TEST_HTML_DIRECTORY
 SERVER_COMMAND = 'server.sh'.freeze
 SERVER_COMMAND_ARG = "#{SERVER_COMMAND} "\
   "#{Shellwords.escape(SERVER_ROOT)}".freeze
-SERVER_DIR = File.expand_path(File.join(File.dirname(__FILE__),
-                                        '../data/'))
+SERVER_DIR = TEST_DATA_DIR
 SERVER_PATH = File.join(SERVER_DIR,
                         SERVER_COMMAND)
 TEST_SERVER_PATH_ENV = "PATH=\"#{SERVER_DIR}:$PATH\"".freeze
@@ -20,3 +23,5 @@ TEST_ENV_VALUE = 'A test string'.freeze
 TEST_ENV_VALUE_TWO = 'A second test string'.freeze
 TEST_ENV = "#{TEST_ENV_KEY}=\"#{TEST_ENV_VALUE}\" "\
   "#{TEST_ENV_KEY_TWO}=\"#{TEST_ENV_VALUE_TWO}\"".freeze
+TEST_REAL_ENV = File.read(File.join(TEST_DATA_DIR, 'real_env.txt'))
+TEST_REAL_VALUE = 'fd --type d --hidden --exclude .git'.freeze

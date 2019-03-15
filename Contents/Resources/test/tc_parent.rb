@@ -58,7 +58,7 @@ class TestParent < Minitest::Test
       end
     end
     error_called = false
-    delegate.add_process_error_block do |text|
+    delegate.add_process_error_block do |_text|
       error_called = true
     end
     parent.run

@@ -39,4 +39,33 @@ class TestParent < Minitest::Test
     assert_equal(output_count, test_output_count)
     assert_equal(error_count, test_error_count)
   end
+
+  def test_parent_real_env
+    delegate = ParentDelegate.new
+    parent = Repla::Server::Parent.new(PRINT_VARIABLE_PATH,
+                                       TEST_REAL_ENV,
+                                       delegate)
+    test_output_count = TEST_OUTPUT_COUNT
+    output_count = 0
+    (1..test_output_count).each do |_|
+      delegate.add_process_output_block do |text|
+        text.chomp!
+        assert_equal(text, TEST_REAL_VALUE)
+        output_count += 1
+      end
+    end
+    error_called = false
+    delegate.add_process_error_block do |text|
+      error_called = true
+    end
+    parent.run
+    count = 0
+    until (output_count == test_output_count &&
+        error_count == test_error_count) || count > 4
+      sleep(1)
+      count += 1
+    end
+    assert_false(error_called)
+    assert_equal(output_count, test_output_count)
+  end
 end

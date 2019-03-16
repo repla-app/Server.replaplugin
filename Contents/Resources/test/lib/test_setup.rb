@@ -21,7 +21,7 @@ TEST_ENV_KEY = 'TEST_VARIABLE'.freeze
 TEST_ENV_KEY_TWO = 'TEST_VARIABLE_TWO'.freeze
 TEST_ENV_VALUE = 'A test string'.freeze
 TEST_ENV_VALUE_TWO = 'A second test string'.freeze
-TEST_ENV = "#{TEST_ENV_KEY}=\"#{TEST_ENV_VALUE}\" "\
-  "#{TEST_ENV_KEY_TWO}=\"#{TEST_ENV_VALUE_TWO}\"".freeze
+TEST_ENV = "#{TEST_ENV_KEY}=#{TEST_ENV_VALUE}\n"\
+  "#{TEST_ENV_KEY_TWO}=#{TEST_ENV_VALUE_TWO}".freeze
 TEST_REAL_ENV = File.read(File.join(TEST_DATA_DIR, 'real_env.txt'))
 TEST_REAL_VALUE = 'fd --type d --hidden --exclude .git'.freeze

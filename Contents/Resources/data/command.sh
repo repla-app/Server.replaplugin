@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
 set -e
+# Automatically export all environment variables
+set -a
 
 env="$1"
 command="$2"
@@ -15,4 +17,5 @@ process_env() {
 }
 
 env_arg=$(process_env "$env")
-eval "env $env_arg $command"
+eval "$env_arg"
+exec $command

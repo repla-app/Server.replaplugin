@@ -10,7 +10,7 @@ SERVER_BUNDLE_COMMAND = File.expand_path(File.join(File.dirname(__FILE__),
 # Test server
 class TestServer < Minitest::Test
   def setup
-    @pid = spawn(SERVER_BUNDLE_COMMAND, SERVER_PATH, TEST_SERVER_ENV)
+    @pid = spawn(SERVER_BUNDLE_COMMAND, SERVER_COMMAND_PATH, TEST_SERVER_ENV)
     sleep Repla::Test::TEST_PAUSE_TIME
     window_id = Repla::Test::Helper.window_id
     @window = Repla::Window.new(window_id)
@@ -23,7 +23,7 @@ class TestServer < Minitest::Test
 
   def test_server
     javascript = File.read(Repla::Test::TITLE_JAVASCRIPT_FILE)
-    @window.load_file(Repla::Test::INDEX_HTML_FILE)
+    @window.load_url(Repla::Test::INDEX_HTML_URL)
     result = @window.do_javascript(javascript)
     assert_equal(result, Repla::Test::INDEX_HTML_TITLE)
   end
@@ -33,7 +33,7 @@ end
 class TestServerNoEnv < Minitest::Test
   def setup
     @pid = spawn(SERVER_BUNDLE_COMMAND,
-                 SERVER_PATH,
+                 SERVER_COMMAND_PATH,
                  chdir: SERVER_ROOT)
     sleep Repla::Test::TEST_PAUSE_TIME
     window_id = Repla::Test::Helper.window_id
@@ -47,7 +47,7 @@ class TestServerNoEnv < Minitest::Test
 
   def test_server
     javascript = File.read(Repla::Test::TITLE_JAVASCRIPT_FILE)
-    @window.load_file(Repla::Test::INDEX_HTML_FILE)
+    @window.load_url(Repla::Test::INDEX_HTML_URL)
     result = @window.do_javascript(javascript)
     assert_equal(result, Repla::Test::INDEX_HTML_TITLE)
   end
@@ -58,7 +58,7 @@ class TestServerPathAndArg < Minitest::Test
   def setup
     @pid = spawn(SERVER_BUNDLE_COMMAND,
                  SERVER_COMMAND_ARG,
-                 TEST_SERVER_PATH_ENV)
+                 TEST_SERVER_COMMAND_PATH_ENV)
     sleep Repla::Test::TEST_PAUSE_TIME
     window_id = Repla::Test::Helper.window_id
     @window = Repla::Window.new(window_id)
@@ -71,7 +71,7 @@ class TestServerPathAndArg < Minitest::Test
 
   def test_server
     javascript = File.read(Repla::Test::TITLE_JAVASCRIPT_FILE)
-    @window.load_file(Repla::Test::INDEX_HTML_FILE)
+    @window.load_url(Repla::Test::INDEX_HTML_URL)
     result = @window.do_javascript(javascript)
     assert_equal(result, Repla::Test::INDEX_HTML_TITLE)
   end

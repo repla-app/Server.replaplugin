@@ -114,7 +114,7 @@ class TestServer < Minitest::Test
     @parent_logger = Repla::Server::ParentLogger.new
     @parent_logger.logger.show
     @window = Repla::Window.new(@parent_logger.logger.window_id)
-    @parent = Repla::Server::Parent.new(SERVER_PATH,
+    @parent = Repla::Server::Parent.new(SERVER_COMMAND_PATH,
                                         TEST_SERVER_ENV,
                                         @parent_logger)
     Thread.new do
@@ -130,8 +130,7 @@ class TestServer < Minitest::Test
 
   def test_server
     javascript = File.read(Repla::Test::TITLE_JAVASCRIPT_FILE)
-
-    @window.load_file(Repla::Test::INDEX_HTML_FILE)
+    @window.load_url(Repla::Test::INDEX_HTML_URL)
     result = @window.do_javascript(javascript)
     assert_equal(result, Repla::Test::INDEX_HTML_TITLE)
   end
@@ -144,7 +143,7 @@ class TestServerPathAndArg < Minitest::Test
     @parent_logger.logger.show
     @window = Repla::Window.new(@parent_logger.logger.window_id)
     @parent = Repla::Server::Parent.new(SERVER_COMMAND_ARG,
-                                        TEST_SERVER_PATH_ENV,
+                                        TEST_SERVER_COMMAND_PATH_ENV,
                                         @parent_logger)
     Thread.new do
       @parent.run
@@ -160,7 +159,7 @@ class TestServerPathAndArg < Minitest::Test
   def test_server_path_and_arg
     javascript = File.read(Repla::Test::TITLE_JAVASCRIPT_FILE)
 
-    @window.load_file(Repla::Test::INDEX_HTML_FILE)
+    @window.load_url(Repla::Test::INDEX_HTML_URL)
     result = @window.do_javascript(javascript)
     assert_equal(result, Repla::Test::INDEX_HTML_TITLE)
   end

@@ -7,6 +7,9 @@ module Repla
     ERROR_PREFIX = 'ERROR '.freeze
     LOG_PLUGIN_NAME = 'Log'.freeze
 
+    def initialize
+      @mutex = Mutex.new
+    end
     # Toggle
 
     SHOW_LOG_SCRIPT = File.join(APPLESCRIPT_DIRECTORY, 'show_log.scpt')
@@ -48,12 +51,16 @@ module Repla
     end
 
     def view_id
-      @view_id ||= Repla.split_id_in_window(window_id, LOG_PLUGIN_NAME)
-      return @view_id unless @view_id.nil?
+      view_id = nil
+      @mutex.synchronize do
+        @view_id ||= Repla.split_id_in_window(window_id, LOG_PLUGIN_NAME)
+        return @view_id unless @view_id.nil?
 
-      @view_id = Repla.split_id_in_window_last(window_id)
-      Repla.run_plugin_in_split(LOG_PLUGIN_NAME, window_id, @view_id)
-      @view_id
+        @view_id = Repla.split_id_in_window_last(window_id)
+        Repla.run_plugin_in_split(LOG_PLUGIN_NAME, window_id, @view_id)
+        view_id = @view_id
+      end
+      view_id
     end
 
     private

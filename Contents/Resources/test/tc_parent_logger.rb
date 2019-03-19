@@ -51,7 +51,7 @@ class TestParentLoggerClass < Minitest::Test
       @failed = false
     end
 
-    def load_url(_url)
+    def load_url(_url, _options = {})
       @failed = true if @called
       @called = true
     end
@@ -130,7 +130,7 @@ class TestServer < Minitest::Test
 
   def test_server
     javascript = File.read(Repla::Test::TITLE_JAVASCRIPT_FILE)
-    @window.load_url(Repla::Test::INDEX_HTML_URL)
+    @window.load_url(Repla::Test::INDEX_HTML_URL, should_clear_cache: true)
     result = @window.do_javascript(javascript)
     assert_equal(result, Repla::Test::INDEX_HTML_TITLE)
   end
@@ -159,7 +159,7 @@ class TestServerPathAndArg < Minitest::Test
   def test_server_path_and_arg
     javascript = File.read(Repla::Test::TITLE_JAVASCRIPT_FILE)
 
-    @window.load_url(Repla::Test::INDEX_HTML_URL)
+    @window.load_url(Repla::Test::INDEX_HTML_URL, should_clear_cache: true)
     result = @window.do_javascript(javascript)
     assert_equal(result, Repla::Test::INDEX_HTML_TITLE)
   end

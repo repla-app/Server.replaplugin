@@ -18,7 +18,7 @@ module Repla
       def process_output(text)
         url = self.class.url_from_line(text)
         if !url.nil? && !@loaded_url
-          @view.load_url(url)
+          @view.load_url(url, should_clear_cache: true)
           @loaded_url = true
         end
         @logger.info(text)
@@ -27,7 +27,7 @@ module Repla
       def process_error(text)
         url = self.class.url_from_line(text)
         if !url.nil? && !@loaded_url
-          @view.load_url(url)
+          @view.load_url(url, should_clear_cache: true)
           @loaded_url = true
         end
         @logger.error(text)

@@ -90,8 +90,11 @@ class TestLogger < Minitest::Test
     # Message
     message = TEST_ENV_VALUE
     @parent_logger.process_output(message)
-    sleep Repla::Test::TEST_PAUSE_TIME
-    last = @test_log_helper.last_log_message
+    last = nil
+    Repla::Test.block_until do
+      last = @test_log_helper.last_log_message
+      last == message
+    end
     assert_equal(message, last)
     test_class = @test_log_helper.last_log_class
     assert_equal('message', test_class)
@@ -100,8 +103,11 @@ class TestLogger < Minitest::Test
     error = TEST_ENV_VALUE_TWO
     refute_equal(message, error)
     @parent_logger.process_error(error)
-    sleep Repla::Test::TEST_PAUSE_TIME
-    last = @test_log_helper.last_log_message
+    last = nil
+    Repla::Test.block_until do
+      last = @test_log_helper.last_log_message
+      last == error
+    end
     assert_equal(error, last)
     test_class = @test_log_helper.last_log_class
     assert_equal('error', test_class)

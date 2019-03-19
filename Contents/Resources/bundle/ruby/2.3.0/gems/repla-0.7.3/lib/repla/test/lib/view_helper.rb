@@ -40,7 +40,7 @@ module Repla
 
         url = Repla::Test.html_server_url(filename)
         view = view_class.new(window_id)
-        view.load_url(url)
+        view.load_url(url, should_clear_cache: true)
         view
       end
     end

@@ -30,11 +30,8 @@ class TestParent < Minitest::Test
       end
     end
     parent.run
-    count = 0
-    until (output_count == test_output_count &&
-        error_count == test_error_count) || count > 4
-      sleep(1)
-      count += 1
+    Repla::Test.block_until do
+      output_count == test_output_count && error_count == test_error_count
     end
     assert_equal(test_output_count, output_count)
     assert_equal(test_error_count, error_count)
@@ -68,11 +65,8 @@ class TestParent < Minitest::Test
       error_called = true
     end
     parent.run
-    count = 0
-    until (output_count == test_output_count &&
-        argument_output_success) || count > 4
-      sleep(1)
-      count += 1
+    Repla::Test.block_until do
+      output_count == test_output_count && argument_output_success
     end
     refute(error_called)
     assert_equal(test_output_count, output_count)

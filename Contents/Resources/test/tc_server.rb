@@ -42,8 +42,11 @@ class TestServerNoEnv < Minitest::Test
     @pid = spawn(SERVER_BUNDLE_COMMAND,
                  SERVER_COMMAND_PATH,
                  chdir: SERVER_ROOT)
-    sleep Repla::Test::TEST_PAUSE_TIME
-    window_id = Repla::Test::Helper.window_id
+    window_id = nil
+    Repla::Test.block_until do
+      window_id = Repla::Test::Helper.window_id
+      !window_id.nil?
+    end
     refute_nil(window_id)
     @window = Repla::Window.new(window_id)
   end
@@ -55,9 +58,12 @@ class TestServerNoEnv < Minitest::Test
 
   def test_server_no_env
     javascript = File.read(Repla::Test::TITLE_JAVASCRIPT_FILE)
-    @window.load_url(Repla::Test::INDEX_HTML_URL, should_clear_cache: true)
-    result = @window.do_javascript(javascript)
-    assert_equal(result, Repla::Test::INDEX_HTML_TITLE)
+    result = nil
+    Repla::Test.block_until do
+      result = @window.do_javascript(javascript)
+      result == Repla::Test::INDEX_HTML_TITLE
+    end
+    assert_equal(Repla::Test::INDEX_HTML_TITLE, result)
   end
 end
 
@@ -67,8 +73,11 @@ class TestServerPathAndArg < Minitest::Test
     @pid = spawn(SERVER_BUNDLE_COMMAND,
                  SERVER_COMMAND_ARG,
                  TEST_SERVER_COMMAND_PATH_ENV)
-    sleep Repla::Test::TEST_PAUSE_TIME
-    window_id = Repla::Test::Helper.window_id
+    window_id = nil
+    Repla::Test.block_until do
+      window_id = Repla::Test::Helper.window_id
+      !window_id.nil?
+    end
     refute_nil(window_id)
     @window = Repla::Window.new(window_id)
   end
@@ -80,8 +89,11 @@ class TestServerPathAndArg < Minitest::Test
 
   def test_server_path_and_arg
     javascript = File.read(Repla::Test::TITLE_JAVASCRIPT_FILE)
-    @window.load_url(Repla::Test::INDEX_HTML_URL, should_clear_cache: true)
-    result = @window.do_javascript(javascript)
-    assert_equal(result, Repla::Test::INDEX_HTML_TITLE)
+    result = nil
+    Repla::Test.block_until do
+      result = @window.do_javascript(javascript)
+      result == Repla::Test::INDEX_HTML_TITLE
+    end
+    assert_equal(Repla::Test::INDEX_HTML_TITLE, result)
   end
 end

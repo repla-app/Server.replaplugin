@@ -13,6 +13,7 @@ class TestServer < Minitest::Test
     @pid = spawn(SERVER_BUNDLE_COMMAND, SERVER_COMMAND_PATH, TEST_SERVER_ENV)
     sleep Repla::Test::TEST_PAUSE_TIME
     window_id = Repla::Test::Helper.window_id
+    refute_nil(window_id)
     @window = Repla::Window.new(window_id)
   end
 
@@ -25,7 +26,7 @@ class TestServer < Minitest::Test
     javascript = File.read(Repla::Test::TITLE_JAVASCRIPT_FILE)
     @window.load_url(Repla::Test::INDEX_HTML_URL, should_clear_cache: true)
     result = @window.do_javascript(javascript)
-    assert_equal(result, Repla::Test::INDEX_HTML_TITLE)
+    assert_equal(Repla::Test::INDEX_HTML_TITLE, result)
   end
 end
 
@@ -37,6 +38,7 @@ class TestServerNoEnv < Minitest::Test
                  chdir: SERVER_ROOT)
     sleep Repla::Test::TEST_PAUSE_TIME
     window_id = Repla::Test::Helper.window_id
+    refute_nil(window_id)
     @window = Repla::Window.new(window_id)
   end
 
@@ -45,7 +47,7 @@ class TestServerNoEnv < Minitest::Test
     Process.kill(:INT, @pid)
   end
 
-  def test_server
+  def test_server_no_env
     javascript = File.read(Repla::Test::TITLE_JAVASCRIPT_FILE)
     @window.load_url(Repla::Test::INDEX_HTML_URL, should_clear_cache: true)
     result = @window.do_javascript(javascript)
@@ -61,6 +63,7 @@ class TestServerPathAndArg < Minitest::Test
                  TEST_SERVER_COMMAND_PATH_ENV)
     sleep Repla::Test::TEST_PAUSE_TIME
     window_id = Repla::Test::Helper.window_id
+    refute_nil(window_id)
     @window = Repla::Window.new(window_id)
   end
 
@@ -69,7 +72,7 @@ class TestServerPathAndArg < Minitest::Test
     Process.kill(:INT, @pid)
   end
 
-  def test_server
+  def test_server_path_and_arg
     javascript = File.read(Repla::Test::TITLE_JAVASCRIPT_FILE)
     @window.load_url(Repla::Test::INDEX_HTML_URL, should_clear_cache: true)
     result = @window.do_javascript(javascript)

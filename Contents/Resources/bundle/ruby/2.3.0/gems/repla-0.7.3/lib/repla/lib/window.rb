@@ -35,9 +35,17 @@ module Repla
     end
 
     LOAD_URL_SCRIPT = File.join(APPLESCRIPT_DIRECTORY, 'load_url.scpt')
-    def load_url(file)
-      arguments = [file]
-      script = LOAD_URL_SCRIPT
+    LOAD_URL_CACHE_SCRIPT = File.join(APPLESCRIPT_DIRECTORY,
+                                      'load_url_clearing_cache.scpt')
+    def load_url(url, options = {})
+      arguments = [url]
+      should_clear_cache = options[:should_clear_cache]
+      script = if should_clear_cache.nil?
+                 LOAD_URL_SCRIPT
+               else
+                 arguments.push(should_clear_cache)
+                 LOAD_URL_CACHE_SCRIPT
+               end
       run_script(script, arguments)
     end
 

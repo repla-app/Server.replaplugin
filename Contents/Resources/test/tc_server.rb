@@ -11,8 +11,11 @@ SERVER_BUNDLE_COMMAND = File.expand_path(File.join(File.dirname(__FILE__),
 class TestServer < Minitest::Test
   def setup
     @pid = spawn(SERVER_BUNDLE_COMMAND, SERVER_COMMAND_PATH, TEST_SERVER_ENV)
-    sleep Repla::Test::TEST_PAUSE_TIME
-    window_id = Repla::Test::Helper.window_id
+    window_id = nil
+    Repla::Test.block_until do
+      window_id = Repla::Test::Helper.window_id
+      !window_id.nil?
+    end
     refute_nil(window_id)
     @window = Repla::Window.new(window_id)
   end
@@ -24,8 +27,11 @@ class TestServer < Minitest::Test
 
   def test_server
     javascript = File.read(Repla::Test::TITLE_JAVASCRIPT_FILE)
-    @window.load_url(Repla::Test::INDEX_HTML_URL, should_clear_cache: true)
-    result = @window.do_javascript(javascript)
+    result = nil
+    Repla::Test.block_until do
+      result = @window.do_javascript(javascript)
+      result == Repla::Test::INDEX_HTML_TITLE
+    end
     assert_equal(Repla::Test::INDEX_HTML_TITLE, result)
   end
 end

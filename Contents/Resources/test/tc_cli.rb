@@ -4,6 +4,7 @@ require 'minitest/autorun'
 
 require_relative 'lib/test_setup'
 require 'repla'
+require Repla::Test::LOG_HELPER_FILE
 
 # Test CLI
 class TestCLI < Minitest::Test
@@ -28,11 +29,21 @@ class TestCLI < Minitest::Test
     server_command = "#{SERVER_COMMAND_PATH} #{SERVER_ROOT}"
     command = "#{SYMLINK_DST} server "\
       "#{Shellwords.escape(server_command)}"
-    # puts "command = #{command}"
     `#{command}`
-    # Repla::Test.block_until do
-    #   window_id = Repla::Test::Helper.window_id
-    #   !window_id.nil?
-    # end
+    window_id = nil
+    Repla::Test.block_until do
+      window_id = Repla::Test::Helper.window_id
+      !window_id.nil?
+    end
+    refute_nil(window_id)
+    window = Repla::Window.new(window_id)
+    javascript = File.read(Repla::Test::TITLE_JAVASCRIPT_FILE)
+    result = nil
+    Repla::Test.block_until do
+      result = window.do_javascript(javascript)
+      result == Repla::Test::INDEX_HTML_TITLE
+    end
+    assert_equal(Repla::Test::INDEX_HTML_TITLE, result)
+    window.close
   end
 end

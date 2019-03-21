@@ -25,13 +25,14 @@ class TestCLI < Minitest::Test
   end
 
   def test_cli
+    server_command = "#{SERVER_COMMAND_PATH} #{SERVER_ROOT}"
     command = "#{SYMLINK_DST} server "\
-      "#{SERVER_COMMAND_PATH} "\
-      "#{SERVER_ROOT}"
-      # Repla::Test.block_until do
-      #   window_id = Repla::Test::Helper.window_id
-      #   !window_id.nil?
-      # end
-    puts "command = #{command}"
+      "#{Shellwords.escape(server_command)}"
+    # puts "command = #{command}"
+    `#{command}`
+    # Repla::Test.block_until do
+    #   window_id = Repla::Test::Helper.window_id
+    #   !window_id.nil?
+    # end
   end
 end

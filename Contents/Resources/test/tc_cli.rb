@@ -3,13 +3,15 @@
 require 'minitest/autorun'
 
 require_relative 'lib/test_setup'
-require Repla::Test::HELPER_FILE
+require 'repla'
 
 # Test CLI
 class TestCLI < Minitest::Test
   SYMLINK_DST = File.join(__dir__, 'repla')
   CLI_PATH_COMPONENT = 'Contents/Resources/Scripts/repla'.freeze
+  PLUGIN_ROOT = File.join(__dir__, '../../../')
   def setup
+    Repla.load_plugin(PLUGIN_ROOT)
     bundle_command = 'osascript -e \'POSIX path of '\
     '(path to application "Repla")\''
     app_bundle_path = `#{bundle_command}`

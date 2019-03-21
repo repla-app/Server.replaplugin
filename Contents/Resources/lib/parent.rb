@@ -7,7 +7,7 @@ module Repla
   module Server
     # Parent
     class Parent
-      COMMAND_FILE = File.join(File.dirname(__FILE__), '../data/command.sh')
+      COMMAND_FILE = File.join(__dir__, '../data/command.sh')
       def initialize(command, environment, delegate)
         @delegate = delegate
         @command = if environment.nil?

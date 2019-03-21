@@ -2,7 +2,7 @@ require_relative '../../bundle/bundler/setup'
 require 'repla/test'
 require 'Shellwords'
 
-TEST_DATA_DIR = File.join(File.dirname(__FILE__), '../data/')
+TEST_DATA_DIR = File.join(__dir__, '../data/')
 PRINT_VARIABLE_PATH = File.expand_path(File.join(TEST_DATA_DIR,
                                                  'print_variable.sh'))
 PRINT_VARIABLE_NO_ERROR_PATH = File.expand_path(File.join(TEST_DATA_DIR,

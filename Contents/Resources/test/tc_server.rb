@@ -4,7 +4,7 @@ require 'minitest/autorun'
 require_relative 'lib/test_setup'
 require Repla::Test::LOG_HELPER_FILE
 
-SERVER_BUNDLE_COMMAND = File.expand_path(File.join(File.dirname(__FILE__),
+SERVER_BUNDLE_COMMAND = File.expand_path(File.join(__dir__,
                                                    '../server.rb'))
 
 # Test server

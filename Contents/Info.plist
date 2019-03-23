@@ -10,5 +10,7 @@
 	<string>3A160EAD-B4A6-4DE7-9DF4-57AED7FDA0B5</string>
 	<key>WCEditable</key>
 	<integer>0</integer>
+	<key>WCLAutoShowLog</key>
+	<integer>1</integer>
 </dict>
 </plist>

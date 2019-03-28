@@ -1,6 +1,6 @@
 require_relative '../bundle/bundler/setup'
 require 'repla'
-require 'repla/logger'
+require_relative 'putter'
 
 # Repla
 module Repla
@@ -10,8 +10,11 @@ module Repla
       attr_reader :logger
 
       def initialize(logger = nil, view = nil)
-        @logger = logger || Repla::Logger.new
-        @view = view || Repla::View.new(@logger.window_id)
+        raise unless (logger.nil? && view.nil?) ||
+                     (!logger.nil? && !view.nil?)
+
+        @logger = logger || Repla::Server::Putter.new
+        @view = view || Repla::View.new
         @loaded_url = false
       end
 

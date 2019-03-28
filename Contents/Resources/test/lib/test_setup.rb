@@ -1,5 +1,6 @@
 require_relative '../../bundle/bundler/setup'
 require 'repla/test'
+require 'repla/logger'
 require 'Shellwords'
 
 TEST_DATA_DIR = File.join(__dir__, '../data/')

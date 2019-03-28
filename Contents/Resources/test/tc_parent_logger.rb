@@ -146,9 +146,10 @@ end
 # Test server path
 class TestServerPathAndArg < Minitest::Test
   def setup
-    @parent_logger = Repla::Server::ParentLogger.new
-    @parent_logger.logger.show
-    @window = Repla::Window.new(@parent_logger.logger.window_id)
+    logger = Repla::Logger.new
+    @view = Repla::View.new(logger.window_id)
+    @parent_logger = Repla::Server::ParentLogger.new(logger, @view)
+    logger.show
     @parent = Repla::Server::Parent.new(SERVER_COMMAND_ARG,
                                         TEST_SERVER_COMMAND_PATH_ENV,
                                         @parent_logger)
@@ -159,15 +160,15 @@ class TestServerPathAndArg < Minitest::Test
   end
 
   def teardown
-    @window.close
+    @view.close
     @parent.stop
   end
 
   def test_server_path_and_arg
     javascript = File.read(Repla::Test::TITLE_JAVASCRIPT_FILE)
 
-    @window.load_url(Repla::Test::INDEX_HTML_URL, should_clear_cache: true)
-    result = @window.do_javascript(javascript)
+    @view.load_url(Repla::Test::INDEX_HTML_URL, should_clear_cache: true)
+    result = @view.do_javascript(javascript)
     assert_equal(result, Repla::Test::INDEX_HTML_TITLE)
   end
 end

@@ -34,6 +34,12 @@ class TestParentLoggerClass < Minitest::Test
     url = Repla::Server::ParentLogger.send(:url_from_line,
                                            line_with_real_example_url)
     assert_equal(real_example_url, url)
+
+    real_example_url_two = 'http://localhost:8888/?token=dd9490c690046'
+    line_with_real_example_url_two = "Server address: #{real_example_url_two}"
+    url = Repla::Server::ParentLogger.send(:url_from_line,
+                                           line_with_real_example_url_two)
+    assert_equal(real_example_url_two, url)
   end
 
   # Mock logger

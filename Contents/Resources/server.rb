@@ -1,4 +1,4 @@
-#!/System/Library/Frameworks/Ruby.framework/Versions/2.3/usr/bin/ruby
+#!/usr/bin/script -q /dev/null /System/Library/Frameworks/Ruby.framework/Versions/2.3/usr/bin/ruby
 
 require 'Shellwords'
 

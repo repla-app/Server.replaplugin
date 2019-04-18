@@ -4,6 +4,7 @@ module Repla
     class Putter
       def info(text)
         puts text
+        STDOUT.flush
       end
 
       def error(text)

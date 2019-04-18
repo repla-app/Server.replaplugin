@@ -40,6 +40,13 @@ class TestParentLoggerClass < Minitest::Test
     url = Repla::Server::ParentLogger.send(:url_from_line,
                                            line_with_real_example_url_two)
     assert_equal(real_example_url_two, url)
+
+    rails_token = 'tcp://localhost:3000'
+    rails_url = 'http://localhost:3000'
+    line_with_rails_token = "Server address: #{rails_token}"
+    url = Repla::Server::ParentLogger.send(:url_from_line,
+                                           line_with_rails_token)
+    assert_equal(rails_url, url)
   end
 
   # Mock logger

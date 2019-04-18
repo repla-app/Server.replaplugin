@@ -41,7 +41,13 @@ module Repla
       def self.url_from_line(line)
         # This is more correct, but it makes has false positives for our use
         # case like `address:` line[URI::DEFAULT_PARSER.make_regexp]
-        line[Regexp.new(%r{https?://[\S]+})]
+        result = line[Regexp.new(%r{https?://[\S]+})]
+        return result unless result.nil?
+
+        result = line[Regexp.new(%r{tcp://[\S]+})]
+        return nil if result.nil?
+
+        result.gsub(/^tcp/, 'http')
       end
     end
   end

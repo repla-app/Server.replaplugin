@@ -13,7 +13,7 @@ class TestCLI < Minitest::Test
   PLUGIN_ROOT = File.join(__dir__, '../../../')
   def setup
     Repla.load_plugin(PLUGIN_ROOT)
-    bundle_command = 'osascript -e \'POSIX path of '\
+    bundle_command = '/usr/bin/osascript -e \'POSIX path of '\
     '(path to application "Repla")\''
     app_bundle_path = `#{bundle_command}`
     app_bundle_path.chomp!

@@ -10,7 +10,7 @@ class TestParent < Minitest::Test
   TEST_OUTPUT_COUNT = 40
   def test_parent
     delegate = ParentDelegate.new
-    Repla::Test::Helper.add_env(TEST_ENV)
+    restore = Repla::Test::Helper.add_env(TEST_ENV)
     parent = Repla::Server::Parent.new(PRINT_VARIABLE_PATH, delegate)
     test_output_count = TEST_OUTPUT_COUNT
     output_count = 0
@@ -36,14 +36,14 @@ class TestParent < Minitest::Test
     end
     assert_equal(test_output_count, output_count)
     assert_equal(test_error_count, error_count)
-    Repla::Test::Helper.remove_env(TEST_ENV)
+    Repla::Test::Helper.remove_env(TEST_ENV, restore)
   end
 
   def test_parent_real_env
     delegate = ParentDelegate.new
     argument_output = 'the first line'
     command = "#{PRINT_VARIABLE_NO_ERROR_PATH} #{argument_output}"
-    Repla::Test::Helper.add_env(TEST_REAL_ENV)
+    restore = Repla::Test::Helper.add_env(TEST_REAL_ENV)
     parent = Repla::Server::Parent.new(command, delegate)
     test_output_count = TEST_OUTPUT_COUNT
     argument_output_success = false
@@ -71,6 +71,6 @@ class TestParent < Minitest::Test
     end
     refute(error_called)
     assert_equal(test_output_count, output_count)
-    Repla::Test::Helper.remove_env(TEST_REAL_ENV)
+    Repla::Test::Helper.remove_env(TEST_REAL_ENV, restore)
   end
 end

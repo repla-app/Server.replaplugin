@@ -32,18 +32,22 @@ module Repla
     # Helper
     module Helper
       def self.add_env(env)
+        restore = {}
         env.each_line do |line|
           line.chomp!
           key, value = line.split('=', 2)
+          restore[key] = ENV[key] if ENV.key?(key)
           ENV[key] = value
         end
+        restore
       end
 
-      def self.remove_env(env)
+      def self.remove_env(env, restore = {})
         env.each_line do |line|
           line.chomp!
           key, _value = line.split('=', 2)
           ENV.delete(key)
+          ENV[key] = restore[key] if restore.key?(key)
         end
       end
     end

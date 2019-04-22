@@ -26,3 +26,26 @@ TEST_ENV = "#{TEST_ENV_KEY}=#{TEST_ENV_VALUE}\n"\
   "#{TEST_ENV_KEY_TWO}=#{TEST_ENV_VALUE_TWO}\n".freeze
 TEST_REAL_ENV = File.read(File.join(TEST_DATA_DIR, 'real_env.txt'))
 TEST_REAL_VALUE = 'CHANGEDfd --type d --hidden --exclude .git'.freeze
+
+module Repla
+  module Test
+    # Helper
+    module Helper
+      def self.setup_env(env)
+        env.each_line do |line|
+          line.chomp!
+          key, value = line.split('=', 2)
+          ENV[key] = value
+        end
+      end
+
+      def self.remove_env(env)
+        env.each_line do |line|
+          line.chomp!
+          key, _value = line.split('=', 2)
+          ENV.delete(key)
+        end
+      end
+    end
+  end
+end

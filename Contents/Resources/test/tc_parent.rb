@@ -10,7 +10,8 @@ class TestParent < Minitest::Test
   TEST_OUTPUT_COUNT = 40
   def test_parent
     delegate = ParentDelegate.new
-    parent = Repla::Server::Parent.new(PRINT_VARIABLE_PATH, TEST_ENV, delegate)
+    # TODO: Setup `TEST_ENV` here
+    parent = Repla::Server::Parent.new(PRINT_VARIABLE_PATH, delegate)
     test_output_count = TEST_OUTPUT_COUNT
     output_count = 0
     (1..test_output_count).each do |_|
@@ -41,9 +42,8 @@ class TestParent < Minitest::Test
     delegate = ParentDelegate.new
     argument_output = 'the first line'
     command = "#{PRINT_VARIABLE_NO_ERROR_PATH} #{argument_output}"
-    parent = Repla::Server::Parent.new(command,
-                                       TEST_REAL_ENV,
-                                       delegate)
+    # TODO: Setup `TEST_REAL_ENV` here
+    parent = Repla::Server::Parent.new(command, delegate)
     test_output_count = TEST_OUTPUT_COUNT
     argument_output_success = false
     delegate.add_process_output_block do |text|

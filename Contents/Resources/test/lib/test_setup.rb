@@ -31,7 +31,7 @@ module Repla
   module Test
     # Helper
     module Helper
-      def self.setup_env(env)
+      def self.add_env(env)
         env.each_line do |line|
           line.chomp!
           key, value = line.split('=', 2)

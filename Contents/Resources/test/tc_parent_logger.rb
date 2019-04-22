@@ -134,7 +134,7 @@ class TestServer < Minitest::Test
     @view = Repla::View.new(logger.window_id)
     @parent_logger = Repla::Server::ParentLogger.new(logger, @view)
     logger.show
-    # TODO: Setup `TEST_SERVER_ENV` here
+    Repla::Test::Helper.add_env(TEST_SERVER_ENV)
     @parent = Repla::Server::Parent.new(SERVER_COMMAND_PATH,
                                         @parent_logger)
     Thread.new do
@@ -144,6 +144,7 @@ class TestServer < Minitest::Test
   end
 
   def teardown
+    Repla::Test::Helper.remove_env(TEST_SERVER_ENV)
     @view.close
     @parent.stop
   end
@@ -163,7 +164,7 @@ class TestServerPathAndArg < Minitest::Test
     @view = Repla::View.new(logger.window_id)
     @parent_logger = Repla::Server::ParentLogger.new(logger, @view)
     logger.show
-    # TODO: Setup `TEST_SERVER_COMMAND_PATH_ENV` here
+    Repla::Test::Helper.add_env(TEST_SERVER_COMMAND_PATH_ENV)
     @parent = Repla::Server::Parent.new(SERVER_COMMAND_ARG,
                                         @parent_logger)
     Thread.new do
@@ -173,6 +174,7 @@ class TestServerPathAndArg < Minitest::Test
   end
 
   def teardown
+    Repla::Test::Helper.remove_env(TEST_SERVER_COMMAND_PATH_ENV)
     @view.close
     @parent.stop
   end

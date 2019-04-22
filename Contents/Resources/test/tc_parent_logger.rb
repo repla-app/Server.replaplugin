@@ -151,8 +151,12 @@ class TestServer < Minitest::Test
 
   def test_server
     javascript = File.read(Repla::Test::TITLE_JAVASCRIPT_FILE)
-    @view.load_url(Repla::Test::INDEX_HTML_URL, should_clear_cache: true)
-    result = @view.do_javascript(javascript)
+    result = nil
+    Repla::Test.block_until do
+      @view.load_url(Repla::Test::INDEX_HTML_URL, should_clear_cache: true)
+      result = @view.do_javascript(javascript)
+      result == Repla::Test::INDEX_HTML_TITLE
+    end
     assert_equal(result, Repla::Test::INDEX_HTML_TITLE)
   end
 end
@@ -184,6 +188,6 @@ class TestServerPathAndArg < Minitest::Test
 
     @view.load_url(Repla::Test::INDEX_HTML_URL, should_clear_cache: true)
     result = @view.do_javascript(javascript)
-    assert_equal(result, Repla::Test::INDEX_HTML_TITLE)
+    assert_equal(Repla::Test::INDEX_HTML_TITLE, result)
   end
 end

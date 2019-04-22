@@ -10,7 +10,8 @@ SERVER_BUNDLE_COMMAND = File.expand_path(File.join(__dir__,
 # Test server
 class TestServer < Minitest::Test
   def setup
-    @pid = spawn(SERVER_BUNDLE_COMMAND, SERVER_COMMAND_PATH, TEST_SERVER_ENV)
+    @restore = Repla::Test::Helper.add_env(TEST_SERVER_ENV)
+    @pid = spawn(SERVER_BUNDLE_COMMAND, SERVER_COMMAND_PATH)
     window_id = nil
     Repla::Test.block_until do
       window_id = Repla::Test::Helper.window_id
@@ -21,6 +22,7 @@ class TestServer < Minitest::Test
   end
 
   def teardown
+    Repla::Test::Helper.remove_env(TEST_SERVER_ENV, @restore)
     @window.close
     Process.kill(:INT, @pid)
   end

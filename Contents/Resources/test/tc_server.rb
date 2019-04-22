@@ -72,6 +72,7 @@ end
 # Test server path and arg
 class TestServerPathAndArg < Minitest::Test
   def setup
+    @restore = Repla::Test::Helper.add_env(TEST_SERVER_COMMAND_PATH_ENV)
     @pid = spawn(SERVER_BUNDLE_COMMAND,
                  SERVER_COMMAND_ARG,
                  TEST_SERVER_COMMAND_PATH_ENV)
@@ -85,6 +86,7 @@ class TestServerPathAndArg < Minitest::Test
   end
 
   def teardown
+    Repla::Test::Helper.remove_env(TEST_SERVER_COMMAND_PATH_ENV, @restore)
     @window.close
     Process.kill(:INT, @pid)
   end

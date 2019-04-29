@@ -49,6 +49,15 @@ class TestParentLoggerClass < Minitest::Test
     assert_equal(rails_url, url)
   end
 
+  def test_port_url_from_line
+    port_token = 'Port 3131'
+    port_url = 'http://localhost:3131'
+    line_with_port_token = "Server address: #{port_token}"
+    url = Repla::Server::ParentLogger.send(:url_from_line,
+                                           line_with_port_token)
+    assert_equal(port_url, url)
+  end
+
   # Mock logger
   class MockLogger
     def error(text); end

@@ -94,4 +94,11 @@ class TestParent < Minitest::Test
       Repla::Test::Helper.remove_env(TEST_REAL_ENV, restore)
     end
   end
+
+  def test_escape
+    with_escape = File.read(TEST_ESCAPE_FILE)
+    result = Repla::Server::Parent.remove_escape(with_escape)
+    without_escape = `cat #{TEST_ESCAPE_FILE} | sed "s,\x1B\[[0-9;]*[a-zA-Z],,g"`
+    assert_equal(without_escape, result)
+  end
 end

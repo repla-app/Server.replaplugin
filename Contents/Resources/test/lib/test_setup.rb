@@ -27,6 +27,8 @@ TEST_ENV = "#{TEST_ENV_KEY}=#{TEST_ENV_VALUE}\n"\
   "#{TEST_ENV_KEY_TWO}=#{TEST_ENV_VALUE_TWO}\n".freeze
 TEST_REAL_ENV = File.read(File.join(TEST_DATA_DIR, 'real_env.txt'))
 TEST_REAL_VALUE = 'CHANGEDfd --type d --hidden --exclude .git'.freeze
+TEST_ESCAPE_FILE = File.join(TEST_DATA_DIR,
+                             'output_with_escapes.txt')
 
 module Repla
   module Test

@@ -28,7 +28,7 @@ module Repla
           output_thread = Thread.new do
             stdout.each do |line|
               # Strip escape sequences
-              line.gsub!(/\e\[\d*m/, '')
+              line = self.class.remove_escape(line)
               @delegate.process_output(line) unless @delegate.nil?
             end
           end
@@ -70,6 +70,10 @@ module Repla
           output_thread.join
           error_thread.join
         end
+      end
+
+      def self.remove_escape(text)
+        text.gsub(/\e\[\d*m/, '')
       end
 
       def stop

@@ -18,5 +18,4 @@ Quit the server with CONTROL-C.
 [29/Apr/2019 19:19:21] [m"GET /static/admin/fonts/Roboto-Regular-webfont.woff HTTP/1.1" 200 85876[0m
 [29/Apr/2019 19:19:21] [m"GET /static/admin/fonts/Roboto-Bold-webfont.woff HTTP/1.1" 200 86184[0m
 [29/Apr/2019 19:19:23] [m"GET / HTTP/1.1" 200 16348[0m
-^C
 Script done on Mon Apr 29 15:19:27 2019

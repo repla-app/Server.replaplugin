@@ -98,7 +98,7 @@ class TestParent < Minitest::Test
   def test_escape
     with_escape = File.read(TEST_ESCAPE_FILE)
     result = Repla::Server::Parent.remove_escape(with_escape)
-    without_escape = `cat #{TEST_ESCAPE_FILE} | sed "s,\x1B\[[0-9;]*[a-zA-Z],,g"`
+    without_escape = `sed "s,\x1B\[[0-9;]*[a-zA-Z],,g" < #{TEST_ESCAPE_FILE}`
     assert_equal(without_escape, result)
   end
 end

@@ -1,7 +1,5 @@
 require 'Shellwords'
 
-require 'open3'
-
 # Repla
 module Repla
   module Server
@@ -13,8 +11,41 @@ module Repla
       end
 
       def run
+        run_pty
+      end
+
+      def run_pty
         return if @command.nil?
 
+        # Using `PTY`, we lose the `STDOUT` vs. `STDERR` distinction, and we
+        # have to handle escape codes, but this seems to automatically prevent
+        # any `STDOUT` buffering issues
+        require 'pty'
+        PTY.spawn(@command) do |stdout, stdin, pid|
+          stdin.sync = true
+          stdout.sync = true
+
+          output_thread = Thread.new do
+            stdout.each do |line|
+              # Strip escape sequences
+              line.gsub!(/\e\[\d*m/, '')
+              @delegate.process_output(line) unless @delegate.nil?
+            end
+          end
+
+          @pid = pid
+          # Make sure all output gets processed before existing
+          stdout.flush
+          output_thread.join
+        end
+      end
+
+      def run_open3
+        return if @command.nil?
+
+        # Using `open3`, we get `STDERR` and escape codes are automatically
+        # removed, by this introduces `STDOUT` buffering issues.
+        require 'open3'
         Open3.popen3(@command) do |stdin, stdout, stderr, wait_thr|
           stdin.sync = true
           stdout.sync = true

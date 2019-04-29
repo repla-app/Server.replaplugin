@@ -56,6 +56,27 @@ class TestParentLoggerClass < Minitest::Test
     url = Repla::Server::ParentLogger.send(:url_from_line,
                                            line_with_port_token)
     assert_equal(port_url, url)
+
+    port_token = 'port: 3131'
+    port_url = 'http://localhost:3131'
+    line_with_port_token = "Server address: #{port_token}"
+    url = Repla::Server::ParentLogger.send(:url_from_line,
+                                           line_with_port_token)
+    assert_equal(port_url, url)
+
+    port_token = 'PORT=3131'
+    port_url = 'http://localhost:3131'
+    line_with_port_token = "Server address: #{port_token}"
+    url = Repla::Server::ParentLogger.send(:url_from_line,
+                                           line_with_port_token)
+    assert_equal(port_url, url)
+
+    port_token = 'port  3131'
+    port_url = 'http://localhost:3131'
+    line_with_port_token = "Server address: #{port_token}"
+    url = Repla::Server::ParentLogger.send(:url_from_line,
+                                           line_with_port_token)
+    assert_equal(port_url, url)
   end
 
   # Mock logger

@@ -1,0 +1,22 @@
+Script started on Mon Apr 29 15:19:11 2019
+command: python3 manage.py runserver
+Watching for file changes with StatReloader
+Performing system checks...
+
+System check identified no issues (0 silenced).
+[31m
+You have 17 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): admin, auth, contenttypes, sessions.[0m
+[31mRun 'python manage.py migrate' to apply them.
+[0m
+April 29, 2019 - 19:19:12
+Django version 2.2, using settings 'repla_test_django.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+[29/Apr/2019 19:19:21] [m"GET / HTTP/1.1" 200 16348[0m
+[29/Apr/2019 19:19:21] [m"GET /static/admin/css/fonts.css HTTP/1.1" 200 423[0m
+[29/Apr/2019 19:19:21] [36m"GET /static/admin/fonts/Roboto-Light-webfont.woff HTTP/1.1" 304 0[0m
+[29/Apr/2019 19:19:21] [m"GET /static/admin/fonts/Roboto-Regular-webfont.woff HTTP/1.1" 200 85876[0m
+[29/Apr/2019 19:19:21] [m"GET /static/admin/fonts/Roboto-Bold-webfont.woff HTTP/1.1" 200 86184[0m
+[29/Apr/2019 19:19:23] [m"GET / HTTP/1.1" 200 16348[0m
+^C
+Script done on Mon Apr 29 15:19:27 2019

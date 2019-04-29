@@ -11,6 +11,10 @@ module Repla
       end
 
       def run
+        run_pty
+      end
+
+      def run_pty
         return if @command.nil?
 
         # Using `PTY`, we lose the `STDOUT` vs. `STDERR` distinction, and we
@@ -34,34 +38,38 @@ module Repla
           stdout.flush
           output_thread.join
         end
+      end
+
+      def run_open3
+        return if @command.nil?
 
         # Using `open3`, we get `STDERR` and escape codes are automatically
         # removed, by this introduces `STDOUT` buffering issues.
-        # require 'open3'
-        # Open3.popen3(@command) do |stdin, stdout, stderr, wait_thr|
-        #   stdin.sync = true
-        #   stdout.sync = true
-        #   stderr.sync = true
+        require 'open3'
+        Open3.popen3(@command) do |stdin, stdout, stderr, wait_thr|
+          stdin.sync = true
+          stdout.sync = true
+          stderr.sync = true
 
-        #   output_thread = Thread.new do
-        #     stdout.each do |line|
-        #       @delegate.process_output(line) unless @delegate.nil?
-        #     end
-        #   end
+          output_thread = Thread.new do
+            stdout.each do |line|
+              @delegate.process_output(line) unless @delegate.nil?
+            end
+          end
 
-        #   error_thread = Thread.new do
-        #     stderr.each do |line|
-        #       @delegate.process_error(line) unless @delegate.nil?
-        #     end
-        #   end
-        #   @pid = wait_thr.pid
-        #   wait_thr.value
-        #   # Make sure all output gets processed before existing
-        #   stdout.flush
-        #   stderr.flush
-        #   output_thread.join
-        #   error_thread.join
-        # end
+          error_thread = Thread.new do
+            stderr.each do |line|
+              @delegate.process_error(line) unless @delegate.nil?
+            end
+          end
+          @pid = wait_thr.pid
+          wait_thr.value
+          # Make sure all output gets processed before existing
+          stdout.flush
+          stderr.flush
+          output_thread.join
+          error_thread.join
+        end
       end
 
       def stop

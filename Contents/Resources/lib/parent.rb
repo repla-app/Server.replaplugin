@@ -23,6 +23,8 @@ module Repla
 
           output_thread = Thread.new do
             stdout.each do |line|
+              # Strip escape sequences
+              line.gsub!(/\e\[\d*m/, '')
               @delegate.process_output(line) unless @delegate.nil?
             end
           end

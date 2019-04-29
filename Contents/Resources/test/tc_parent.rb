@@ -9,7 +9,7 @@ require_relative 'lib/test_setup'
 class TestParent < Minitest::Test
   TEST_OUTPUT_COUNT = 40
   def test_parent
-    for i in 1..2
+    (1..2).each do |i|
       delegate = ParentDelegate.new
       restore = Repla::Test::Helper.add_env(TEST_ENV)
       parent = Repla::Server::Parent.new(PRINT_VARIABLE_PATH, delegate)
@@ -23,12 +23,12 @@ class TestParent < Minitest::Test
           assert_equal(TEST_ENV_VALUE, text)
           output_count += 1
         end
-        if i == 1
-          delegate.add_process_output_block do |text|
-            text.chomp!
-            assert_equal(TEST_ENV_VALUE_TWO, text)
-            error_count += 1
-          end
+        next unless i == 1
+
+        delegate.add_process_output_block do |text|
+          text.chomp!
+          assert_equal(TEST_ENV_VALUE_TWO, text)
+          error_count += 1
         end
       end
       if i == 2
@@ -55,7 +55,7 @@ class TestParent < Minitest::Test
   end
 
   def test_parent_real_env
-    for i in 1..2
+    (1..2).each do |i|
       delegate = ParentDelegate.new
       argument_output = 'the first line'
       command = "#{PRINT_VARIABLE_NO_ERROR_PATH} #{argument_output}"

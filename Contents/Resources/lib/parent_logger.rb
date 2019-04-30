@@ -50,7 +50,7 @@ module Repla
         return result.gsub(/^tcp/, 'http') unless result.nil?
 
         # Handle Port
-        result = line[Regexp.new(/port..?(\d+)/, Regexp::IGNORECASE)]
+        result = line[Regexp.new(/Port[^\d]?[^\d]?(\d+)/, Regexp::IGNORECASE)]
         return Regexp.last_match(1) unless result.nil?
 
         nil

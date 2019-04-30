@@ -44,10 +44,16 @@ module Repla
         result = line[Regexp.new(%r{https?://[\S]+})]
         return result unless result.nil?
 
+        # Handle `tcp`
+        # Rails uses the format `tcp://localhost:3000`
         result = line[Regexp.new(%r{tcp://[\S]+})]
-        return nil if result.nil?
+        return result.gsub(/^tcp/, 'http') unless result.nil?
 
-        result.gsub(/^tcp/, 'http')
+        # Handle Port
+        result = line[Regexp.new(/port..?(\d+)/, Regexp::IGNORECASE)]
+        return Regexp.last_match(1) unless result.nil?
+
+        nil
       end
     end
   end

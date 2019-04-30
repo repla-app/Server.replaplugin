@@ -9,13 +9,19 @@ module Repla
     class ParentLogger
       attr_reader :logger
 
-      def initialize(logger = nil, view = nil)
+      def initialize(logger = nil, view = nil, options = {})
         raise unless (logger.nil? && view.nil?) ||
                      (!logger.nil? && !view.nil?)
 
         @logger = logger || Repla::Server::Putter.new
         @view = view || Repla::View.new
         @loaded_url = false
+
+        port = options[:port]
+        url = options[:url]
+        @url = get_url(url, port)
+        @string = options[:string]
+        @string_found = @string.nil?
       end
 
       def process_output(text)
@@ -36,9 +42,33 @@ module Repla
         @logger.error(text)
       end
 
+
+      def url_from_line(line)
+        # TODO: Unless `@string_found`, first test the the `line` for the string
+        string_index = self.class.find_string(line) unless @string_found
+
+        return self.class.url_from_line(line) if @url.nil?
+      end
+
+      def self.find_string(text, string)
+        nil
+      end
+
+      def self.get_url(url = nil, port = nil)
+        unless url.nil?
+          return url if port.nil?
+
+          return "#{url}:#{port}"
+        end
+
+        return "http://localhost:#{port}" unless port.nil?
+
+        nil
+      end
+
       require 'uri'
-      # `private_class_method`
-      def self.url_from_line(line)
+      def self.url_from_line(line, string = nil)
+
         # This is more correct, but it makes has false positives for our use
         # case like `address:` line[URI::DEFAULT_PARSER.make_regexp]
         result = line[Regexp.new(%r{https?://[\S]+})]

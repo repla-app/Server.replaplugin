@@ -51,7 +51,10 @@ module Repla
 
         # Handle Port
         result = line[Regexp.new(/port[^\d]?[^\d]?(\d+)/i)]
-        return Regexp.last_match(1) unless result.nil?
+        unless result.nil?
+          port = Regexp.last_match(1)
+          return "http://localhost:#{port}"
+        end
 
         nil
       end

@@ -61,7 +61,7 @@ module Repla
       end
 
       def self.find_string(text, string)
-        raise if @string.nil?
+        raise if string.nil?
 
         text.index(string)
       end

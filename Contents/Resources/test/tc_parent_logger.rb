@@ -100,7 +100,7 @@ class TestParentLoggerClass < Minitest::Test
   end
 
   def test_find_string
-    test_index = 15
+    test_index = 14
     text = 'The string is somewhere'
     string = 'some'
     index = Repla::Server::ParentLogger.find_string(text, string)

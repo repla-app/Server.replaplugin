@@ -80,6 +80,10 @@ class TestParentLoggerClass < Minitest::Test
     assert_equal('http://localhost:8888', url)
   end
 
+  # TODO: Write `test_find_string`
+  # def test_find_string
+  # end
+
   # Mock logger
   class MockLogger
     def error(text); end

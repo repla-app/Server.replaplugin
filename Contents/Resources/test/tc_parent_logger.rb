@@ -107,7 +107,7 @@ class TestParentLoggerClass < Minitest::Test
     index = Repla::Server::ParentLogger.find_string(text, string)
     assert_equal(test_index, index)
 
-    string = 'none'
+    string = 'Tnone'
     index = Repla::Server::ParentLogger.find_string(text, string)
     assert_nil(index)
 

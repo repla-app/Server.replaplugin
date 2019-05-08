@@ -42,15 +42,27 @@ module Repla
         @logger.error(text)
       end
 
-
       def url_from_line(line)
-        # TODO: Unless `@string_found`, first test the the `line` for the string
-        string_index = self.class.find_string(line) unless @string_found
+        string_index = self.class.find_string(line, @string) unless
+          @string_found
 
-        return self.class.url_from_line(line) if @url.nil?
+        unless string_index.nil?
+          @string_found = true
+          # Trim everything before the `@string` so that it isn't searched for
+          # a URL
+          line = line[string_index..-1]
+        end
+
+        return nil unless @string_found
+
+        return @url unless @url.nil?
+
+        self.class.url_from_line(line)
       end
 
       def self.find_string(text, string)
+        raise if @string.nil?
+
         nil
       end
 

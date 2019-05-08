@@ -11,41 +11,41 @@ class TestParentLoggerClass < Minitest::Test
   def test_url_from_line
     good_url = 'http://www.google.com'
     line_with_good_url = "Here is a URL #{good_url}"
-    url = Repla::Server::ParentLogger.send(:url_from_line, line_with_good_url)
+    url = Repla::Server::ParentLogger.url_from_line(line_with_good_url)
     assert_equal(good_url, url)
 
     local_url = 'http://127.0.0.1'
     line_with_local_url = "#{local_url} is a local URL"
-    url = Repla::Server::ParentLogger.send(:url_from_line, line_with_local_url)
+    url = Repla::Server::ParentLogger.url_from_line(line_with_local_url)
     assert_equal(local_url, url)
 
     line_with_no_url = 'This line doesn\'t have any URLs'
-    url = Repla::Server::ParentLogger.send(:url_from_line, line_with_no_url)
+    url = Repla::Server::ParentLogger.url_from_line(line_with_no_url)
     assert_nil(url)
 
     local_url_with_port = 'http://127.0.0.1:5000'
     line_with_local_url_with_port = "Here is a URL #{local_url_with_port}"
-    url = Repla::Server::ParentLogger.send(:url_from_line,
-                                           line_with_local_url_with_port)
+    url = Repla::Server::ParentLogger.url_from_line(
+      line_with_local_url_with_port
+    )
     assert_equal(local_url_with_port, url)
 
     real_example_url = 'http://127.0.0.1:4000/'
     line_with_real_example_url = "Server address: #{real_example_url}"
-    url = Repla::Server::ParentLogger.send(:url_from_line,
-                                           line_with_real_example_url)
+    url = Repla::Server::ParentLogger.url_from_line(line_with_real_example_url)
     assert_equal(real_example_url, url)
 
     real_example_url_two = 'http://localhost:8888/?token=dd9490c690046'
     line_with_real_example_url_two = "Server address: #{real_example_url_two}"
-    url = Repla::Server::ParentLogger.send(:url_from_line,
-                                           line_with_real_example_url_two)
+    url = Repla::Server::ParentLogger.url_from_line(
+      line_with_real_example_url_two
+    )
     assert_equal(real_example_url_two, url)
 
     rails_token = 'tcp://localhost:3000'
     rails_url = 'http://localhost:3000'
     line_with_rails_token = "Server address: #{rails_token}"
-    url = Repla::Server::ParentLogger.send(:url_from_line,
-                                           line_with_rails_token)
+    url = Repla::Server::ParentLogger.url_from_line(line_with_rails_token)
     assert_equal(rails_url, url)
   end
 

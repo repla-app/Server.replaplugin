@@ -68,13 +68,13 @@ module Repla
 
       def self.get_url(url = nil, port = nil)
         unless url.nil?
+          url.strip!
+
           return url if port.nil?
 
           return "#{url}:#{port}"
         end
 
-        # TODO: Trim whitespace around the URL
-        # TODO: Test if it starts with `https?://` and add it if not
 
         return "http://localhost:#{port}" unless port.nil?
 

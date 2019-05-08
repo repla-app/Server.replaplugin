@@ -75,7 +75,6 @@ module Repla
           return "#{url}:#{port}"
         end
 
-
         return "http://localhost:#{port}" unless port.nil?
 
         nil

@@ -99,9 +99,13 @@ class TestParentLoggerClass < Minitest::Test
     assert_equal(test_url, url)
   end
 
-  # TODO: Write `test_find_string`
-  # def test_find_string
-  # end
+  def test_find_string
+    test_index = 15
+    text = 'The string is somewhere'
+    string = 'some'
+    index = Repla::Server::ParentLogger.find_string(text, string)
+    assert_equal(test_index, index)
+  end
 
   # Mock logger
   class MockLogger

@@ -76,8 +76,20 @@ class TestParentLoggerClass < Minitest::Test
   end
 
   def test_get_url
+    test_url = 'http://localhost:8888'
+
     url = Repla::Server::ParentLogger.get_url(nil, 8888)
-    assert_equal('http://localhost:8888', url)
+    assert_equal(test_url, url)
+
+    url = Repla::Server::ParentLogger.get_url('localhost', 8888)
+    assert_equal(test_url, url)
+
+    url = Repla::Server::ParentLogger.get_url('http://localhost', 8888)
+    assert_equal(test_url, url)
+
+    test_url = 'https://localhost:8888'
+    url = Repla::Server::ParentLogger.get_url('https://localhost', 8888)
+    assert_equal(test_url, url)
   end
 
   # TODO: Write `test_find_string`

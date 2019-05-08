@@ -116,9 +116,7 @@ class TestParentLoggerClass < Minitest::Test
     index = Repla::Server::ParentLogger.find_string(text, string)
     assert_equal(test_index, index)
   end
-
 end
-
 
 # Test parent logger
 class TestParentLogger < Minitest::Test
@@ -179,9 +177,21 @@ class TestParentLogger < Minitest::Test
     parent_logger = Repla::Server::ParentLogger.new(MockLogger.new,
                                                     MockView.new,
                                                     options)
-    line_with_good_url = "A line with no URL"
-    url = parent_logger.url_from_line(line_with_good_url)
+    line_with_no_url = 'A line with no URL'
+    url = parent_logger.url_from_line(line_with_no_url)
     assert_equal(good_url, url)
+  end
+
+  def test_port
+    port = 5000
+    local_url_with_port = "http://localhost:#{port}"
+    options = { port: port }
+    parent_logger = Repla::Server::ParentLogger.new(MockLogger.new,
+                                                    MockView.new,
+                                                    options)
+    line_with_no_url = 'A line with no URL'
+    url = parent_logger.url_from_line(line_with_no_url)
+    assert_equal(local_url_with_port, url)
   end
 end
 

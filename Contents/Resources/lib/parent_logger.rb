@@ -19,7 +19,7 @@ module Repla
 
         port = options[:port]
         url = options[:url]
-        @url = get_url(url, port)
+        @url = self.class.get_url(url, port)
         @string = options[:string]
         @string_found = @string.nil?
       end

@@ -166,6 +166,11 @@ class TestParentLogger < Minitest::Test
     line_with_good_url = "Here is a URL #{good_url}"
     url = parent_logger.url_from_line(line_with_good_url)
     assert_nil(url)
+    url = parent_logger.url_from_line(line_with_good_url)
+    assert_nil(url)
+    line_with_good_url_after_string = "wait for this string#{good_url}"
+    url = parent_logger.url_from_line(line_with_good_url_after_string)
+    assert_equal(good_url, url)
   end
 end
 

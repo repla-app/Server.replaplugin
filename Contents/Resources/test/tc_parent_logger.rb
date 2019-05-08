@@ -9,7 +9,7 @@ require_relative '../lib/parent'
 # Test parent logger class
 class TestParentLoggerClass < Minitest::Test
   def test_url_from_line
-    good_url = 'http://www.google.com'
+    good_url = 'http://www.example.com'
     line_with_good_url = "Here is a URL #{good_url}"
     url = Repla::Server::ParentLogger.url_from_line(line_with_good_url)
     assert_equal(good_url, url)
@@ -117,12 +117,18 @@ class TestParentLoggerClass < Minitest::Test
     assert_equal(test_index, index)
   end
 
+end
+
+
+# Test parent logger
+class TestParentLogger
   # Mock logger
   class MockLogger
     def error(text); end
 
     def info(text); end
   end
+
   # Mock view
   class MockView
     attr_reader :failed
@@ -149,6 +155,17 @@ class TestParentLoggerClass < Minitest::Test
     line_with_local_url_with_port = "Here is a URL #{local_url_with_port}"
     parent_logger.process_output(line_with_local_url_with_port)
     assert(!mock_view.failed)
+  end
+
+  def test_string
+    options = { string: 'wait for this string' }
+    parent_logger = Repla::Server::ParentLogger.new(MockLogger.new,
+                                                    MockView.new,
+                                                    options)
+    good_url = 'http://www.example.com'
+    line_with_good_url = "Here is a URL #{good_url}"
+    url = parent_logger.url_from_line(line_with_good_url)
+    assert_nil(url)
   end
 end
 

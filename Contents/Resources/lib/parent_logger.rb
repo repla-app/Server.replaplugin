@@ -63,7 +63,7 @@ module Repla
       def self.find_string(text, string)
         raise if @string.nil?
 
-        nil
+        text.index(string)
       end
 
       def self.get_url(url = nil, port = nil)
@@ -79,8 +79,7 @@ module Repla
       end
 
       require 'uri'
-      def self.url_from_line(line, string = nil)
-
+      def self.url_from_line(line)
         # This is more correct, but it makes has false positives for our use
         # case like `address:` line[URI::DEFAULT_PARSER.make_regexp]
         result = line[Regexp.new(%r{https?://[\S]+})]

@@ -100,9 +100,19 @@ class TestParentLoggerClass < Minitest::Test
   end
 
   def test_find_string
-    test_index = 14
     text = 'The string is somewhere'
+
+    test_index = 14
     string = 'some'
+    index = Repla::Server::ParentLogger.find_string(text, string)
+    assert_equal(test_index, index)
+
+    string = 'none'
+    index = Repla::Server::ParentLogger.find_string(text, string)
+    assert_nil(index)
+
+    test_index = 0
+    string = 'T'
     index = Repla::Server::ParentLogger.find_string(text, string)
     assert_equal(test_index, index)
   end

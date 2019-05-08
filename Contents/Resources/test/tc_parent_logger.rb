@@ -121,7 +121,7 @@ end
 
 
 # Test parent logger
-class TestParentLogger
+class TestParentLogger < Minitest::Test
   # Mock logger
   class MockLogger
     def error(text); end

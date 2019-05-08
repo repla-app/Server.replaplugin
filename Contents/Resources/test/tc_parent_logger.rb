@@ -75,6 +75,11 @@ class TestParentLoggerClass < Minitest::Test
     assert_equal(port_url, url)
   end
 
+  def test_get_url
+    url = Repla::Server::ParentLogger.get_url(nil, 8888)
+    assert_equal('http://localhost:8888', url)
+  end
+
   # Mock logger
   class MockLogger
     def error(text); end

@@ -45,7 +45,7 @@ command = ARGV[0]
 
 exit 1 unless command
 
-runner = Repla::Server::Runner.new(command)
+runner = Repla::Server::Runner.new(command, options)
 trap 'SIGINT' do
   runner.stop
 end

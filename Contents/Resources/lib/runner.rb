@@ -5,8 +5,8 @@ module Repla
   module Server
     # Runner
     class Runner
-      def initialize(command)
-        parent_logger = ParentLogger.new
+      def initialize(command, options = {})
+        parent_logger = ParentLogger.new(nil, nil, options)
         @parent = Parent.new(command, parent_logger)
       end
 

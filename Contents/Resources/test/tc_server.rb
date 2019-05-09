@@ -108,10 +108,9 @@ class TestServerString < Minitest::Test
     command = "#{SERVER_COMMAND_PATH} "\
               '-u www.example.com '\
               "-m '#{SERVER_COMMAND_OTHER_STRING}'"
-    parameters = "-s \"#{SERVER_COMMAND_STRING}\" "\
-                 "\"#{command}\""
+    arguments = "-s \"#{SERVER_COMMAND_STRING}\""
     @pid = spawn(SERVER_BUNDLE_COMMAND,
-                 parameters,
+                 arguments, command,
                  chdir: SERVER_ROOT)
     window_id = nil
     Repla::Test.block_until do

@@ -120,31 +120,10 @@ end
 
 # Test parent logger
 class TestParentLogger < Minitest::Test
-  # Mock logger
-  class MockLogger
-    def error(text); end
-
-    def info(text); end
-  end
-
-  # Mock view
-  class MockView
-    attr_reader :failed
-    attr_reader :called
-    def initialize
-      @called = false
-      @failed = false
-    end
-
-    def load_url(_url, _options = {})
-      @failed = true if @called
-      @called = true
-    end
-  end
-
   def test_multiple_urls
-    mock_view = MockView.new
-    parent_logger = Repla::Server::ParentLogger.new(MockLogger.new, mock_view)
+    mock_view = Repla::Test::MockView.new
+    parent_logger = Repla::Server::ParentLogger.new(Repla::Test::MockLogger.new,
+                                                    mock_view)
     real_example_url = 'http://127.0.0.1:4000/'
     line_with_real_example_url = "Server address: #{real_example_url}"
     parent_logger.process_output(line_with_real_example_url)
@@ -154,11 +133,14 @@ class TestParentLogger < Minitest::Test
     parent_logger.process_output(line_with_local_url_with_port)
     assert(!mock_view.failed)
   end
+end
 
+# Test parent logger options
+class TestParentLoggerOptionsSingle < Minitest::Test
   def test_string
     options = { string: 'wait for this string' }
-    parent_logger = Repla::Server::ParentLogger.new(MockLogger.new,
-                                                    MockView.new,
+    parent_logger = Repla::Server::ParentLogger.new(Repla::Test::MockLogger.new,
+                                                    Repla::Test::MockView.new,
                                                     options)
     good_url = 'http://www.example.com'
     line_with_good_url = "Here is a URL #{good_url}"
@@ -171,11 +153,37 @@ class TestParentLogger < Minitest::Test
     assert_equal(good_url, url)
   end
 
+  def test_url
+    good_url = 'http://www.example.com'
+    options = { url: good_url }
+    parent_logger = Repla::Server::ParentLogger.new(Repla::Test::MockLogger.new,
+                                                    Repla::Test::MockView.new,
+                                                    options)
+    line_with_no_url = 'A line with no URL'
+    url = parent_logger.url_from_line(line_with_no_url)
+    assert_equal(good_url, url)
+  end
+
+  def test_port
+    port = 5000
+    local_url_with_port = "http://localhost:#{port}"
+    options = { port: port }
+    parent_logger = Repla::Server::ParentLogger.new(Repla::Test::MockLogger.new,
+                                                    Repla::Test::MockView.new,
+                                                    options)
+    line_with_no_url = 'A line with no URL'
+    url = parent_logger.url_from_line(line_with_no_url)
+    assert_equal(local_url_with_port, url)
+  end
+end
+
+# Test parent logger options multiple
+class TestParentLoggerOptionsMultiple < Minitest::Test
   def test_string_new_line
     string = 'wait for this string'
     options = { string: string }
-    parent_logger = Repla::Server::ParentLogger.new(MockLogger.new,
-                                                    MockView.new,
+    parent_logger = Repla::Server::ParentLogger.new(Repla::Test::MockLogger.new,
+                                                    Repla::Test::MockView.new,
                                                     options)
     good_url = 'http://www.example.com'
     line_with_good_url = "Here is a URL #{good_url}"
@@ -189,36 +197,13 @@ class TestParentLogger < Minitest::Test
     assert_equal(good_url, url)
   end
 
-  def test_url
-    good_url = 'http://www.example.com'
-    options = { url: good_url }
-    parent_logger = Repla::Server::ParentLogger.new(MockLogger.new,
-                                                    MockView.new,
-                                                    options)
-    line_with_no_url = 'A line with no URL'
-    url = parent_logger.url_from_line(line_with_no_url)
-    assert_equal(good_url, url)
-  end
-
-  def test_port
-    port = 5000
-    local_url_with_port = "http://localhost:#{port}"
-    options = { port: port }
-    parent_logger = Repla::Server::ParentLogger.new(MockLogger.new,
-                                                    MockView.new,
-                                                    options)
-    line_with_no_url = 'A line with no URL'
-    url = parent_logger.url_from_line(line_with_no_url)
-    assert_equal(local_url_with_port, url)
-  end
-
   def test_url_and_port
     port = 5000
     good_url = 'http://www.example.com'
     good_url_with_port = "#{good_url}:#{port}"
     options = { port: port, url: good_url }
-    parent_logger = Repla::Server::ParentLogger.new(MockLogger.new,
-                                                    MockView.new,
+    parent_logger = Repla::Server::ParentLogger.new(Repla::Test::MockLogger.new,
+                                                    Repla::Test::MockView.new,
                                                     options)
     line_with_no_url = 'A line with no URL'
     url = parent_logger.url_from_line(line_with_no_url)
@@ -229,8 +214,8 @@ class TestParentLogger < Minitest::Test
     good_url = 'http://www.example.com'
     different_url = 'http://localhost'
     options = { string: 'wait for this string', url: good_url }
-    parent_logger = Repla::Server::ParentLogger.new(MockLogger.new,
-                                                    MockView.new,
+    parent_logger = Repla::Server::ParentLogger.new(Repla::Test::MockLogger.new,
+                                                    Repla::Test::MockView.new,
                                                     options)
     line_with_no_url = 'A line with no URL'
     url = parent_logger.url_from_line(line_with_no_url)
@@ -249,8 +234,8 @@ class TestParentLogger < Minitest::Test
     options = { string: 'wait for this string', port: port }
     local_url_with_port = "http://localhost:#{port}"
     different_url = 'http://www.example.com'
-    parent_logger = Repla::Server::ParentLogger.new(MockLogger.new,
-                                                    MockView.new,
+    parent_logger = Repla::Server::ParentLogger.new(Repla::Test::MockLogger.new,
+                                                    Repla::Test::MockView.new,
                                                     options)
     line_with_no_url = 'A line with no URL'
     url = parent_logger.url_from_line(line_with_no_url)
@@ -268,8 +253,8 @@ class TestParentLogger < Minitest::Test
     different_url = 'http://localhost'
     good_url_with_port = "#{good_url}:#{port}"
     options = { port: port, url: good_url, string: string }
-    parent_logger = Repla::Server::ParentLogger.new(MockLogger.new,
-                                                    MockView.new,
+    parent_logger = Repla::Server::ParentLogger.new(Repla::Test::MockLogger.new,
+                                                    Repla::Test::MockView.new,
                                                     options)
     line_with_no_url = 'A line with no URL'
     url = parent_logger.url_from_line(line_with_no_url)

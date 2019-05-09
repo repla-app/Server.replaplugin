@@ -54,5 +54,27 @@ module Repla
         end
       end
     end
+
+    # Mock logger
+    class MockLogger
+      def error(text); end
+
+      def info(text); end
+    end
+
+    # Mock view
+    class MockView
+      attr_reader :failed
+      attr_reader :called
+      def initialize
+        @called = false
+        @failed = false
+      end
+
+      def load_url(_url, _options = {})
+        @failed = true if @called
+        @called = true
+      end
+    end
   end
 end

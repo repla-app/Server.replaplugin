@@ -43,7 +43,7 @@ optparse.parse!
 
 command = ARGV[0]
 
-exit 1 unless command
+abort('No command specified.') unless command
 
 runner = Repla::Server::Runner.new(command, options)
 trap 'SIGINT' do

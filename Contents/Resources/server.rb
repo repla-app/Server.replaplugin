@@ -1,6 +1,5 @@
 #!/System/Library/Frameworks/Ruby.framework/Versions/2.3/usr/bin/ruby
 
-require 'Shellwords'
 require 'optparse'
 
 require_relative 'bundle/bundler/setup'

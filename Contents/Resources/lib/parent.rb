@@ -1,5 +1,3 @@
-require 'Shellwords'
-
 # Repla
 module Repla
   module Server

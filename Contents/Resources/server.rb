@@ -39,10 +39,9 @@ optparse = OptionParser.new do |opts|
 end
 
 optparse.parse!
-
 command = ARGV[0]
 
-abort('No command specified.') unless command
+abort('No command specified.') if command.nil?
 
 runner = Repla::Server::Runner.new(command, options)
 trap 'SIGINT' do

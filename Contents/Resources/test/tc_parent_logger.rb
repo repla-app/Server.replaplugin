@@ -171,6 +171,24 @@ class TestParentLogger < Minitest::Test
     assert_equal(good_url, url)
   end
 
+  def test_string_new_line
+    string = 'wait for this string'
+    options = { string: string }
+    parent_logger = Repla::Server::ParentLogger.new(MockLogger.new,
+                                                    MockView.new,
+                                                    options)
+    good_url = 'http://www.example.com'
+    line_with_good_url = "Here is a URL #{good_url}"
+    url = parent_logger.url_from_line(line_with_good_url)
+    assert_nil(url)
+    line_with_string = "the string will appear #{string}"
+    url = parent_logger.url_from_line(line_with_string)
+    assert_nil(url)
+    line_with_good_url = "A different string #{good_url}"
+    url = parent_logger.url_from_line(line_with_good_url)
+    assert_equal(good_url, url)
+  end
+
   def test_url
     good_url = 'http://www.example.com'
     options = { url: good_url }

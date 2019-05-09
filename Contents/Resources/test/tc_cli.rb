@@ -26,7 +26,7 @@ class TestCLI < Minitest::Test
   end
 
   def test_cli
-    server_command = "#{SERVER_COMMAND_PATH} -r #{SERVER_ROOT}"
+    server_command = "#{SERVER_COMMAND_DEFAULT_PATH} -r #{SERVER_ROOT}"
     command = "#{SYMLINK_DST} server "\
       "#{Shellwords.escape(server_command)}"
     `#{command}`

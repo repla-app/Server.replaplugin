@@ -38,6 +38,11 @@ fi
 ruby -run -e httpd -- -p 5000 "$SERVER_ROOT" 2>&1 | while read -r x; do
   echo "$x"
   if [[ $x == *"WEBrick::HTTPServer#start"* ]]; then
-    echo "Server started at http://127.0.0.1:5000";
+    if [[ -n "$url" ]]; then
+      echo "Server started at $url";
+    fi
+    if [[ "$default_message" == "true" ]]; then
+      echo "Server started at http://127.0.0.1:5000";
+    fi
   fi
 done

@@ -11,7 +11,7 @@ SERVER_BUNDLE_COMMAND = File.expand_path(File.join(__dir__,
 class TestServer < Minitest::Test
   def setup
     @restore = Repla::Test::Helper.add_env(TEST_SERVER_ENV)
-    @pid = spawn(SERVER_BUNDLE_COMMAND, SERVER_COMMAND_PATH)
+    @pid = spawn(SERVER_BUNDLE_COMMAND, SERVER_COMMAND_DEFAULT_PATH)
     window_id = nil
     Repla::Test.block_until do
       window_id = Repla::Test::Helper.window_id
@@ -42,7 +42,7 @@ end
 class TestServerNoEnv < Minitest::Test
   def setup
     @pid = spawn(SERVER_BUNDLE_COMMAND,
-                 SERVER_COMMAND_PATH,
+                 SERVER_COMMAND_DEFAULT_PATH,
                  chdir: SERVER_ROOT)
     window_id = nil
     Repla::Test.block_until do

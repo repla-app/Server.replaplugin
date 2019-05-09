@@ -11,11 +11,14 @@ PRINT_VARIABLE_NO_ERROR_PATH = File.expand_path(File.join(TEST_DATA_DIR,
                                                           'no_error.sh'))
 SERVER_ROOT = Repla::Test::TEST_HTML_DIRECTORY
 SERVER_COMMAND = 'server.sh'.freeze
+SERVER_COMMAND_DEFAULT = 'server.sh -d'.freeze
 SERVER_COMMAND_ARG = "#{SERVER_COMMAND} "\
   "-r #{Shellwords.escape(SERVER_ROOT)}".freeze
 SERVER_COMMAND_DIR = TEST_DATA_DIR
 SERVER_COMMAND_PATH = File.join(SERVER_COMMAND_DIR,
                                 SERVER_COMMAND)
+SERVER_COMMAND_DEFAULT_PATH = File.join(SERVER_COMMAND_DIR,
+                                        SERVER_COMMAND_DEFAULT)
 TEST_SERVER_COMMAND_PATH_ENV = "PATH=#{SERVER_COMMAND_DIR}:"\
   "#{ENV['PATH']}".freeze
 TEST_SERVER_ENV = "SERVER_ROOT=#{SERVER_ROOT}".freeze

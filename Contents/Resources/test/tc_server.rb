@@ -105,13 +105,13 @@ end
 # Test server string
 class TestServerString < Minitest::Test
   def setup
-    plugin_command = "#{SERVER_BUNDLE_COMMAND} "\
-                     "-s \"#{SERVER_COMMAND_STRING}\""
     command = "#{SERVER_COMMAND_PATH} "\
               '-u www.example.com '\
-              "-m \"#{SERVER_COMMAND_OTHER_STRING}\""
-    @pid = spawn(plugin_command,
-                 command,
+              "-m '#{SERVER_COMMAND_OTHER_STRING}'"
+    parameters = "-s \"#{SERVER_COMMAND_STRING}\" "\
+                 "\"#{command}\""
+    @pid = spawn(SERVER_BUNDLE_COMMAND,
+                 parameters,
                  chdir: SERVER_ROOT)
     window_id = nil
     Repla::Test.block_until do
@@ -137,4 +137,3 @@ class TestServerString < Minitest::Test
     assert_equal(Repla::Test::INDEX_HTML_TITLE, result)
   end
 end
-

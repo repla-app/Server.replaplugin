@@ -3,13 +3,16 @@
 set -e
 
 default_message="false"
-while getopts ":r:u:dh" option; do
+while getopts ":r:m:u:dh" option; do
   case "$option" in
     r)
       SERVER_ROOT=$OPTARG
       ;;
     u)
       url=$OPTARG
+      ;;
+    m)
+      message=$OPTARG
       ;;
     d)
       default_message="true"
@@ -39,7 +42,11 @@ ruby -run -e httpd -- -p 5000 "$SERVER_ROOT" 2>&1 | while read -r x; do
   echo "$x"
   if [[ $x == *"WEBrick::HTTPServer#start"* ]]; then
     if [[ -n "$url" ]]; then
-      echo "Server started at $url";
+      if [[ -n "$message" ]]; then
+        echo "$message $url";
+      else
+        echo "Server started at $url";
+      fi
     fi
     if [[ "$default_message" == "true" ]]; then
       echo "Server started at http://127.0.0.1:5000";

@@ -19,6 +19,8 @@ SERVER_COMMAND_PATH = File.join(SERVER_COMMAND_DIR,
                                 SERVER_COMMAND)
 SERVER_COMMAND_DEFAULT_PATH = File.join(SERVER_COMMAND_DIR,
                                         SERVER_COMMAND_DEFAULT)
+SERVER_COMMAND_STRING = 'Server started at'.freeze
+SERVER_COMMAND_OTHER_STRING = 'A different message'.freeze
 TEST_SERVER_COMMAND_PATH_ENV = "PATH=#{SERVER_COMMAND_DIR}:"\
   "#{ENV['PATH']}".freeze
 TEST_SERVER_ENV = "SERVER_ROOT=#{SERVER_ROOT}".freeze

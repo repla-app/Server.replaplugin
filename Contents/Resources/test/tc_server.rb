@@ -101,3 +101,40 @@ class TestServerPathAndArg < Minitest::Test
     assert_equal(Repla::Test::INDEX_HTML_TITLE, result)
   end
 end
+
+# Test server string
+class TestServerString < Minitest::Test
+  def setup
+    plugin_command = "#{SERVER_BUNDLE_COMMAND} "\
+                     "-s \"#{SERVER_COMMAND_STRING}\""
+    command = "#{SERVER_COMMAND_PATH} "\
+              '-u www.example.com '\
+              "-m \"#{SERVER_COMMAND_OTHER_STRING}\""
+    @pid = spawn(plugin_command,
+                 command,
+                 chdir: SERVER_ROOT)
+    window_id = nil
+    Repla::Test.block_until do
+      window_id = Repla::Test::Helper.window_id
+      !window_id.nil?
+    end
+    refute_nil(window_id)
+    @window = Repla::Window.new(window_id)
+  end
+
+  def teardown
+    @window.close
+    Process.kill(:INT, @pid)
+  end
+
+  def test_server_no_env
+    javascript = File.read(Repla::Test::TITLE_JAVASCRIPT_FILE)
+    result = nil
+    Repla::Test.block_until do
+      result = @window.do_javascript(javascript)
+      result == Repla::Test::INDEX_HTML_TITLE
+    end
+    assert_equal(Repla::Test::INDEX_HTML_TITLE, result)
+  end
+end
+

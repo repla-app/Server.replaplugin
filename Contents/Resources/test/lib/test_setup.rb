@@ -12,7 +12,7 @@ PRINT_VARIABLE_NO_ERROR_PATH = File.expand_path(File.join(TEST_DATA_DIR,
 SERVER_ROOT = Repla::Test::TEST_HTML_DIRECTORY
 SERVER_COMMAND = 'server.sh'.freeze
 SERVER_COMMAND_ARG = "#{SERVER_COMMAND} "\
-  "#{Shellwords.escape(SERVER_ROOT)}".freeze
+  "-r #{Shellwords.escape(SERVER_ROOT)}".freeze
 SERVER_COMMAND_DIR = TEST_DATA_DIR
 SERVER_COMMAND_PATH = File.join(SERVER_COMMAND_DIR,
                                 SERVER_COMMAND)

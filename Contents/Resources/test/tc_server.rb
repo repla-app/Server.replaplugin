@@ -74,7 +74,7 @@ class TestServerPathAndArg < Minitest::Test
   def setup
     @restore = Repla::Test::Helper.add_env(TEST_SERVER_COMMAND_PATH_ENV)
     @pid = spawn(SERVER_BUNDLE_COMMAND,
-                 SERVER_COMMAND_ARG,
+                 SERVER_COMMAND_ROOT,
                  TEST_SERVER_COMMAND_PATH_ENV)
     window_id = nil
     Repla::Test.block_until do

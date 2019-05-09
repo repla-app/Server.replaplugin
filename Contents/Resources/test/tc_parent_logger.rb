@@ -351,7 +351,7 @@ class TestServerPathAndArg < Minitest::Test
     @parent_logger = Repla::Server::ParentLogger.new(logger, @view)
     logger.show
     @restore = Repla::Test::Helper.add_env(TEST_SERVER_COMMAND_PATH_ENV)
-    @parent = Repla::Server::Parent.new(SERVER_COMMAND_ARG,
+    @parent = Repla::Server::Parent.new(SERVER_COMMAND_ROOT,
                                         @parent_logger)
     Thread.new do
       @parent.run

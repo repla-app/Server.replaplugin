@@ -11,7 +11,7 @@ PRINT_VARIABLE_NO_ERROR_PATH = File.expand_path(File.join(TEST_DATA_DIR,
                                                           'no_error.sh'))
 SERVER_ROOT = Repla::Test::TEST_HTML_DIRECTORY
 SERVER_PORT = 5000
-SERVER_URL = '127.0.0.1'.freeze
+SERVER_URL = 'http://127.0.0.1'.freeze
 SERVER_COMMAND = 'server.sh'.freeze
 SERVER_COMMAND_DEFAULT = 'server.sh -d'.freeze
 SERVER_COMMAND_ROOT = "#{SERVER_COMMAND} "\

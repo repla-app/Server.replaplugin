@@ -39,7 +39,10 @@ if [[ -z "$SERVER_ROOT" ]]; then
 fi
 
 ruby -run -e httpd -- -p 5000 "$SERVER_ROOT" 2>&1 | while read -r x; do
-  echo "$x"
+  # The output specifies a port which will automatically load a URL so strip
+  # those lines so that with default output there is no URL to automatically
+  # load.
+  echo "$x" | grep -v port
   if [[ $x == *"WEBrick::HTTPServer#start"* ]]; then
     if [[ -n "$url" ]]; then
       if [[ -n "$message" ]]; then

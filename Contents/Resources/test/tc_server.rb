@@ -202,3 +202,37 @@ class TestServerURL < Minitest::Test
     assert_equal(Repla::Test::INDEX_HTML_TITLE, result)
   end
 end
+
+# Test server port URL string
+class TestServerPortURLString < Minitest::Test
+  def setup
+    command = "#{SERVER_COMMAND_PATH} "\
+              '-u www.example.com '
+    arguments = "-u #{SERVER_URL} -p #{SERVER_PORT} -s #{SERVER_COMMAND_STRING}"
+    @pid = spawn(SERVER_BUNDLE_COMMAND,
+                 arguments, command,
+                 chdir: SERVER_ROOT)
+    window_id = nil
+    Repla::Test.block_until do
+      window_id = Repla::Test::Helper.window_id
+      !window_id.nil?
+    end
+    refute_nil(window_id)
+    @window = Repla::Window.new(window_id)
+  end
+
+  def teardown
+    @window.close
+    Process.kill(:INT, @pid)
+  end
+
+  def test_server_url
+    javascript = File.read(Repla::Test::TITLE_JAVASCRIPT_FILE)
+    result = nil
+    Repla::Test.block_until do
+      result = @window.do_javascript(javascript)
+      result == Repla::Test::INDEX_HTML_TITLE
+    end
+    assert_equal(Repla::Test::INDEX_HTML_TITLE, result)
+  end
+end

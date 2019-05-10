@@ -108,9 +108,9 @@ class TestServerString < Minitest::Test
     command = "#{SERVER_COMMAND_DEFAULT_PATH} "\
               '-u www.example.com '\
               "-m '#{SERVER_COMMAND_OTHER_STRING}'"
-    arguments = "-s #{SERVER_COMMAND_STRING}"
+    argument = "-s #{SERVER_COMMAND_STRING}"
     @pid = spawn(SERVER_BUNDLE_COMMAND,
-                 arguments, command,
+                 argument, command,
                  chdir: SERVER_ROOT)
     window_id = nil
     Repla::Test.block_until do
@@ -141,9 +141,9 @@ end
 class TestServerPort < Minitest::Test
   def setup
     command = SERVER_COMMAND_PATH.to_s
-    arguments = "-p #{SERVER_PORT}"
+    argument = "-p #{SERVER_PORT}"
     @pid = spawn(SERVER_BUNDLE_COMMAND,
-                 arguments, command,
+                 argument, command,
                  chdir: SERVER_ROOT)
     window_id = nil
     Repla::Test.block_until do
@@ -174,9 +174,9 @@ end
 class TestServerURL < Minitest::Test
   def setup
     command = SERVER_COMMAND_PATH.to_s
-    arguments = "-u #{SERVER_URL}:#{SERVER_PORT}"
+    argument = "-u #{SERVER_URL}:#{SERVER_PORT}"
     @pid = spawn(SERVER_BUNDLE_COMMAND,
-                 arguments, command,
+                 argument, command,
                  chdir: SERVER_ROOT)
     window_id = nil
     Repla::Test.block_until do

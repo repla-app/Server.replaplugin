@@ -105,7 +105,7 @@ end
 # Test server string
 class TestServerString < Minitest::Test
   def setup
-    command = "#{SERVER_COMMAND_PATH} "\
+    command = "#{SERVER_COMMAND_DEFAULT_PATH} "\
               '-u www.example.com '\
               "-m '#{SERVER_COMMAND_OTHER_STRING}'"
     arguments = "-s \"#{SERVER_COMMAND_STRING}\""

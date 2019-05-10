@@ -24,12 +24,14 @@ optparse = OptionParser.new do |opts|
           'Specify a URL. If a PORT is also specified, then the PORT and URL '\
           'will be combined, otherwise no port number will be used. The URL '\
           'will be loaded after the first output unless a STRING is also '\
-          'specified.') do |url|
+          'specified. Leading and trailing whitespace is removed from the '\
+          'URL.') do |url|
     options[:url] = url
   end
   opts.on('-s',
           '--string STRING',
-          'Don\'t load a URL until the STRING is output.') do |string|
+          'Don\'t load a URL until after the STRING is output. Leading and '\
+          'trailing whitespace is removed from the STRING.') do |string|
     options[:string] = string
   end
   opts.on('-h', '--help', 'Show options help.') do

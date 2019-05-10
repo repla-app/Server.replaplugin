@@ -25,19 +25,23 @@ module Repla
       end
 
       def process_output(text)
-        url = self.class.url_from_line(text)
-        if !url.nil? && !@loaded_url
-          @view.load_url(url, should_clear_cache: true)
-          @loaded_url = true
+        unless @loaded_url
+          url = url_from_line(text)
+          unless url.nil?
+            @view.load_url(url, should_clear_cache: true)
+            @loaded_url = true
+          end
         end
         @logger.info(text)
       end
 
       def process_error(text)
-        url = self.class.url_from_line(text)
-        if !url.nil? && !@loaded_url
-          @view.load_url(url, should_clear_cache: true)
-          @loaded_url = true
+        unless @loaded_url
+          url = url_from_line(text)
+          unless url.nil?
+            @view.load_url(url, should_clear_cache: true)
+            @loaded_url = true
+          end
         end
         @logger.error(text)
       end
@@ -67,6 +71,7 @@ module Repla
       end
 
       def self.get_url(url = nil, port = nil)
+        port.strip! unless port.nil?
         unless url.nil?
           url.strip!
 

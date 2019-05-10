@@ -108,7 +108,7 @@ class TestServerString < Minitest::Test
     command = "#{SERVER_COMMAND_DEFAULT_PATH} "\
               '-u www.example.com '\
               "-m '#{SERVER_COMMAND_OTHER_STRING}'"
-    arguments = "-s \"#{SERVER_COMMAND_STRING}\""
+    arguments = "-s #{SERVER_COMMAND_STRING}"
     @pid = spawn(SERVER_BUNDLE_COMMAND,
                  arguments, command,
                  chdir: SERVER_ROOT)

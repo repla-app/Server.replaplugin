@@ -91,9 +91,6 @@ class TestParentLoggerClass < Minitest::Test
     url = Repla::Server::ParentLogger.get_url('www.example.com', 8888)
     assert_equal(test_url, url)
 
-    url = Repla::Server::ParentLogger.get_url('   www.example.com   ', 8888)
-    assert_equal(test_url, url)
-
     test_url = 'https://example.com:8888'
     url = Repla::Server::ParentLogger.get_url('https://example.com', 8888)
     assert_equal(test_url, url)

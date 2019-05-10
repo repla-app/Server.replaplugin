@@ -17,11 +17,11 @@ module Repla
         @view = view || Repla::View.new
         @loaded_url = false
 
-        port = options[:port]
-        url = options[:url]
+        port = options[:port]&.to_i
+        url = options[:url]&.strip
         @url = self.class.get_url(url, port)
         @string = options[:string]
-        @string.strip!
+        @string&.strip!
         @string_found = @string.nil? || @string.empty?
       end
 
@@ -72,10 +72,7 @@ module Repla
       end
 
       def self.get_url(url = nil, port = nil)
-        port.strip! unless port.nil?
         unless url.nil?
-          url.strip!
-
           return url if port.nil?
 
           return "#{url}:#{port}"

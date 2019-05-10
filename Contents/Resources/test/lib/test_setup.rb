@@ -10,12 +10,19 @@ PRINT_VARIABLE_NO_ERROR_PATH = File.expand_path(File.join(TEST_DATA_DIR,
                                                           'print_variable_'\
                                                           'no_error.sh'))
 SERVER_ROOT = Repla::Test::TEST_HTML_DIRECTORY
+SERVER_PORT = 5000
+SERVER_URL = 'http://127.0.0.1'.freeze
 SERVER_COMMAND = 'server.sh'.freeze
-SERVER_COMMAND_ARG = "#{SERVER_COMMAND} "\
-  "#{Shellwords.escape(SERVER_ROOT)}".freeze
+SERVER_COMMAND_DEFAULT = 'server.sh -d'.freeze
+SERVER_COMMAND_DEFAULT_ROOT = "#{SERVER_COMMAND} -d "\
+  "-r #{Shellwords.escape(SERVER_ROOT)}".freeze
 SERVER_COMMAND_DIR = TEST_DATA_DIR
 SERVER_COMMAND_PATH = File.join(SERVER_COMMAND_DIR,
                                 SERVER_COMMAND)
+SERVER_COMMAND_DEFAULT_PATH = File.join(SERVER_COMMAND_DIR,
+                                        SERVER_COMMAND_DEFAULT)
+SERVER_COMMAND_STRING = 'Server started at'.freeze
+SERVER_COMMAND_OTHER_STRING = 'A different message'.freeze
 TEST_SERVER_COMMAND_PATH_ENV = "PATH=#{SERVER_COMMAND_DIR}:"\
   "#{ENV['PATH']}".freeze
 TEST_SERVER_ENV = "SERVER_ROOT=#{SERVER_ROOT}".freeze
@@ -52,6 +59,28 @@ module Repla
           ENV.delete(key)
           ENV[key] = restore[key] if restore.key?(key)
         end
+      end
+    end
+
+    # Mock logger
+    class MockLogger
+      def error(text); end
+
+      def info(text); end
+    end
+
+    # Mock view
+    class MockView
+      attr_reader :failed
+      attr_reader :called
+      def initialize
+        @called = false
+        @failed = false
+      end
+
+      def load_url(_url, _options = {})
+        @failed = true if @called
+        @called = true
       end
     end
   end

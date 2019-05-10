@@ -249,7 +249,10 @@ class TestParentLoggerOptionsMultiple < Minitest::Test
     good_url = 'http://www.example.com'
     different_url = 'http://localhost'
     good_url_with_port = "#{good_url}:#{port}"
-    options = { port: port, url: good_url, string: string }
+    # Add whitespace to assure it's stripped properly
+    options = { port: "    #{port}     ",
+                url: "    #{good_url}    ",
+                string: string }
     parent_logger = Repla::Server::ParentLogger.new(Repla::Test::MockLogger.new,
                                                     Repla::Test::MockView.new,
                                                     options)

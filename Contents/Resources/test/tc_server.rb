@@ -206,7 +206,10 @@ end
 # Test server port URL string
 class TestServerPortURLString < Minitest::Test
   def setup
-    command = "#{SERVER_COMMAND_PATH} "\
+    # Pass in the `-e` flag as a quick standard error test. Note that this
+    # isn't really relevant right now because `PTY` merges `STDOUT` and
+    # `STDERR`. But this might be relevant in the future.
+    command = "#{SERVER_COMMAND_PATH} -e "\
               '-u www.example.com '
     arguments = ["-u #{SERVER_URL}",
                  "-p #{SERVER_PORT}",

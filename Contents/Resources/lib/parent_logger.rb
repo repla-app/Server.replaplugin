@@ -21,7 +21,8 @@ module Repla
         url = options[:url]
         @url = self.class.get_url(url, port)
         @string = options[:string]
-        @string_found = @string.nil?
+        @string.strip!
+        @string_found = @string.nil? || @string.empty?
       end
 
       def process_output(text)

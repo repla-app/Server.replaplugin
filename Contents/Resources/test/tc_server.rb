@@ -208,9 +208,11 @@ class TestServerPortURLString < Minitest::Test
   def setup
     command = "#{SERVER_COMMAND_PATH} "\
               '-u www.example.com '
-    arguments = "-u #{SERVER_URL} -p #{SERVER_PORT} -s #{SERVER_COMMAND_STRING}"
+    arguments = ["-u #{SERVER_URL}",
+                 "-p #{SERVER_PORT}",
+                 "-s #{SERVER_COMMAND_STRING}"]
     @pid = spawn(SERVER_BUNDLE_COMMAND,
-                 arguments, command,
+                 arguments[0], arguments[1], arguments[2], command,
                  chdir: SERVER_ROOT)
     window_id = nil
     Repla::Test.block_until do

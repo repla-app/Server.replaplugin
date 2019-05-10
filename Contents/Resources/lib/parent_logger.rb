@@ -26,25 +26,29 @@ module Repla
       end
 
       def process_output(text)
-        unless @loaded_url
-          url = url_from_line(text)
-          unless url.nil?
-            @view.load_url(url, should_clear_cache: true)
-            @loaded_url = true
-          end
-        end
         @logger.info(text)
+
+        return if @loaded_url
+
+        url = url_from_line(text)
+
+        return if url.nil?
+
+        @view.load_url(url, should_clear_cache: true)
+        @loaded_url = true
       end
 
       def process_error(text)
-        unless @loaded_url
-          url = url_from_line(text)
-          unless url.nil?
-            @view.load_url(url, should_clear_cache: true)
-            @loaded_url = true
-          end
-        end
         @logger.error(text)
+
+        return if @loaded_url
+
+        url = url_from_line(text)
+
+        return if url.nil?
+
+        @view.load_url(url, should_clear_cache: true)
+        @loaded_url = true
       end
 
       def url_from_line(line)

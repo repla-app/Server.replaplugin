@@ -1,0 +1,21 @@
+Script started on Fri May 10 18:28:02 2019
+command: make server
+DEBUG=myapp:* npm start
+
+> repla-test-express@0.0.0 start /Users/robenkleene/Development/Projects/Cocoa/Repla/Test/repla-test-express
+> node ./bin/www
+
+Port 3000 is already in use
+[37;40mnpm[0m [0m[31;40mERR![0m [0m[35mcode[0m ELIFECYCLE
+[0m[37;40mnpm[0m [0m[31;40mERR![0m [0m[35merrno[0m 1
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m repla-test-express@0.0.0 start: `node ./bin/www`
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m Exit status 1
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m 
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m Failed at the repla-test-express@0.0.0 start script.
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m This is probably not a problem with npm. There is likely additional logging output above.
+[0m
+[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m A complete log of this run can be found in:
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m     /Users/robenkleene/.npm/_logs/2019-05-10T22_28_02_734Z-debug.log
+[0mmake: *** [server] Error 1
+
+Script done on Fri May 10 18:28:02 2019

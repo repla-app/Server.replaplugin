@@ -120,7 +120,8 @@ class TestParentLogger < Minitest::Test
   def test_multiple_urls
     mock_view = Repla::Test::MockView.new
     parent_logger = Repla::Server::ParentLogger.new(Repla::Test::MockLogger.new,
-                                                    mock_view)
+                                                    mock_view,
+                                                    TEST_ZERO_DELAY_OPTIONS)
     real_example_url = 'http://127.0.0.1:4000/'
     line_with_real_example_url = "Server address: #{real_example_url}"
     parent_logger.process_output(line_with_real_example_url)

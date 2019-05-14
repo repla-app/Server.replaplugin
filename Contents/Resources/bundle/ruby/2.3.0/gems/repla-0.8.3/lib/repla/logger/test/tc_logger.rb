@@ -65,11 +65,16 @@ class TestLoggerObject < Minitest::Test
 
   def test_logger_object
     # Test Error
+    # This test doesn't call `@logger.error` because `TestLog.replaplugin` had
+    # to be changed being run with `/usr/bin/script` which combines standard
+    # output and standard error.
     message = 'Testing log error'
-    @logger.error(message)
-    message = 'Testing log message'
     @logger.info(message)
+    # @logger.error(message)
     message = Repla::Logger::ERROR_PREFIX.rstrip
+    @logger.info(message)
+    # @logger.error(message)
+    message = 'Testing log message'
     @logger.info(message)
     message = Repla::Logger::MESSAGE_PREFIX.rstrip
     @logger.info(message)

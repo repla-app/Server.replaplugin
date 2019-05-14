@@ -24,8 +24,9 @@ module Repla
       'http://127.0.0.1:5000/' + filename
     end
 
-    def self.block_until_with_timeout(timeout)
-      cycles = [timeout / POLLING_INTERVAL, 1].max
+    def self.block_until_with_timeout(timeout,
+                                      polling_interval = POLLING_INTERVAL)
+      cycles = [timeout / polling_interval, 1].max
       count = 0
       until yield || count >= cycles
         sleep(POLLING_INTERVAL)
@@ -50,6 +51,8 @@ module Repla
     TEST_ASSETS_JAVASCRIPT_DIRECTORY = File.join(TEST_DIRECTORY, 'js')
     TITLE_JAVASCRIPT_FILE = File.join(TEST_ASSETS_JAVASCRIPT_DIRECTORY,
                                       'title.js')
+    BODY_JAVASCRIPT_FILE = File.join(TEST_ASSETS_JAVASCRIPT_DIRECTORY,
+                                     'body.js')
     # Plugins
     TEST_PLUGIN_DIRECTORY = File.join(TEST_DIRECTORY, 'packages')
     TEST_HELLOWORLD_PLUGIN_FILE = File.join(TEST_PLUGIN_DIRECTORY,

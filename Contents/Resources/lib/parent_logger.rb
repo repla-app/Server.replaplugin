@@ -5,6 +5,7 @@ require_relative 'putter'
 # Repla
 module Repla
   module Server
+    DEFAULT_DELAY = 0.5
     # Parent logger
     class ParentLogger
       attr_reader :logger
@@ -19,6 +20,7 @@ module Repla
 
         port = options[:port]&.to_i
         url = options[:url]&.strip
+        @delay = options[:delay]&.to_f || DEFAULT_DELAY
         @url = self.class.get_url(url, port)
         @string = options[:string]
         @string&.strip!
@@ -34,8 +36,16 @@ module Repla
 
         return if url.nil?
 
-        @view.load_url(url, should_clear_cache: true)
         @loaded_url = true
+
+        if @delay > 0
+          Thread.new do
+            sleep @delay
+            @view.load_url(url, should_clear_cache: true)
+          end
+        else
+          @view.load_url(url, should_clear_cache: true)
+        end
       end
 
       def process_error(text)

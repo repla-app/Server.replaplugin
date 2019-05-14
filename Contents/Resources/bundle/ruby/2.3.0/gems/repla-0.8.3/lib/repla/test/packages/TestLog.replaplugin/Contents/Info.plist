@@ -5,7 +5,7 @@
 	<key>WCName</key>
 	<string>TestLog</string>
 	<key>WCCommand</key>
-	<string>echo.sh</string>
+	<string>run.sh</string>
 	<key>WCUUID</key>
 	<string>7A95638E-798D-437C-9404-08E7DC68655B</string>
 	<key>WCEditable</key>

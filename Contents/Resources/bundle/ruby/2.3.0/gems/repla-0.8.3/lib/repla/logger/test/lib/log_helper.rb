@@ -27,7 +27,7 @@ module Repla
       end
 
       def number_of_log_messages
-        @view.do_javascript(TEST_MESSAGE_COUNT_JAVASCRIPT)
+        @view.do_javascript(TEST_MESSAGE_COUNT_JAVASCRIPT).to_i
       end
 
       def last_log_message

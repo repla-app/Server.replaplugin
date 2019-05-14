@@ -23,6 +23,10 @@ SERVER_COMMAND_DEFAULT_PATH = File.join(SERVER_COMMAND_DIR,
                                         SERVER_COMMAND_DEFAULT)
 SERVER_COMMAND_STRING = 'Server started at'.freeze
 SERVER_COMMAND_OTHER_STRING = 'A different message'.freeze
+TEST_DELAY_OPTIONS_ZERO = { delay: 0 }.freeze
+TEST_DELAY_LENGTH_LONG = 1
+TEST_DELAY_LENGTH_DEFAULT = 0.5
+TEST_DELAY_OPTIONS_LONG = { delay: TEST_DELAY_LENGTH_LONG }.freeze
 TEST_SERVER_COMMAND_PATH_ENV = "PATH=#{SERVER_COMMAND_DIR}:"\
   "#{ENV['PATH']}".freeze
 TEST_SERVER_ENV = "SERVER_ROOT=#{SERVER_ROOT}".freeze
@@ -74,15 +78,19 @@ module Repla
     # Mock view
     class MockView
       attr_reader :failed
-      attr_reader :called
+      attr_reader :timestamp
       def initialize
         @called = false
         @failed = false
       end
 
       def load_url(_url, _options = {})
-        @failed = true if @called
-        @called = true
+        @failed = true if called
+        @timestamp = Time.now.to_i
+      end
+
+      def called
+        !@timestamp.nil?
       end
     end
   end

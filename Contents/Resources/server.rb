@@ -34,6 +34,13 @@ optparse = OptionParser.new do |opts|
           'trailing whitespace is removed from the STRING.') do |string|
     options[:string] = string
   end
+  opts.on('-d',
+          '--delay DELAY',
+          'Wait DELAY seconds before loading a url. If a string is also '\
+          'specified, the delay happens after the string is found. The '\
+          'default DELAY is 0.5, the DELAY can be set to 0.') do |delay|
+    options[:delay] = delay.to_f
+  end
   opts.on('-h', '--help', 'Show options help.') do
     puts opts
     exit

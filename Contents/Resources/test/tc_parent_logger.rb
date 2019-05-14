@@ -156,7 +156,7 @@ class TestParentLogger < Minitest::Test
     line_with_real_example_url = "Server address: #{real_example_url}"
     parent_logger.process_output(line_with_real_example_url)
     assert(!mock_view.called)
-    Repla::Test.block_until { mock_view.called }
+    Repla::Test.block_until_with_timeout(4, 0.25) { mock_view.called }
     assert(mock_view.called)
     now = Time.now.to_f
     elapsed = now - mock_view.timestamp

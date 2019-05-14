@@ -20,7 +20,7 @@ module Repla
 
         port = options[:port]&.to_i
         url = options[:url]&.strip
-        @delay = options[:delay]&.to_i || DEFAULT_DELAY
+        @delay = options[:delay]&.to_f || DEFAULT_DELAY
         @url = self.class.get_url(url, port)
         @string = options[:string]
         @string&.strip!

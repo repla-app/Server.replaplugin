@@ -121,7 +121,7 @@ class TestParentLogger < Minitest::Test
     mock_view = Repla::Test::MockView.new
     parent_logger = Repla::Server::ParentLogger.new(Repla::Test::MockLogger.new,
                                                     mock_view,
-                                                    TEST_ZERO_DELAY_OPTIONS)
+                                                    TEST_DELAY_OPTIONS_ZERO)
     real_example_url = 'http://127.0.0.1:4000/'
     line_with_real_example_url = "Server address: #{real_example_url}"
     parent_logger.process_output(line_with_real_example_url)
@@ -130,6 +130,38 @@ class TestParentLogger < Minitest::Test
     line_with_local_url_with_port = "Here is a URL #{local_url_with_port}"
     parent_logger.process_output(line_with_local_url_with_port)
     assert(!mock_view.failed)
+  end
+
+  def test_delay_long
+    mock_view = Repla::Test::MockView.new
+    parent_logger = Repla::Server::ParentLogger.new(Repla::Test::MockLogger.new,
+                                                    mock_view,
+                                                    TEST_DELAY_OPTIONS_LONG)
+    real_example_url = 'http://127.0.0.1:4000/'
+    line_with_real_example_url = "Server address: #{real_example_url}"
+    parent_logger.process_output(line_with_real_example_url)
+    assert(!mock_view.called)
+    Repla::Test.block_until { mock_view.called }
+    assert(mock_view.called)
+    now = Time.now.to_i
+    elapsed = now - mock_view.timestamp
+    assert(elapsed => TEST_DELAY_LENGTH_LONG)
+  end
+
+  def test_delay_default
+    mock_view = Repla::Test::MockView.new
+    parent_logger = Repla::Server::ParentLogger.new(Repla::Test::MockLogger.new,
+                                                    mock_view)
+    real_example_url = 'http://127.0.0.1:4000/'
+    line_with_real_example_url = "Server address: #{real_example_url}"
+    parent_logger.process_output(line_with_real_example_url)
+    assert(!mock_view.called)
+    Repla::Test.block_until { mock_view.called }
+    assert(mock_view.called)
+    now = Time.now.to_f
+    elapsed = now - mock_view.timestamp
+    assert(elapsed => TEST_DELAY_LENGTH_DEFAULT)
+    assert(elapsed < TEST_DELAY_LENGTH_LONG)
   end
 end
 

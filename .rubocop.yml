@@ -26,3 +26,10 @@ AllCops:
     - '**/node_modules/**/*'
     - '**/vendor/**/*'
     - '**/bundle/**/*'
+Metrics/LineLength:
+  Exclude:
+    - 'Contents/Resources/server.rb'
+    - 'Contents/Resources/test/tc_cli.rb'
+    - 'Contents/Resources/test/tc_parent.rb'
+    - 'Contents/Resources/test/tc_server.rb'
+    - 'Contents/Resources/test/tc_parent_logger.rb'

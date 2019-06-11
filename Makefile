@@ -14,6 +14,7 @@ test:
 
 bundle_update:
 	cd ./Contents/Resources/ &&\
+		bundle update repla --full-index &&\
 		bundle update &&\
 		bundle clean &&\
 		bundle install --standalone

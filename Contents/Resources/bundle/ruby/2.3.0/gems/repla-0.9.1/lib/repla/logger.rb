@@ -7,7 +7,8 @@ module Repla
     ERROR_PREFIX = 'ERROR '.freeze
     LOG_PLUGIN_NAME = 'Log'.freeze
 
-    def initialize
+    def initialize(window_id = nil)
+      @window_id = window_id
       @mutex = Mutex.new
     end
     # Toggle

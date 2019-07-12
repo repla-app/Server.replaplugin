@@ -32,7 +32,11 @@ module Repla
           end
 
           @pid = pid
-          # Make sure all output gets processed before existing
+          Thread.new do
+            IO.copy_stream(STDIN, stdin)
+          end
+
+          # Make sure all output gets processed before exiting
           stdout.flush
           output_thread.join
         end

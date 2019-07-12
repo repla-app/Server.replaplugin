@@ -59,6 +59,21 @@ module Repla
       run_script(DOJAVASCRIPT_SCRIPT, [javascript])
     end
 
+    RELOAD_SCRIPT = File.join(APPLESCRIPT_DIRECTORY, 'reload.scpt')
+    def reload
+      run_script(RELOAD_SCRIPT)
+    end
+
+    GOBACK_SCRIPT = File.join(APPLESCRIPT_DIRECTORY, 'go_back.scpt')
+    def go_back
+      run_script(GOBACK_SCRIPT)
+    end
+
+    GOFORWARD_SCRIPT = File.join(APPLESCRIPT_DIRECTORY, 'go_forward.scpt')
+    def go_forward
+      run_script(GOFORWARD_SCRIPT)
+    end
+
     READ_FROM_STANDARD_INPUT_SCRIPT = File.join(APPLESCRIPT_DIRECTORY,
                                                 'read_from_standard_input.scpt')
     def read_from_standard_input(text)

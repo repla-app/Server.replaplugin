@@ -1,4 +1,6 @@
-#!/System/Library/Frameworks/Ruby.framework/Versions/2.3/usr/bin/ruby --disable-gems
+#!/System/Library/Frameworks/Ruby.framework/Versions/2.3/usr/bin/ruby
+
+# This shebang doesn't use `--disable-gems` because otherwise it wouldn't be able to access `test/unit`.
 
 require 'test/unit'
 

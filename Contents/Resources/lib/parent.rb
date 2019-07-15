@@ -32,6 +32,9 @@ module Repla
           end
 
           @pid = pid
+          # This passes STDIN from the parent process to the child, but for
+          # some reason everything passed to the child processes `stdin` also
+          # gets output to that processes standard output.
           Thread.new do
             IO.copy_stream(STDIN, stdin)
           end

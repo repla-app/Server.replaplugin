@@ -18,6 +18,9 @@ class TestCLI < Minitest::Test
     app_bundle_path = `#{bundle_command}`
     app_bundle_path.chomp!
     symlink_src = File.join(app_bundle_path, CLI_PATH_COMPONENT)
+    if File.file?(SYMLINK_DST)
+      File.delete(SYMLINK_DST)
+    end
     File.symlink(symlink_src, SYMLINK_DST)
   end
 
@@ -44,6 +47,36 @@ class TestCLI < Minitest::Test
       result == Repla::Test::INDEX_HTML_TITLE
     end
     assert_equal(Repla::Test::INDEX_HTML_TITLE, result)
+    window.close
+  end
+
+  def test_stdin
+    server_command = 'cat'
+    command = "#{SYMLINK_DST} server "\
+      "#{Shellwords.escape(server_command)}"
+    `#{command}`
+    window_id = nil
+    Repla::Test.block_until do
+      window_id = Repla::Test::Helper.window_id
+      !window_id.nil?
+    end
+    refute_nil(window_id)
+    window = Repla::Window.new(window_id)
+
+    # Setup Logger
+    logger = Repla::Logger.new(window_id)
+    logger.show
+    test_log_helper = Repla::Test::LogHelper.new(logger.window_id,
+                                                 logger.view_id)
+    # Run Test
+    message = 'a test string'
+    window.read_from_standard_input("#{message}\n")
+    last = nil
+    Repla::Test.block_until do
+      last = test_log_helper.last_log_message
+      last == message
+    end
+    assert_equal(message, last)
     window.close
   end
 end

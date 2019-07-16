@@ -3,8 +3,9 @@
 
 require 'webrick'
 
+server_root = ARGV[0] || Dir.pwd
 web_server = WEBrick::HTTPServer.new(Port: 3000,
-                                     DocumentRoot: Dir.pwd)
+                                     DocumentRoot: server_root)
 
 Thread.new do
   web_server.start

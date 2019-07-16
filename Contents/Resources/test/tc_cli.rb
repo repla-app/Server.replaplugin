@@ -77,4 +77,30 @@ class TestCLI < Minitest::Test
     assert_equal(message, last)
     window.close
   end
+
+  def test_refresh
+    server_command = "#{SERVER_COMMAND_REFRESH_PATH} #{SERVER_ROOT}"
+    flags = "-r \"#{SERVER_COMMAND_REFERSH_STRING}\""
+    command = "#{SYMLINK_DST} server "\
+      "#{Shellwords.escape(server_command)}"
+    `#{command} #{flags}`
+    window_id = nil
+    Repla::Test.block_until do
+      window_id = Repla::Test::Helper.window_id
+      !window_id.nil?
+    end
+    refute_nil(window_id)
+    window = Repla::Window.new(window_id)
+    javascript = File.read(Repla::Test::TITLE_JAVASCRIPT_FILE)
+    result = nil
+    Repla::Test.block_until do
+      result = window.do_javascript(javascript)
+      result == Repla::Test::INDEX_HTML_TITLE
+    end
+    assert_equal(Repla::Test::INDEX_HTML_TITLE, result)
+    window.close
+
+    # 1. Change the root and refresh
+    # 2. Change it back and refresh
+  end
 end

@@ -79,7 +79,9 @@ module Repla
     class MockView
       attr_reader :load_url_failed
       attr_reader :load_url_timestamp
+      attr_reader :reload_timestamp
       def initialize
+        @reload_called = false
         @load_url_called = false
         @load_url_failed = false
       end
@@ -89,8 +91,16 @@ module Repla
         @load_url_timestamp = Time.now.to_i
       end
 
+      def reload
+        @reload_timestamp = Time.now.to_i
+      end
+
       def load_url_called
         !@load_url_timestamp.nil?
+      end
+
+      def reload_called
+        !@reload_timestamp.nil?
       end
     end
   end

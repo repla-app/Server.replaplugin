@@ -34,7 +34,7 @@ module Repla
 
         if @loaded_url && !@refresh_string.nil?
           found = self.class.string_found?(text, @refresh_string)
-          view.reload if found
+          @view.reload if found
         end
 
         return if @loaded_url

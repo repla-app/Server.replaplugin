@@ -121,7 +121,7 @@ class TestParentLoggerClass < Minitest::Test
   end
 end
 
-# Test parent logger
+# Test parent logger URL
 class TestParentLoggerURL < Minitest::Test
   def test_multiple_urls
     mock_view = Repla::Test::MockView.new
@@ -172,7 +172,35 @@ class TestParentLoggerURL < Minitest::Test
   end
 end
 
-# Test parent logger options
+# Test parent logger refresh
+class TestParentLoggerRefresh < Minitest::Test
+  def test_refresh
+    mock_view = Repla::Test::MockView.new
+    options = TEST_DELAY_OPTIONS_ZERO.dup
+    refresh_string = 'refresh string'
+    options[:refresh_string] = refresh_string
+    parent_logger = Repla::Server::ParentLogger.new(Repla::Test::MockLogger.new,
+                                                    mock_view,
+                                                    options)
+
+    line_with_refresh_string = "The refresh string is #{refresh_string}"
+    parent_logger.process_output(line_with_refresh_string)
+    refute(mock_view.reload_called,
+           "Refresh should not be called before loading a URL.")
+
+    # Load the URL
+    real_example_url = 'http://127.0.0.1:4000/'
+    line_with_real_example_url = "Server address: #{real_example_url}"
+    parent_logger.process_output(line_with_real_example_url)
+    assert(mock_view.load_url_called)
+
+    line_with_refresh_string = "The refresh string is #{refresh_string}"
+    parent_logger.process_output(line_with_refresh_string)
+    assert(mock_view.reload_called)
+  end
+end
+
+# Test parent logger URL options single
 class TestParentLoggerURLOptionsSingle < Minitest::Test
   def test_string
     options = { url_string: 'wait for this string' }
@@ -214,8 +242,8 @@ class TestParentLoggerURLOptionsSingle < Minitest::Test
   end
 end
 
-# Test parent logger options multiple
-class TestParentLoggerOptionsMultiple < Minitest::Test
+# Test parent logger URL options multiple
+class TestParentLoggerURLOptionsMultiple < Minitest::Test
   def test_string_new_line
     string = 'wait for this string'
     options = { url_string: string }

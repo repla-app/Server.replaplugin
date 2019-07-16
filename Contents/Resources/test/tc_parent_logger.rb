@@ -192,8 +192,8 @@ class TestParentLoggerRefresh < Minitest::Test
     real_example_url = 'http://127.0.0.1:4000/'
     line_with_real_example_url = "Server address: #{real_example_url}"
     parent_logger.process_output(line_with_real_example_url)
-    assert(mock_view.load_url_called)
 
+    # Try refresh
     parent_logger.process_output(line_with_refresh_string)
     assert(mock_view.reload_called)
 
@@ -201,6 +201,33 @@ class TestParentLoggerRefresh < Minitest::Test
     mock_view.reload_reset
     refute(mock_view.reload_called)
     parent_logger.process_output(line_with_refresh_string)
+    assert(mock_view.reload_called)
+
+    # Test refresh string alone
+    mock_view.reload_reset
+    refute(mock_view.reload_called)
+    parent_logger.process_output(refresh_string)
+    assert(mock_view.reload_called)
+  end
+
+  def test_refresh_same_line
+    mock_view = Repla::Test::MockView.new
+    options = TEST_DELAY_OPTIONS_ZERO.dup
+    refresh_string = 'refresh string'
+    options[:refresh_string] = refresh_string
+    parent_logger = Repla::Server::ParentLogger.new(Repla::Test::MockLogger.new,
+                                                    mock_view,
+                                                    options)
+
+    # Load the URL
+    real_example_url = 'http://127.0.0.1:4000/'
+    line_with_url_and_refresh = "#{refresh_string} "\
+      "Server address: #{real_example_url}"
+    parent_logger.process_output(line_with_url_and_refresh)
+    assert(mock_view.load_url_called)
+    refute(mock_view.reload_called)
+
+    parent_logger.process_output(line_with_url_and_refresh)
     assert(mock_view.reload_called)
   end
 end

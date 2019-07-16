@@ -18,9 +18,7 @@ class TestCLI < Minitest::Test
     app_bundle_path = `#{bundle_command}`
     app_bundle_path.chomp!
     symlink_src = File.join(app_bundle_path, CLI_PATH_COMPONENT)
-    if File.file?(SYMLINK_DST)
-      File.delete(SYMLINK_DST)
-    end
+    File.delete(SYMLINK_DST) if File.file?(SYMLINK_DST)
     File.symlink(symlink_src, SYMLINK_DST)
   end
 

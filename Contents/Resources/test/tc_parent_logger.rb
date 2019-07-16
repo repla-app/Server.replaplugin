@@ -103,15 +103,21 @@ class TestParentLoggerClass < Minitest::Test
     string = 'some'
     index = Repla::Server::ParentLogger.find_string(text, string)
     assert_equal(test_index, index)
+    found = Repla::Server::ParentLogger.string_found?(text, string)
+    assert(found)
 
     string = 'Tnone'
     index = Repla::Server::ParentLogger.find_string(text, string)
     assert_nil(index)
+    found = Repla::Server::ParentLogger.string_found?(text, string)
+    refute(found)
 
     test_index = 0
     string = 'T'
     index = Repla::Server::ParentLogger.find_string(text, string)
     assert_equal(test_index, index)
+    found = Repla::Server::ParentLogger.string_found?(text, string)
+    assert(found)
   end
 end
 

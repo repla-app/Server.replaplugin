@@ -85,6 +85,12 @@ module Repla
         text.index(string)
       end
 
+      def self.string_found?(text, string)
+        raise if string.nil?
+
+        !find_string(text, string).nil?
+      end
+
       def self.get_url(url = nil, port = nil)
         unless url.nil?
           return url if port.nil?

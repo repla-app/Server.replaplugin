@@ -25,6 +25,7 @@ SERVER_COMMAND_REFRESH_PATH = File.join(SERVER_COMMAND_DIR,
                                         'server.rb')
 SERVER_COMMAND_STRING = 'Server started at'.freeze
 SERVER_COMMAND_OTHER_STRING = 'A different message'.freeze
+SERVER_COMMAND_REFERSH_STRING = 'HTTPServer#start'.freeze
 TEST_DELAY_OPTIONS_ZERO = { delay: 0 }.freeze
 TEST_DELAY_LENGTH_LONG = 1
 TEST_DELAY_LENGTH_DEFAULT = 0.5

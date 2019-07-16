@@ -32,7 +32,7 @@ optparse = OptionParser.new do |opts|
           '--string STRING',
           'Don\'t load a URL until after the STRING is output. Leading and '\
           'trailing whitespace is removed from the STRING.') do |string|
-    options[:string] = string
+    options[:url_string] = string
   end
   opts.on('-d',
           '--delay DELAY',

@@ -22,7 +22,7 @@ module Repla
         url = options[:url]&.strip
         @delay = options[:delay]&.to_f || DEFAULT_DELAY
         @url = self.class.get_url(url, port)
-        @string = options[:string]
+        @string = options[:url_string]
         @string&.strip!
         @string_found = @string.nil? || @string.empty?
       end

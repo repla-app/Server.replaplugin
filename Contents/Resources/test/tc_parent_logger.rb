@@ -169,7 +169,7 @@ end
 # Test parent logger options
 class TestParentLoggerOptionsSingle < Minitest::Test
   def test_string
-    options = { string: 'wait for this string' }
+    options = { url_string: 'wait for this string' }
     parent_logger = Repla::Server::ParentLogger.new(Repla::Test::MockLogger.new,
                                                     Repla::Test::MockView.new,
                                                     options)
@@ -212,7 +212,7 @@ end
 class TestParentLoggerOptionsMultiple < Minitest::Test
   def test_string_new_line
     string = 'wait for this string'
-    options = { string: string }
+    options = { url_string: string }
     parent_logger = Repla::Server::ParentLogger.new(Repla::Test::MockLogger.new,
                                                     Repla::Test::MockView.new,
                                                     options)
@@ -244,7 +244,7 @@ class TestParentLoggerOptionsMultiple < Minitest::Test
   def test_url_string
     good_url = 'http://www.example.com'
     different_url = 'http://localhost'
-    options = { string: 'wait for this string', url: good_url }
+    options = { url_string: 'wait for this string', url: good_url }
     parent_logger = Repla::Server::ParentLogger.new(Repla::Test::MockLogger.new,
                                                     Repla::Test::MockView.new,
                                                     options)
@@ -262,7 +262,7 @@ class TestParentLoggerOptionsMultiple < Minitest::Test
 
   def test_port_string
     port = 5000
-    options = { string: 'wait for this string', port: port }
+    options = { url_string: 'wait for this string', port: port }
     local_url_with_port = "http://localhost:#{port}"
     different_url = 'http://www.example.com'
     parent_logger = Repla::Server::ParentLogger.new(Repla::Test::MockLogger.new,
@@ -286,7 +286,7 @@ class TestParentLoggerOptionsMultiple < Minitest::Test
     # Add whitespace to assure it's stripped properly
     options = { port: "    #{port}     ",
                 url: "    #{good_url}    ",
-                string: string }
+                url_string: string }
     parent_logger = Repla::Server::ParentLogger.new(Repla::Test::MockLogger.new,
                                                     Repla::Test::MockView.new,
                                                     options)

@@ -122,7 +122,7 @@ class TestParentLoggerClass < Minitest::Test
 end
 
 # Test parent logger
-class TestParentLogger < Minitest::Test
+class TestParentLoggerURL < Minitest::Test
   def test_multiple_urls
     mock_view = Repla::Test::MockView.new
     parent_logger = Repla::Server::ParentLogger.new(Repla::Test::MockLogger.new,
@@ -173,7 +173,7 @@ class TestParentLogger < Minitest::Test
 end
 
 # Test parent logger options
-class TestParentLoggerOptionsSingle < Minitest::Test
+class TestParentLoggerURLOptionsSingle < Minitest::Test
   def test_string
     options = { url_string: 'wait for this string' }
     parent_logger = Repla::Server::ParentLogger.new(Repla::Test::MockLogger.new,

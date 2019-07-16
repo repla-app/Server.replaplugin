@@ -29,10 +29,17 @@ optparse = OptionParser.new do |opts|
     options[:url] = url
   end
   opts.on('-s',
-          '--string STRING',
+          '--url-string STRING',
           'Don\'t load a URL until after the STRING is output. Leading and '\
           'trailing whitespace is removed from the STRING.') do |string|
     options[:url_string] = string
+  end
+  opts.on('-r',
+          '--refresh-string STRING',
+          'Refresh each time STRING is output. Has no effect until a URL is '\
+          'loaded. Leading and trailing whitespace is removed from the '\
+          'STRING.') do |string|
+    options[:refresh_string] = string
   end
   opts.on('-d',
           '--delay DELAY',

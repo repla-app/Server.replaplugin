@@ -21,6 +21,8 @@ SERVER_COMMAND_PATH = File.join(SERVER_COMMAND_DIR,
                                 SERVER_COMMAND)
 SERVER_COMMAND_DEFAULT_PATH = File.join(SERVER_COMMAND_DIR,
                                         SERVER_COMMAND_DEFAULT)
+SERVER_COMMAND_REFRESH_PATH = File.join(SERVER_COMMAND_DIR,
+                                        'server.rb')
 SERVER_COMMAND_STRING = 'Server started at'.freeze
 SERVER_COMMAND_OTHER_STRING = 'A different message'.freeze
 TEST_DELAY_OPTIONS_ZERO = { delay: 0 }.freeze

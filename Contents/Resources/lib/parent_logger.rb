@@ -25,10 +25,17 @@ module Repla
         @url_string = options[:url_string]
         @url_string&.strip!
         @url_string_found = @url_string.nil? || @url_string.empty?
+        @refresh_string = options[:refresh_string]
+        @refresh_string&.strip!
       end
 
       def process_output(text)
         @logger.info(text)
+
+        if @loaded_url && !@refresh_string.nil?
+          found = self.class.string_found?(text, @refresh_string)
+          view.reload if found
+        end
 
         return if @loaded_url
 
@@ -67,8 +74,8 @@ module Repla
 
         unless string_index.nil?
           @url_string_found = true
-          # Trim everything before the `@url_string` so that it isn't searched for
-          # a URL
+          # Trim everything before the `@url_string` so that it isn't searched
+          # for a URL
           line = line[string_index..-1]
         end
 

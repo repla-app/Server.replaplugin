@@ -131,11 +131,11 @@ class TestParentLoggerURL < Minitest::Test
     real_example_url = 'http://127.0.0.1:4000/'
     line_with_real_example_url = "Server address: #{real_example_url}"
     parent_logger.process_output(line_with_real_example_url)
-    assert(mock_view.called)
+    assert(mock_view.load_url_called)
     local_url_with_port = 'http://127.0.0.1:5000'
     line_with_local_url_with_port = "Here is a URL #{local_url_with_port}"
     parent_logger.process_output(line_with_local_url_with_port)
-    assert(!mock_view.failed)
+    assert(!mock_view.load_url_failed)
   end
 
   def test_delay_long
@@ -146,11 +146,11 @@ class TestParentLoggerURL < Minitest::Test
     real_example_url = 'http://127.0.0.1:4000/'
     line_with_real_example_url = "Server address: #{real_example_url}"
     parent_logger.process_output(line_with_real_example_url)
-    assert(!mock_view.called)
-    Repla::Test.block_until { mock_view.called }
-    assert(mock_view.called)
+    assert(!mock_view.load_url_called)
+    Repla::Test.block_until { mock_view.load_url_called }
+    assert(mock_view.load_url_called)
     now = Time.now.to_i
-    elapsed = now - mock_view.timestamp
+    elapsed = now - mock_view.load_url_timestamp
     assert(elapsed => TEST_DELAY_LENGTH_LONG)
   end
 
@@ -161,11 +161,11 @@ class TestParentLoggerURL < Minitest::Test
     real_example_url = 'http://127.0.0.1:4000/'
     line_with_real_example_url = "Server address: #{real_example_url}"
     parent_logger.process_output(line_with_real_example_url)
-    assert(!mock_view.called)
-    Repla::Test.block_until_with_timeout(4, 0.2) { mock_view.called }
-    assert(mock_view.called)
+    assert(!mock_view.load_url_called)
+    Repla::Test.block_until_with_timeout(4, 0.2) { mock_view.load_url_called }
+    assert(mock_view.load_url_called)
     now = Time.now.to_f
-    elapsed = now - mock_view.timestamp
+    elapsed = now - mock_view.load_url_timestamp
     assert(elapsed => TEST_DELAY_LENGTH_DEFAULT)
     # This assert isn't reliable
     # assert(elapsed < TEST_DELAY_LENGTH_LONG)

@@ -77,20 +77,20 @@ module Repla
 
     # Mock view
     class MockView
-      attr_reader :failed
-      attr_reader :timestamp
+      attr_reader :load_url_failed
+      attr_reader :load_url_timestamp
       def initialize
-        @called = false
-        @failed = false
+        @load_url_called = false
+        @load_url_failed = false
       end
 
       def load_url(_url, _options = {})
-        @failed = true if called
-        @timestamp = Time.now.to_i
+        @load_url_failed = true if load_url_called
+        @load_url_timestamp = Time.now.to_i
       end
 
-      def called
-        !@timestamp.nil?
+      def load_url_called
+        !@load_url_timestamp.nil?
       end
     end
   end

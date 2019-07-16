@@ -91,6 +91,10 @@ module Repla
         @load_url_timestamp = Time.now.to_i
       end
 
+      def reload_reset
+        @reload_timestamp = nil
+      end
+
       def reload
         @reload_timestamp = Time.now.to_i
       end

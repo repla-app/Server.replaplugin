@@ -186,7 +186,7 @@ class TestParentLoggerRefresh < Minitest::Test
     line_with_refresh_string = "The refresh string is #{refresh_string}"
     parent_logger.process_output(line_with_refresh_string)
     refute(mock_view.reload_called,
-           "Refresh should not be called before loading a URL.")
+           'Refresh should not be called before loading a URL.')
 
     # Load the URL
     real_example_url = 'http://127.0.0.1:4000/'
@@ -194,7 +194,12 @@ class TestParentLoggerRefresh < Minitest::Test
     parent_logger.process_output(line_with_real_example_url)
     assert(mock_view.load_url_called)
 
-    line_with_refresh_string = "The refresh string is #{refresh_string}"
+    parent_logger.process_output(line_with_refresh_string)
+    assert(mock_view.reload_called)
+
+    # Test second refresh
+    mock_view.reload_reset
+    refute(mock_view.reload_called)
     parent_logger.process_output(line_with_refresh_string)
     assert(mock_view.reload_called)
   end

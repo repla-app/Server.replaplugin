@@ -92,15 +92,33 @@ class TestCLI < Minitest::Test
     refute_nil(window_id)
     window = Repla::Window.new(window_id)
     javascript = File.read(Repla::Test::TITLE_JAVASCRIPT_FILE)
+
+    # Test original
     result = nil
     Repla::Test.block_until do
       result = window.do_javascript(javascript)
       result == Repla::Test::INDEX_HTML_TITLE
     end
     assert_equal(Repla::Test::INDEX_HTML_TITLE, result)
-    window.close
 
-    # 1. Change the root and refresh
-    # 2. Change it back and refresh
+    # Change to jQuery
+    window.read_from_standard_input("#{Repla::Test::INDEXJQUERY_HTML_FILENAME}\n")
+    result = nil
+    Repla::Test.block_until do
+      result = window.do_javascript(javascript)
+      result == Repla::Test::INDEXJQUERY_HTML_TITLE
+    end
+    assert_equal(Repla::Test::INDEXJQUERY_HTML_TITLE, result)
+
+    # Change it back
+    window.read_from_standard_input("#{Repla::Test::INDEX_HTML_FILENAME}\n")
+    result = nil
+    Repla::Test.block_until do
+      result = window.do_javascript(javascript)
+      result == Repla::Test::INDEX_HTML_TITLE
+    end
+    assert_equal(Repla::Test::INDEX_HTML_TITLE, result)
+
+    window.close
   end
 end

@@ -48,7 +48,7 @@ STDIN.each_line do |line|
   filename = line.strip!
   server_thread = Thread.new do
     web_server = WEBrick::HTTPServer.new(Port: 3000,
-                                         DocumentRoot: Dir.pwd,
+                                         DocumentRoot: server_root,
                                          DirectoryIndex: [filename])
     web_server.start
   end

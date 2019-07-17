@@ -22,13 +22,20 @@ module Repla
         url = options[:url]&.strip
         @delay = options[:delay]&.to_f || DEFAULT_DELAY
         @url = self.class.get_url(url, port)
-        @string = options[:string]
-        @string&.strip!
-        @string_found = @string.nil? || @string.empty?
+        @url_string = options[:url_string]
+        @url_string&.strip!
+        @url_string_found = @url_string.nil? || @url_string.empty?
+        @refresh_string = options[:refresh_string]
+        @refresh_string&.strip!
       end
 
       def process_output(text)
         @logger.info(text)
+
+        if @loaded_url && !@refresh_string.nil?
+          found = self.class.string_found?(text, @refresh_string)
+          @view.reload if found
+        end
 
         return if @loaded_url
 
@@ -62,17 +69,17 @@ module Repla
       end
 
       def url_from_line(line)
-        string_index = self.class.find_string(line, @string) unless
-          @string_found
+        string_index = self.class.find_string(line, @url_string) unless
+          @url_string_found
 
         unless string_index.nil?
-          @string_found = true
-          # Trim everything before the `@string` so that it isn't searched for
-          # a URL
+          @url_string_found = true
+          # Trim everything before the `@url_string` so that it isn't searched
+          # for a URL
           line = line[string_index..-1]
         end
 
-        return nil unless @string_found
+        return nil unless @url_string_found
 
         return @url unless @url.nil?
 
@@ -83,6 +90,12 @@ module Repla
         raise if string.nil?
 
         text.index(string)
+      end
+
+      def self.string_found?(text, string)
+        raise if string.nil?
+
+        !find_string(text, string).nil?
       end
 
       def self.get_url(url = nil, port = nil)

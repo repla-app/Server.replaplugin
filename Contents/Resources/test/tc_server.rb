@@ -109,8 +109,11 @@ class TestServerString < Minitest::Test
               '-u www.example.com '\
               "-m '#{SERVER_COMMAND_OTHER_STRING}'"
     argument = "-s #{SERVER_COMMAND_STRING}"
+    # Note that the order of argument and command are sometimes swapped to make
+    # sure the command works regardless if it's before or after flags.
     @pid = spawn(SERVER_BUNDLE_COMMAND,
-                 argument, command,
+                 argument,
+                 command,
                  chdir: SERVER_ROOT)
     window_id = nil
     Repla::Test.block_until do
@@ -142,8 +145,11 @@ class TestServerPort < Minitest::Test
   def setup
     command = SERVER_COMMAND_PATH.to_s
     argument = "-p #{SERVER_PORT}"
+    # Note that the order of argument and command are sometimes swapped to make
+    # sure the command works regardless if it's before or after flags.
     @pid = spawn(SERVER_BUNDLE_COMMAND,
-                 argument, command,
+                 argument,
+                 command,
                  chdir: SERVER_ROOT)
     window_id = nil
     Repla::Test.block_until do
@@ -175,8 +181,11 @@ class TestServerURL < Minitest::Test
   def setup
     command = SERVER_COMMAND_PATH.to_s
     argument = "-u #{SERVER_URL}:#{SERVER_PORT}"
+    # Note that the order of argument and command are sometimes swapped to make
+    # sure the command works regardless if it's before or after flags.
     @pid = spawn(SERVER_BUNDLE_COMMAND,
-                 argument, command,
+                 command,
+                 argument,
                  chdir: SERVER_ROOT)
     window_id = nil
     Repla::Test.block_until do
@@ -214,8 +223,13 @@ class TestServerPortURLString < Minitest::Test
     arguments = ["-u #{SERVER_URL}",
                  "-p #{SERVER_PORT}",
                  "-s #{SERVER_COMMAND_STRING}"]
+    # Note that the order of argument and command are sometimes swapped to make
+    # sure the command works regardless if it's before or after flags.
     @pid = spawn(SERVER_BUNDLE_COMMAND,
-                 arguments[0], arguments[1], arguments[2], command,
+                 arguments[0],
+                 command,
+                 arguments[1],
+                 arguments[2],
                  chdir: SERVER_ROOT)
     window_id = nil
     Repla::Test.block_until do

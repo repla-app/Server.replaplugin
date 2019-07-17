@@ -21,8 +21,11 @@ SERVER_COMMAND_PATH = File.join(SERVER_COMMAND_DIR,
                                 SERVER_COMMAND)
 SERVER_COMMAND_DEFAULT_PATH = File.join(SERVER_COMMAND_DIR,
                                         SERVER_COMMAND_DEFAULT)
+SERVER_COMMAND_REFRESH_PATH = File.join(SERVER_COMMAND_DIR,
+                                        'server.rb')
 SERVER_COMMAND_STRING = 'Server started at'.freeze
 SERVER_COMMAND_OTHER_STRING = 'A different message'.freeze
+SERVER_COMMAND_REFERSH_STRING = 'HTTPServer#start'.freeze
 TEST_DELAY_OPTIONS_ZERO = { delay: 0 }.freeze
 TEST_DELAY_LENGTH_LONG = 1
 TEST_DELAY_LENGTH_DEFAULT = 0.5
@@ -77,20 +80,34 @@ module Repla
 
     # Mock view
     class MockView
-      attr_reader :failed
-      attr_reader :timestamp
+      attr_reader :load_url_failed
+      attr_reader :load_url_timestamp
+      attr_reader :reload_timestamp
       def initialize
-        @called = false
-        @failed = false
+        @reload_called = false
+        @load_url_called = false
+        @load_url_failed = false
       end
 
       def load_url(_url, _options = {})
-        @failed = true if called
-        @timestamp = Time.now.to_i
+        @load_url_failed = true if load_url_called
+        @load_url_timestamp = Time.now.to_i
       end
 
-      def called
-        !@timestamp.nil?
+      def reload_reset
+        @reload_timestamp = nil
+      end
+
+      def reload
+        @reload_timestamp = Time.now.to_i
+      end
+
+      def load_url_called
+        !@load_url_timestamp.nil?
+      end
+
+      def reload_called
+        !@reload_timestamp.nil?
       end
     end
   end

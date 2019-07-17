@@ -103,20 +103,26 @@ class TestParentLoggerClass < Minitest::Test
     string = 'some'
     index = Repla::Server::ParentLogger.find_string(text, string)
     assert_equal(test_index, index)
+    found = Repla::Server::ParentLogger.string_found?(text, string)
+    assert(found)
 
     string = 'Tnone'
     index = Repla::Server::ParentLogger.find_string(text, string)
     assert_nil(index)
+    found = Repla::Server::ParentLogger.string_found?(text, string)
+    refute(found)
 
     test_index = 0
     string = 'T'
     index = Repla::Server::ParentLogger.find_string(text, string)
     assert_equal(test_index, index)
+    found = Repla::Server::ParentLogger.string_found?(text, string)
+    assert(found)
   end
 end
 
-# Test parent logger
-class TestParentLogger < Minitest::Test
+# Test parent logger URL
+class TestParentLoggerURL < Minitest::Test
   def test_multiple_urls
     mock_view = Repla::Test::MockView.new
     parent_logger = Repla::Server::ParentLogger.new(Repla::Test::MockLogger.new,
@@ -125,11 +131,11 @@ class TestParentLogger < Minitest::Test
     real_example_url = 'http://127.0.0.1:4000/'
     line_with_real_example_url = "Server address: #{real_example_url}"
     parent_logger.process_output(line_with_real_example_url)
-    assert(mock_view.called)
+    assert(mock_view.load_url_called)
     local_url_with_port = 'http://127.0.0.1:5000'
     line_with_local_url_with_port = "Here is a URL #{local_url_with_port}"
     parent_logger.process_output(line_with_local_url_with_port)
-    assert(!mock_view.failed)
+    assert(!mock_view.load_url_failed)
   end
 
   def test_delay_long
@@ -140,11 +146,11 @@ class TestParentLogger < Minitest::Test
     real_example_url = 'http://127.0.0.1:4000/'
     line_with_real_example_url = "Server address: #{real_example_url}"
     parent_logger.process_output(line_with_real_example_url)
-    assert(!mock_view.called)
-    Repla::Test.block_until { mock_view.called }
-    assert(mock_view.called)
+    assert(!mock_view.load_url_called)
+    Repla::Test.block_until { mock_view.load_url_called }
+    assert(mock_view.load_url_called)
     now = Time.now.to_i
-    elapsed = now - mock_view.timestamp
+    elapsed = now - mock_view.load_url_timestamp
     assert(elapsed => TEST_DELAY_LENGTH_LONG)
   end
 
@@ -155,21 +161,81 @@ class TestParentLogger < Minitest::Test
     real_example_url = 'http://127.0.0.1:4000/'
     line_with_real_example_url = "Server address: #{real_example_url}"
     parent_logger.process_output(line_with_real_example_url)
-    assert(!mock_view.called)
-    Repla::Test.block_until_with_timeout(4, 0.2) { mock_view.called }
-    assert(mock_view.called)
+    assert(!mock_view.load_url_called)
+    Repla::Test.block_until_with_timeout(4, 0.2) { mock_view.load_url_called }
+    assert(mock_view.load_url_called)
     now = Time.now.to_f
-    elapsed = now - mock_view.timestamp
+    elapsed = now - mock_view.load_url_timestamp
     assert(elapsed => TEST_DELAY_LENGTH_DEFAULT)
     # This assert isn't reliable
     # assert(elapsed < TEST_DELAY_LENGTH_LONG)
   end
 end
 
-# Test parent logger options
-class TestParentLoggerOptionsSingle < Minitest::Test
+# Test parent logger refresh
+class TestParentLoggerRefresh < Minitest::Test
+  def test_refresh
+    mock_view = Repla::Test::MockView.new
+    options = TEST_DELAY_OPTIONS_ZERO.dup
+    refresh_string = 'refresh string'
+    options[:refresh_string] = refresh_string
+    parent_logger = Repla::Server::ParentLogger.new(Repla::Test::MockLogger.new,
+                                                    mock_view,
+                                                    options)
+
+    line_with_refresh_string = "The refresh string is #{refresh_string}"
+    parent_logger.process_output(line_with_refresh_string)
+    refute(mock_view.reload_called,
+           'Refresh should not be called before loading a URL.')
+
+    # Load the URL
+    real_example_url = 'http://127.0.0.1:4000/'
+    line_with_real_example_url = "Server address: #{real_example_url}"
+    parent_logger.process_output(line_with_real_example_url)
+
+    # Try refresh
+    parent_logger.process_output(line_with_refresh_string)
+    assert(mock_view.reload_called)
+
+    # Test second refresh
+    mock_view.reload_reset
+    refute(mock_view.reload_called)
+    parent_logger.process_output(line_with_refresh_string)
+    assert(mock_view.reload_called)
+
+    # Test refresh string alone
+    mock_view.reload_reset
+    refute(mock_view.reload_called)
+    parent_logger.process_output(refresh_string)
+    assert(mock_view.reload_called)
+  end
+
+  def test_refresh_same_line
+    mock_view = Repla::Test::MockView.new
+    options = TEST_DELAY_OPTIONS_ZERO.dup
+    refresh_string = 'refresh string'
+    options[:refresh_string] = refresh_string
+    parent_logger = Repla::Server::ParentLogger.new(Repla::Test::MockLogger.new,
+                                                    mock_view,
+                                                    options)
+
+    # Load the URL
+    real_example_url = 'http://127.0.0.1:4000/'
+    line_with_url_and_refresh = "#{refresh_string} "\
+      "Server address: #{real_example_url}"
+    parent_logger.process_output(line_with_url_and_refresh)
+    assert(mock_view.load_url_called)
+    refute(mock_view.reload_called)
+
+    parent_logger.process_output(line_with_url_and_refresh)
+    assert(mock_view.reload_called)
+  end
+end
+
+# Test parent logger URL options single
+class TestParentLoggerURLOptionsSingle < Minitest::Test
   def test_string
-    options = { string: 'wait for this string' }
+    options = { url_string: 'wait for this string' }
     parent_logger = Repla::Server::ParentLogger.new(Repla::Test::MockLogger.new,
                                                     Repla::Test::MockView.new,
                                                     options)
@@ -208,11 +274,11 @@ class TestParentLoggerOptionsSingle < Minitest::Test
   end
 end
 
-# Test parent logger options multiple
-class TestParentLoggerOptionsMultiple < Minitest::Test
+# Test parent logger URL options multiple
+class TestParentLoggerURLOptionsMultiple < Minitest::Test
   def test_string_new_line
     string = 'wait for this string'
-    options = { string: string }
+    options = { url_string: string }
     parent_logger = Repla::Server::ParentLogger.new(Repla::Test::MockLogger.new,
                                                     Repla::Test::MockView.new,
                                                     options)
@@ -244,7 +310,7 @@ class TestParentLoggerOptionsMultiple < Minitest::Test
   def test_url_string
     good_url = 'http://www.example.com'
     different_url = 'http://localhost'
-    options = { string: 'wait for this string', url: good_url }
+    options = { url_string: 'wait for this string', url: good_url }
     parent_logger = Repla::Server::ParentLogger.new(Repla::Test::MockLogger.new,
                                                     Repla::Test::MockView.new,
                                                     options)
@@ -262,7 +328,7 @@ class TestParentLoggerOptionsMultiple < Minitest::Test
 
   def test_port_string
     port = 5000
-    options = { string: 'wait for this string', port: port }
+    options = { url_string: 'wait for this string', port: port }
     local_url_with_port = "http://localhost:#{port}"
     different_url = 'http://www.example.com'
     parent_logger = Repla::Server::ParentLogger.new(Repla::Test::MockLogger.new,
@@ -286,7 +352,7 @@ class TestParentLoggerOptionsMultiple < Minitest::Test
     # Add whitespace to assure it's stripped properly
     options = { port: "    #{port}     ",
                 url: "    #{good_url}    ",
-                string: string }
+                url_string: string }
     parent_logger = Repla::Server::ParentLogger.new(Repla::Test::MockLogger.new,
                                                     Repla::Test::MockView.new,
                                                     options)

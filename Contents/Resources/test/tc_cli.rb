@@ -104,7 +104,7 @@ class TestCLI < Minitest::Test
     # Change to jQuery
     window.read_from_standard_input("#{Repla::Test::INDEXJQUERY_HTML_FILENAME}\n")
     result = nil
-    Repla::Test.block_until do
+    Repla::Test.block_until_with_timeout(Repla::Test::TEST_TIMEOUT_TIME * 2) do
       result = window.do_javascript(javascript)
       result == Repla::Test::INDEXJQUERY_HTML_TITLE
     end
@@ -113,7 +113,7 @@ class TestCLI < Minitest::Test
     # Change it back
     window.read_from_standard_input("#{Repla::Test::INDEX_HTML_FILENAME}\n")
     result = nil
-    Repla::Test.block_until do
+    Repla::Test.block_until_with_timeout(Repla::Test::TEST_TIMEOUT_TIME * 2) do
       result = window.do_javascript(javascript)
       result == Repla::Test::INDEX_HTML_TITLE
     end

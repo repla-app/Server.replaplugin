@@ -8,16 +8,15 @@ Whether you're editing a simple HTML file or running a complex build system, Rep
 2. **It Combines the Browser and the Terminal:** Instead of having your browser showing your running web app, and a separate terminal window somewhere else running your web server, why not combine them into one window with the web app on the top, and the terminal on the bottom?
 3. **Runs Local Web Servers by Opening a Document:** Instead of running your web server by typing out a long terminal command, why not just save it to a document that you can just open when you need to run your server again?
 
-Here's how it works:
+## Quick Start Guide
 
 1. Download and install the Repla app.
-2. Run the Repla command-line tool with `repla server <your web server command>"`
-3. Configure refresh a refresh string `-r <some string to refresh>`
-4. 
+2. Run the Repla command-line tool with `repla server <your web server command>"`.
+3. Add `-f` to the command to refresh when a file changes.
+4. Use "File" -> "Save" to save this server to a file.
+5. Run your server again by opening the file you saved.
 
-
-
-A few notes on how these features are implemented:
+# Implementation Details
 
 - You never have to add any dependencies to your web app in order to make Repla Servers features work.
 - The main way that refresh is powered is by using system OS-level file system events, or by parsing terminal output.

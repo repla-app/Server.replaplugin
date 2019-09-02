@@ -2,7 +2,7 @@
 
 **Repla Server** is plugin for the [Repla macOS app](https://repla.app). It's a web development tool designed to improve your workflow in three ways:
 
-1. **It *Always* Refreshes:** Instead of making a change, saving, then switching to your web browser, then refreshing, why not just have the web app automatically refresh when you save a file or  up to date?
+1. **It *Always* Refreshes:** Instead of making a change, saving, then switching to your web browser, then refreshing, why not just have the web app automatically refresh when you save a file or your build system finishes?
 
 Whether you're editing a simple HTML file or running a complex build system, Repla Server can always refresh everytime you make a change.
 2. **It Combines the Browser and the Terminal:** Instead of having your browser showing your running web app, and a separate terminal window somewhere else running your web server, why not combine them into one window with the web app on the top, and the terminal on the bottom?
@@ -12,8 +12,10 @@ Here's how it works:
 
 1. Download and install the Repla app.
 2. Run the Repla command-line tool with `repla server <your web server command>"`
-3. Configure when you want your 
-3. Once Use standard "File"
+3. Configure refresh a refresh string `-r <some string to refresh>`
+4. 
+
+
 
 A few notes on how these features are implemented:
 

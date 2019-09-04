@@ -24,7 +24,7 @@
 
 Repla Server is a Unix tool, so works with most web development workflows:
 
-1. Developing web apps in languages like [Node](https://nodejs.org/), [Ruby](https://www.ruby-lang.org/), or [Python](https://www.python.org/); using frameworks like [Express](https://expressjs.com/), [Ruby on Rails](https://rubyonrails.org/), or [Django](https://www.djangoproject.com/).
-2. Doing Frontend Development with build systems like [Gulp](https://gulpjs.com/), [Grunt](https://gruntjs.com/), [Sass](https://sass-lang.com/), [Less](http://lesscss.org/), or [Webpack](https://webpack.js.org/).
-3. Maintaining static blogging engines like [Jekyll](https://jekyllrb.com/) or [Hugo](https://gohugo.io/).
+1. Developing web apps in languages like [Node](https://nodejs.org/), [Python](https://www.python.org/), or [Ruby](https://www.ruby-lang.org/); using frameworks like [Django](https://www.djangoproject.com/), [Express](https://expressjs.com/), or [Ruby on Rails](https://rubyonrails.org/).
+2. Doing frontend development with build systems like [Grunt](https://gruntjs.com/), [Gulp](https://gulpjs.com/), [Less](http://lesscss.org/), [Sass](https://sass-lang.com/), or [Webpack](https://webpack.js.org/).
+3. Maintaining static blogging engines like [Hugo](https://gohugo.io/) or [Jekyll](https://jekyllrb.com/).
 4. Running local web apps like [Jupyter Notebooks](https://jupyter.org/).

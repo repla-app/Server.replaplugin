@@ -1,6 +1,6 @@
 # Server [![Build Status](https://travis-ci.org/repla-app/Server.replaplugin.svg?branch=master)](https://travis-ci.org/repla-app/Server.replaplugin)
 
-**Repla Server** is a plugin that comes with the [Repla macOS app](https://repla.app). It's a web development tool designed to improve your workflow in three ways:
+**Repla Server** is a plugin built-in to the [Repla macOS app](https://repla.app). It's a web development tool designed to improve your workflow in three ways:
 
 1. **_Always_ Refresh:** Refresh automatically when you save a file, or when your build system finishes.
 2. **One-Window Browser and Terminal:** Keep your browser and your terminal in one window with your web app on top, and the server output on the bottom.
@@ -19,7 +19,7 @@
 Repla Server works with most web development workflows:
 
 - Developing web apps in languages like [Node](https://nodejs.org/), [Python](https://www.python.org/), or [Ruby](https://www.ruby-lang.org/); using frameworks like [Django](https://www.djangoproject.com/), [Express](https://expressjs.com/), or [Ruby on Rails](https://rubyonrails.org/).
-- Doing frontend development with build systems like [Grunt](https://gruntjs.com/), [Gulp](https://gulpjs.com/), [Less](http://lesscss.org/), [Sass](https://sass-lang.com/), or [Webpack](https://webpack.js.org/).
+- Doing front-end development with build systems like [Grunt](https://gruntjs.com/), [Gulp](https://gulpjs.com/), [Less](http://lesscss.org/), [Sass](https://sass-lang.com/), or [Webpack](https://webpack.js.org/).
 - Maintaining static blogging engines like [Hugo](https://gohugo.io/) or [Jekyll](https://jekyllrb.com/).
 - Running local web apps like [Jupyter Notebooks](https://jupyter.org/).
 

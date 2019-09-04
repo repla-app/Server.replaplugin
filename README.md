@@ -22,9 +22,9 @@
 
 ## Use Cases
 
-Since Repla Server is a Unix tool, it works with most workflows:
+Repla Server is a Unix tool, so works with most web development workflows:
 
-1. Developing Web Applications in Node, Ruby, or Python using Express, Ruby on Rails, or Django.
-2. Doing Frontend Development involving build systems like Gulp, Grunt, Sass, Less, or Webpack.
-3. Making changes to a static blog using Jekyll or Hugo.
-4. Simplify running a local web applications like Jupyter Notebooks.
+1. Developing web apps in languages like [Node](https://nodejs.org/), [Ruby](https://www.ruby-lang.org/), or [Python](https://www.python.org/); using frameworks like [Express](https://expressjs.com/), [Ruby on Rails](https://rubyonrails.org/), or [Django](https://www.djangoproject.com/).
+2. Doing Frontend Development with build systems like [Gulp](https://gulpjs.com/), [Grunt](https://gruntjs.com/), [Sass](https://sass-lang.com/), [Less](http://lesscss.org/), or [Webpack](https://webpack.js.org/).
+3. Maintaining static blogging engines like [Jekyll](https://jekyllrb.com/) or [Hugo](https://gohugo.io/).
+4. Running local web apps like [Jupyter Notebooks](https://jupyter.org/).

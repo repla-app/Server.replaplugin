@@ -2,15 +2,15 @@
 
 **Repla Server** is a plugin that comes with the [Repla macOS app](https://repla.app). It's a web development tool designed to improve your workflow in three ways:
 
-1. ***Always* Refreshes:** Automatically refresh when you save a file, or when your build system finishes.
-2. **Integrated Browser and Terminal:** One window with your web server running on the bottom, and your web app on top.
-3. **Run your Web Apps by Opening a File:** Save your web app and launch it again just by opening a file.
+1. **_Always_ Refreshes:** Refresh automatically when you save a file, or when your build system finishes.
+2. **One-Window Browser and Terminal:** Keep your browser and your terminal in one window with your web app on top, and the server running on the bottom.
+3. **Run your Web Apps by Opening a File:** Save your running web app as a file and launch it again easily just by opening it.
 
 ## Implementation Details
 
-- All of these features work immediately with your existing web apps, no dependencies or modifications necessary.
-- Refresh can be configured to either use OS-level file system events, or by looking for a string in terminal output to refresh when your build system finishes.
-- Repla Server uses environment inheritance to run your local web server with the same environment that you have setup in your shell.
+- These features work immediately with your existing web apps, no dependencies or other modifications required.
+- Refresh can either use file system events to refresh on save, or look for a terminal output string to refresh when your build system finishes.
+- Environment inheritance is used to run your web server with an identical environment as your shell.
 
 ## Quick Start Guide
 

@@ -15,13 +15,10 @@
 ## Quick Start Guide
 
 1. Download and install the Repla app.
-2. Run the Repla command-line tool with `repla server <your web server command>"`.
-3. Add `-f` to the command to refresh when a file changes or when a your build system finishes with `-r <a string in the server command output>`.
-4. Use "File" -> "Save" to save this configuration to a file.
-5. Run your server again by opening the file you saved.
-
-# Implementation Details
-
+2. Run the Repla command-line tool with `repla server "<your web server command>"`.
+3. Add the `-f` flag to automatically refresh when a file changes, or the `-r <a string in the server command output>` flag to refresh when a string is output in terminal.
+4. Use "File" -> "Save" to save the currently running web app to a file.
+5. After closing the Repla window, run the web app again by opening the file.
 
 ## Use Cases
 

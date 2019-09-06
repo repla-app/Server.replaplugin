@@ -14,7 +14,6 @@ module Repla
         @url = self.class.get_url(url, port)
         @url_string = options[:url_string]
         @url_string&.strip!
-        @url_string_found = @url_string.nil? || @url_string.empty?
         @file = options[:file]&.strip
         @refresh_string = options[:refresh_string]
         @refresh_string&.strip!

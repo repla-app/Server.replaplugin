@@ -18,6 +18,7 @@ module Repla
         @view = view || Repla::View.new
         @loaded_url = false
         @config = config
+        @url_string_found = @config&.nil? || @config&.url_string&.empty?
       end
 
       def process_output(text)

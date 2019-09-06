@@ -110,7 +110,7 @@ module Repla
       def update_string_found(line)
         string_index = self.class.find_string(line, @config&.url_string) unless
           @url_string_found
-        return if string_index.nil?
+        return line if string_index.nil?
 
         @url_string_found = true
         # Trim everything before the `@config&.url_string` so that it isn't

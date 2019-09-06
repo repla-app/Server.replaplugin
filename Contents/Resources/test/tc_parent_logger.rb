@@ -235,6 +235,19 @@ class TestParentLoggerRefresh < Minitest::Test
     parent_logger.process_output(line_with_url_and_refresh)
     assert(mock_view.reload_called)
   end
+
+  def test_file
+    mock_view = Repla::Test::MockView.new
+    config = Repla::Server::Config.new(TEST_OPTIONS_FILE)
+    parent_logger = Repla::Server::ParentLogger.new(Repla::Test::MockLogger.new,
+                                                    mock_view,
+                                                    config)
+
+    # Load the URL
+    text = 'Any string'
+    parent_logger.process_output(text)
+    assert(mock_view.load_file_called)
+  end
 end
 
 # Test parent logger URL options single

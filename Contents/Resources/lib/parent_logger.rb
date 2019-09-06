@@ -23,6 +23,14 @@ module Repla
                             @config&.url_string&.empty?
       end
 
+      def file
+        @config&.file
+      end
+
+      def use_file
+        !file.nil?
+      end
+
       def delay
         @config&.delay || DEFAULT_DELAY
       end
@@ -38,17 +46,29 @@ module Repla
 
         return if @loaded_url
 
-        url = url_from_line(text)
+        file = nil
+        url = nil
+        if use_file
+          file = file_from_line(text)
+        else
+          url = url_from_line(text)
+        end
 
-        return if url.nil?
+        return if url.nil? && file.nil?
 
         @loaded_url = true
 
         if !delay.nil? && delay > 0
           Thread.new do
             sleep delay
-            @view.load_url(url, should_clear_cache: true)
+            if use_file
+              @view.load_file(file)
+            else
+              @view.load_url(url, should_clear_cache: true)
+            end
           end
+        elsif use_file
+          @view.load_file(file)
         else
           @view.load_url(url, should_clear_cache: true)
         end
@@ -68,22 +88,34 @@ module Repla
       end
 
       def url_from_line(line)
-        string_index = self.class.find_string(line, @config&.url_string) unless
-          @url_string_found
-
-        unless string_index.nil?
-          @url_string_found = true
-          # Trim everything before the `@config&.url_string` so that it isn't
-          # searched for a URL
-          line = line[string_index..-1]
-        end
+        updated_line = update_string_found(line)
 
         return nil unless @url_string_found
 
         url = @config&.url
         return url unless url.nil?
 
-        self.class.url_from_line(line)
+        self.class.url_from_line(updated_line)
+      end
+
+      def file_from_line(line)
+        update_string_found(line)
+
+        return nil unless @url_string_found
+
+        file = @config&.file
+        return file unless file.nil?
+      end
+
+      def update_string_found(line)
+        string_index = self.class.find_string(line, @config&.url_string) unless
+          @url_string_found
+        return if string_index.nil?
+
+        @url_string_found = true
+        # Trim everything before the `@config&.url_string` so that it isn't
+        # searched for a URL
+        line[string_index..-1]
       end
 
       def self.find_string(text, string)

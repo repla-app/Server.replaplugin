@@ -103,12 +103,20 @@ module Repla
         @load_url_timestamp = Time.now.to_i
       end
 
+      def load_file(_file)
+        @load_file_timestamp = Time.now.to_i
+      end
+
       def reload_reset
         @reload_timestamp = nil
       end
 
       def reload
         @reload_timestamp = Time.now.to_i
+      end
+
+      def load_file_called
+        !@load_file_timestamp.nil?
       end
 
       def load_url_called

@@ -10,8 +10,8 @@ module Repla
 
     # Logger to standard out
     class Validator
-      def validate(options)
-        nil if options
+      def self.validate(options)
+        return nil if options.nil?
       end
     end
   end

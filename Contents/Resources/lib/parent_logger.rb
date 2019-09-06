@@ -24,8 +24,9 @@ module Repla
       def process_output(text)
         @logger.info(text)
 
-        if @loaded_url && !@config&.refresh_string.nil?
-          found = self.class.string_found?(text, @config&.refresh_string)
+        refresh_string = @config&.refresh_string
+        if @loaded_url && !refresh_string.nil?
+          found = self.class.string_found?(text, refresh_string)
           @view.reload if found
         end
 
@@ -74,7 +75,8 @@ module Repla
 
         return nil unless @url_string_found
 
-        return @config&.url unless @config&.url.nil?
+        url = @config&.url
+        return url unless url.nil?
 
         self.class.url_from_line(line)
       end

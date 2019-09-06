@@ -18,7 +18,9 @@ module Repla
         @view = view || Repla::View.new
         @loaded_url = false
         @config = config
-        @url_string_found = @config.nil? || @config&.url_string.nil? || @config&.url_string&.empty?
+        @url_string_found = @config.nil? ||
+                            @config&.url_string.nil? ||
+                            @config&.url_string&.empty?
       end
 
       def delay

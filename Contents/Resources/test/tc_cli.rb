@@ -1,8 +1,10 @@
 #!/System/Library/Frameworks/Ruby.framework/Versions/2.3/usr/bin/ruby
 
 require 'minitest/autorun'
+require 'English'
 
 require_relative 'lib/test_setup'
+require_relative '../lib/validator'
 require 'repla'
 require Repla::Test::LOG_HELPER_FILE
 
@@ -24,6 +26,34 @@ class TestCLI < Minitest::Test
 
   def teardown
     File.delete(SYMLINK_DST)
+  end
+
+  def test_invalid
+    server_command = SERVER_COMMAND_DEFAULT_PATH
+    flags = "-o \"#{TEST_FILE_INVALID}\""
+    command = "#{SYMLINK_DST} server "\
+      "#{Shellwords.escape(server_command)}"
+    `#{command} #{flags}`
+    window_id = nil
+    Repla::Test.block_until do
+      window_id = Repla::Test::Helper.window_id
+      !window_id.nil?
+    end
+    refute_nil(window_id)
+    window = Repla::Window.new(window_id)
+
+    logger = Repla::Logger.new(window_id)
+    logger.show
+    test_log_helper = Repla::Test::LogHelper.new(logger.window_id,
+                                                 logger.view_id)
+    message = 'ERROR: The specified file doesn\'t exist.'.freeze
+    last = nil
+    Repla::Test.block_until do
+      last = test_log_helper.last_log_message
+      last == message
+    end
+    assert_equal(message, last)
+    window.close
   end
 
   def test_cli

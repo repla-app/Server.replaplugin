@@ -7,6 +7,7 @@ require 'repla'
 
 require_relative 'lib/runner'
 require_relative 'lib/config'
+require_relative 'lib/validator'
 
 options = {}
 optparse = OptionParser.new do |opts|
@@ -68,6 +69,12 @@ command = ARGV[0]
 abort('No command specified.') if command.nil?
 
 config = Repla::Server::Config.new(options)
+error = Repla::Server::Validator.validate(config)
+unless error.nil?
+  STDERR.puts error
+  exit 1
+end
+
 runner = Repla::Server::Runner.new(command, config)
 trap 'SIGINT' do
   runner.stop

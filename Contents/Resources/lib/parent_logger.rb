@@ -37,7 +37,8 @@ module Repla
 
         @loaded_url = true
 
-        if @config&.delay > 0
+        delay = @config&.delay
+        if !delay.nil? && delay > 0
           Thread.new do
             sleep @config&.delay
             @view.load_url(url, should_clear_cache: true)

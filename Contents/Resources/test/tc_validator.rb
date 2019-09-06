@@ -13,6 +13,15 @@ class TestServer < Minitest::Test
     assert_nil(Repla::Server::Validator.validate(config))
     config = Repla::Server::Config.new(TEST_DELAY_OPTIONS_LONG)
     assert_nil(Repla::Server::Validator.validate(config))
+    config = Repla::Server::Config.new(TEST_OPTIONS_INVALID_URL_FILE)
+    refute_nil(Repla::Server::Validator.validate(config))
+    config = Repla::Server::Config.new(TEST_OPTIONS_INVALID_PORT_FILE)
+    refute_nil(Repla::Server::Validator.validate(config))
+    config = Repla::Server::Config.new(TEST_OPTIONS_INVALID_PORT_URL_FILE)
+    refute_nil(Repla::Server::Validator.validate(config))
+    config = Repla::Server::Config.new(TEST_OPTIONS_INVALID_BAD_FILE)
+    refute_nil(Repla::Server::Validator.validate(config))
+    config = Repla::Server::Config.new(TEST_OPTIONS_FILE)
+    assert_nil(Repla::Server::Validator.validate(config))
   end
 end
-

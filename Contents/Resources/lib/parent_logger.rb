@@ -10,7 +10,7 @@ module Repla
     class ParentLogger
       attr_reader :logger
 
-      def initialize(config, logger = nil, view = nil)
+      def initialize(logger = nil, view = nil, config = nil)
         raise unless (logger.nil? && view.nil?) ||
                      (!logger.nil? && !view.nil?)
 

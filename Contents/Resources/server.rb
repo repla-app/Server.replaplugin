@@ -66,7 +66,8 @@ command = ARGV[0]
 
 abort('No command specified.') if command.nil?
 
-runner = Repla::Server::Runner.new(command, options)
+config = Repla::Server::Config.new(options)
+runner = Repla::Server::Runner.new(command, config)
 trap 'SIGINT' do
   runner.stop
 end

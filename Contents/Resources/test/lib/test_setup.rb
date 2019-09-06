@@ -38,6 +38,7 @@ TEST_OPTIONS_INVALID_PORT_URL_FILE = { url: SERVER_URL,
                                        file: TEST_FILE }.freeze
 TEST_OPTIONS_INVALID_BAD_FILE = { file: TEST_FILE_INVALID }.freeze
 TEST_OPTIONS_FILE = { file: TEST_FILE }.freeze
+TEST_OPTIONS_FILE_NO_DELAY = { file: TEST_FILE, delay: 0 }.freeze
 TEST_DELAY_OPTIONS_LONG = { delay: TEST_DELAY_LENGTH_LONG }.freeze
 TEST_SERVER_COMMAND_PATH_ENV = "PATH=#{SERVER_COMMAND_DIR}:"\
   "#{ENV['PATH']}".freeze

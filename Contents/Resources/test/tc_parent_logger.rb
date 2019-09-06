@@ -238,7 +238,7 @@ class TestParentLoggerRefresh < Minitest::Test
 
   def test_file
     mock_view = Repla::Test::MockView.new
-    config = Repla::Server::Config.new(TEST_OPTIONS_FILE)
+    config = Repla::Server::Config.new(TEST_OPTIONS_FILE_NO_DELAY)
     parent_logger = Repla::Server::ParentLogger.new(Repla::Test::MockLogger.new,
                                                     mock_view,
                                                     config)

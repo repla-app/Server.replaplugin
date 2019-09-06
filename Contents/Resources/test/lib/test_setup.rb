@@ -29,7 +29,8 @@ SERVER_COMMAND_REFERSH_STRING = 'HTTPServer#start'.freeze
 TEST_DELAY_OPTIONS_ZERO = { delay: 0 }.freeze
 TEST_DELAY_LENGTH_LONG = 1
 TEST_DELAY_LENGTH_DEFAULT = 0.5
-TEST_FILE = Repla::Test::INDEX_HTML_FILE
+# Use jQuery because it's different than the default server file.
+TEST_FILE = Repla::Test::INDEXJQUERY_HTML_FILE
 TEST_FILE_INVALID = 'Invalid'.freeze
 TEST_OPTIONS_INVALID_URL_FILE = { url: SERVER_URL, file: TEST_FILE }.freeze
 TEST_OPTIONS_INVALID_PORT_FILE = { port: SERVER_PORT, file: TEST_FILE }.freeze

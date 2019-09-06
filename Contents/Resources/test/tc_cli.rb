@@ -78,6 +78,29 @@ class TestCLI < Minitest::Test
     window.close
   end
 
+  def test_file
+    server_command = "#{SERVER_COMMAND_DEFAULT_PATH} -r #{SERVER_ROOT}"
+    flags = "-o \"#{TEST_FILE}\""
+    command = "#{SYMLINK_DST} server "\
+      "#{Shellwords.escape(server_command)}"
+    `#{command} #{flags}`
+    window_id = nil
+    Repla::Test.block_until do
+      window_id = Repla::Test::Helper.window_id
+      !window_id.nil?
+    end
+    refute_nil(window_id)
+    window = Repla::Window.new(window_id)
+    javascript = File.read(Repla::Test::TITLE_JAVASCRIPT_FILE)
+    result = nil
+    Repla::Test.block_until_with_timeout(Repla::Test::TEST_TIMEOUT_TIME * 2) do
+      result = window.do_javascript(javascript)
+      result == Repla::Test::INDEXJQUERY_HTML_TITLE
+    end
+    assert_equal(Repla::Test::INDEXJQUERY_HTML_TITLE, result)
+    window.close
+  end
+
   def test_stdin
     server_command = 'cat'
     command = "#{SYMLINK_DST} server "\

@@ -61,16 +61,16 @@ module Repla
 
       def url_from_line(line)
         string_index = self.class.find_string(line, @config.url_string) unless
-          @config.url_string_found
+          @url_string_found
 
         unless string_index.nil?
-          @config.url_string_found = true
+          @url_string_found = true
           # Trim everything before the `@config.url_string` so that it isn't searched
           # for a URL
           line = line[string_index..-1]
         end
 
-        return nil unless @config.url_string_found
+        return nil unless @url_string_found
 
         return @config.url unless @config.url.nil?
 

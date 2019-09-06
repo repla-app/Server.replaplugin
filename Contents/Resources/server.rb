@@ -6,6 +6,8 @@ require_relative 'bundle/bundler/setup'
 require 'repla'
 
 require_relative 'lib/runner'
+require_relative 'lib/config'
+require_relative 'lib/validator'
 
 options = {}
 optparse = OptionParser.new do |opts|
@@ -27,6 +29,13 @@ optparse = OptionParser.new do |opts|
           'specified. Leading and trailing whitespace is removed from the '\
           'URL.') do |url|
     options[:url] = url
+  end
+  opts.on('-o',
+          '--open FILE',
+          'Specify a FILE. The FILE will be opened after the first output '\
+          'unless a STRING is also specified. Leading and trailing whitespace '\
+          'is removed from the FILE.') do |file|
+    options[:file] = file
   end
   opts.on('-s',
           '--url-string STRING',
@@ -59,7 +68,14 @@ command = ARGV[0]
 
 abort('No command specified.') if command.nil?
 
-runner = Repla::Server::Runner.new(command, options)
+config = Repla::Server::Config.new(options)
+error = Repla::Server::Validator.validate(config)
+unless error.nil?
+  STDERR.puts error
+  exit 1
+end
+
+runner = Repla::Server::Runner.new(command, config)
 trap 'SIGINT' do
   runner.stop
 end

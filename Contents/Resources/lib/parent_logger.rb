@@ -10,46 +10,65 @@ module Repla
     class ParentLogger
       attr_reader :logger
 
-      def initialize(logger = nil, view = nil, options = {})
+      def initialize(logger = nil, view = nil, config = nil)
         raise unless (logger.nil? && view.nil?) ||
                      (!logger.nil? && !view.nil?)
 
         @logger = logger || Repla::Server::Putter.new
         @view = view || Repla::View.new
         @loaded_url = false
+        @config = config
+        @url_string_found = @config.nil? ||
+                            @config&.url_string.nil? ||
+                            @config&.url_string&.empty?
+      end
 
-        port = options[:port]&.to_i
-        url = options[:url]&.strip
-        @delay = options[:delay]&.to_f || DEFAULT_DELAY
-        @url = self.class.get_url(url, port)
-        @url_string = options[:url_string]
-        @url_string&.strip!
-        @url_string_found = @url_string.nil? || @url_string.empty?
-        @refresh_string = options[:refresh_string]
-        @refresh_string&.strip!
+      def file
+        @config&.file
+      end
+
+      def use_file
+        !file.nil?
+      end
+
+      def delay
+        @config&.delay || DEFAULT_DELAY
       end
 
       def process_output(text)
         @logger.info(text)
 
-        if @loaded_url && !@refresh_string.nil?
-          found = self.class.string_found?(text, @refresh_string)
+        refresh_string = @config&.refresh_string
+        if @loaded_url && !refresh_string.nil?
+          found = self.class.string_found?(text, refresh_string)
           @view.reload if found
         end
 
         return if @loaded_url
 
-        url = url_from_line(text)
+        file = nil
+        url = nil
+        if use_file
+          file = file_from_line(text)
+        else
+          url = url_from_line(text)
+        end
 
-        return if url.nil?
+        return if url.nil? && file.nil?
 
         @loaded_url = true
 
-        if @delay > 0
+        if !delay.nil? && delay > 0
           Thread.new do
-            sleep @delay
-            @view.load_url(url, should_clear_cache: true)
+            sleep delay
+            if use_file
+              @view.load_file(file)
+            else
+              @view.load_url(url, should_clear_cache: true)
+            end
           end
+        elsif use_file
+          @view.load_file(file)
         else
           @view.load_url(url, should_clear_cache: true)
         end
@@ -69,21 +88,34 @@ module Repla
       end
 
       def url_from_line(line)
-        string_index = self.class.find_string(line, @url_string) unless
-          @url_string_found
-
-        unless string_index.nil?
-          @url_string_found = true
-          # Trim everything before the `@url_string` so that it isn't searched
-          # for a URL
-          line = line[string_index..-1]
-        end
+        updated_line = update_string_found(line)
 
         return nil unless @url_string_found
 
-        return @url unless @url.nil?
+        url = @config&.url
+        return url unless url.nil?
 
-        self.class.url_from_line(line)
+        self.class.url_from_line(updated_line)
+      end
+
+      def file_from_line(line)
+        update_string_found(line)
+
+        return nil unless @url_string_found
+
+        file = @config&.file
+        return file unless file.nil?
+      end
+
+      def update_string_found(line)
+        string_index = self.class.find_string(line, @config&.url_string) unless
+          @url_string_found
+        return line if string_index.nil?
+
+        @url_string_found = true
+        # Trim everything before the `@config&.url_string` so that it isn't
+        # searched for a URL
+        line[string_index..-1]
       end
 
       def self.find_string(text, string)
@@ -96,18 +128,6 @@ module Repla
         raise if string.nil?
 
         !find_string(text, string).nil?
-      end
-
-      def self.get_url(url = nil, port = nil)
-        unless url.nil?
-          return url if port.nil?
-
-          return "#{url}:#{port}"
-        end
-
-        return "http://localhost:#{port}" unless port.nil?
-
-        nil
       end
 
       require 'uri'

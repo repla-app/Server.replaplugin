@@ -21,6 +21,10 @@ module Repla
         @url_string_found = @config.nil? || @config&.url_string.nil? || @config&.url_string&.empty?
       end
 
+      def delay
+        @config&.delay || DEFAULT_DELAY
+      end
+
       def process_output(text)
         @logger.info(text)
 
@@ -38,10 +42,9 @@ module Repla
 
         @loaded_url = true
 
-        delay = @config&.delay
         if !delay.nil? && delay > 0
           Thread.new do
-            sleep @config&.delay
+            sleep delay
             @view.load_url(url, should_clear_cache: true)
           end
         else

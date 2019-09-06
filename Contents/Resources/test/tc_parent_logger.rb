@@ -79,21 +79,21 @@ class TestParentLoggerClass < Minitest::Test
   def test_get_url
     test_url = 'http://localhost:8888'
 
-    url = Repla::Server::ParentLogger.get_url(nil, 8888)
+    url = Repla::Server::Config.get_url(nil, 8888)
     assert_equal(test_url, url)
 
     test_url = 'http://127.0.0.1:8888'
 
-    url = Repla::Server::ParentLogger.get_url('http://127.0.0.1', 8888)
+    url = Repla::Server::Config.get_url('http://127.0.0.1', 8888)
     assert_equal(test_url, url)
 
     test_url = 'www.example.com:8888'
 
-    url = Repla::Server::ParentLogger.get_url('www.example.com', 8888)
+    url = Repla::Server::Config.get_url('www.example.com', 8888)
     assert_equal(test_url, url)
 
     test_url = 'https://example.com:8888'
-    url = Repla::Server::ParentLogger.get_url('https://example.com', 8888)
+    url = Repla::Server::Config.get_url('https://example.com', 8888)
     assert_equal(test_url, url)
   end
 

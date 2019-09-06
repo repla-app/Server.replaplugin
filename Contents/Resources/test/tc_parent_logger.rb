@@ -3,6 +3,7 @@
 require 'minitest/autorun'
 require_relative 'lib/test_setup'
 require Repla::Test::LOG_HELPER_FILE
+require_relative '../lib/config'
 require_relative '../lib/parent_logger'
 require_relative '../lib/parent'
 

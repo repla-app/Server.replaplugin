@@ -6,6 +6,7 @@ require_relative 'bundle/bundler/setup'
 require 'repla'
 
 require_relative 'lib/runner'
+require_relative 'lib/config'
 
 options = {}
 optparse = OptionParser.new do |opts|

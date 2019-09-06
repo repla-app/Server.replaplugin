@@ -29,6 +29,15 @@ SERVER_COMMAND_REFERSH_STRING = 'HTTPServer#start'.freeze
 TEST_DELAY_OPTIONS_ZERO = { delay: 0 }.freeze
 TEST_DELAY_LENGTH_LONG = 1
 TEST_DELAY_LENGTH_DEFAULT = 0.5
+TEST_FILE = Repla::Test::INDEX_HTML_FILE
+TEST_FILE_INVALID = 'Invalid'.freeze
+TEST_OPTIONS_INVALID_URL_FILE = { url: SERVER_URL, file: TEST_FILE }.freeze
+TEST_OPTIONS_INVALID_PORT_FILE = { port: SERVER_PORT, file: TEST_FILE }.freeze
+TEST_OPTIONS_INVALID_PORT_URL_FILE = { url: SERVER_URL,
+                                       port: SERVER_PORT,
+                                       file: TEST_FILE }.freeze
+TEST_OPTIONS_INVALID_BAD_FILE = { file: TEST_FILE_INVALID }.freeze
+TEST_OPTIONS_FILE = { file: TEST_FILE }.freeze
 TEST_DELAY_OPTIONS_LONG = { delay: TEST_DELAY_LENGTH_LONG }.freeze
 TEST_SERVER_COMMAND_PATH_ENV = "PATH=#{SERVER_COMMAND_DIR}:"\
   "#{ENV['PATH']}".freeze

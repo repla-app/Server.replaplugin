@@ -12,6 +12,7 @@ class TestServer < Minitest::Test
     config = Repla::Server::Config.new(TEST_DELAY_OPTIONS_LONG)
     assert_nil(Repla::Server::Validator.validate(config))
     config = Repla::Server::Config.new(TEST_DELAY_OPTIONS_LONG)
+    assert_nil(Repla::Server::Validator.validate(config))
   end
 end
 

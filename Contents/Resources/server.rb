@@ -28,6 +28,13 @@ optparse = OptionParser.new do |opts|
           'URL.') do |url|
     options[:url] = url
   end
+  opts.on('-o',
+          '--open FILE',
+          'Specify a FILE. The FILE will be opened after the first output '\
+          'unless a STRING is also specified. Leading and trailing whitespace '\
+          'is removed from the FILE.') do |file|
+    options[:file] = file
+  end
   opts.on('-s',
           '--url-string STRING',
           'Don\'t load a URL until after the STRING is output. Leading and '\

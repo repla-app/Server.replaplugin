@@ -23,8 +23,8 @@ module Repla
       def process_output(text)
         @logger.info(text)
 
-        if @loaded_url && !@config.refresh_string.nil?
-          found = self.class.string_found?(text, @config.refresh_string)
+        if @loaded_url && !@config&.refresh_string.nil?
+          found = self.class.string_found?(text, @config&.refresh_string)
           @view.reload if found
         end
 
@@ -36,9 +36,9 @@ module Repla
 
         @loaded_url = true
 
-        if @config.delay > 0
+        if @config&.delay > 0
           Thread.new do
-            sleep @config.delay
+            sleep @config&.delay
             @view.load_url(url, should_clear_cache: true)
           end
         else
@@ -60,19 +60,19 @@ module Repla
       end
 
       def url_from_line(line)
-        string_index = self.class.find_string(line, @config.url_string) unless
+        string_index = self.class.find_string(line, @config&.url_string) unless
           @url_string_found
 
         unless string_index.nil?
           @url_string_found = true
-          # Trim everything before the `@config.url_string` so that it isn't searched
-          # for a URL
+          # Trim everything before the `@config&.url_string` so that it isn't
+          # searched for a URL
           line = line[string_index..-1]
         end
 
         return nil unless @url_string_found
 
-        return @config.url unless @config.url.nil?
+        return @config&.url unless @config&.url.nil?
 
         self.class.url_from_line(line)
       end

@@ -10,31 +10,21 @@ module Repla
     class ParentLogger
       attr_reader :logger
 
-      def initialize(logger = nil, view = nil, options = {})
+      def initialize(config, logger = nil, view = nil)
         raise unless (logger.nil? && view.nil?) ||
                      (!logger.nil? && !view.nil?)
 
         @logger = logger || Repla::Server::Putter.new
         @view = view || Repla::View.new
         @loaded_url = false
-
-        port = options[:port]&.to_i
-        url = options[:url]&.strip
-        @delay = options[:delay]&.to_f || DEFAULT_DELAY
-        @url = self.class.get_url(url, port)
-        @url_string = options[:url_string]
-        @url_string&.strip!
-        @url_string_found = @url_string.nil? || @url_string.empty?
-        @file = options[:file]&.strip
-        @refresh_string = options[:refresh_string]
-        @refresh_string&.strip!
+        @config = config
       end
 
       def process_output(text)
         @logger.info(text)
 
-        if @loaded_url && !@refresh_string.nil?
-          found = self.class.string_found?(text, @refresh_string)
+        if @loaded_url && !@config.refresh_string.nil?
+          found = self.class.string_found?(text, @config.refresh_string)
           @view.reload if found
         end
 
@@ -46,9 +36,9 @@ module Repla
 
         @loaded_url = true
 
-        if @delay > 0
+        if @config.delay > 0
           Thread.new do
-            sleep @delay
+            sleep @config.delay
             @view.load_url(url, should_clear_cache: true)
           end
         else
@@ -70,19 +60,19 @@ module Repla
       end
 
       def url_from_line(line)
-        string_index = self.class.find_string(line, @url_string) unless
-          @url_string_found
+        string_index = self.class.find_string(line, @config.url_string) unless
+          @config.url_string_found
 
         unless string_index.nil?
-          @url_string_found = true
-          # Trim everything before the `@url_string` so that it isn't searched
+          @config.url_string_found = true
+          # Trim everything before the `@config.url_string` so that it isn't searched
           # for a URL
           line = line[string_index..-1]
         end
 
-        return nil unless @url_string_found
+        return nil unless @config.url_string_found
 
-        return @url unless @url.nil?
+        return @config.url unless @config.url.nil?
 
         self.class.url_from_line(line)
       end
@@ -97,18 +87,6 @@ module Repla
         raise if string.nil?
 
         !find_string(text, string).nil?
-      end
-
-      def self.get_url(url = nil, port = nil)
-        unless url.nil?
-          return url if port.nil?
-
-          return "#{url}:#{port}"
-        end
-
-        return "http://localhost:#{port}" unless port.nil?
-
-        nil
       end
 
       require 'uri'

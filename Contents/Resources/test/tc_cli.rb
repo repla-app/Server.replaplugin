@@ -83,7 +83,9 @@ class TestCLI < Minitest::Test
     flags = "-o \"#{TEST_FILE}\""
     command = "#{SYMLINK_DST} server "\
       "#{Shellwords.escape(server_command)}"
-    `#{command} #{flags}`
+    Dir.chdir(Repla::Test::TEST_HTML_DIRECTORY) do
+      `#{command} #{flags}`
+    end
     window_id = nil
     Repla::Test.block_until do
       window_id = Repla::Test::Helper.window_id
@@ -93,7 +95,7 @@ class TestCLI < Minitest::Test
     window = Repla::Window.new(window_id)
     javascript = File.read(Repla::Test::TITLE_JAVASCRIPT_FILE)
     result = nil
-    Repla::Test.block_until_with_timeout(Repla::Test::TEST_TIMEOUT_TIME * 2) do
+    Repla::Test.block_until do
       result = window.do_javascript(javascript)
       result == Repla::Test::INDEXJQUERY_HTML_TITLE
     end

@@ -62,6 +62,7 @@ module Repla
           Thread.new do
             sleep delay
             if use_file
+              @view.root_access_directory_path = Dir.pwd
               @view.load_file(file)
             else
               @view.load_url(url, should_clear_cache: true)

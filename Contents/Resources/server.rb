@@ -52,11 +52,13 @@ optparse = OptionParser.new do |opts|
   end
   opts.on('-d',
           '--delay DELAY',
-          'Wait DELAY seconds before loading a url. If a string is also '\
-          'specified, the delay happens after the string is found. The '\
+          'Wait DELAY seconds before loading a URL. If a STRING is also '\
+          'specified, the delay happens after the STRING is found. The '\
           'default DELAY is 0.5, the DELAY can be set to 0.') do |delay|
     options[:delay] = delay.to_f
   end
+  # `-f, --file-refresh`: Refresh any time a file changes in the current
+  # directory or a subdirectory.
   opts.on('-h', '--help', 'Show options help.') do
     puts opts
     exit

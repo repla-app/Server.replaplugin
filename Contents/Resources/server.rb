@@ -73,7 +73,7 @@ abort('No command specified.') if command.nil?
 config = Repla::Server::Config.new(options)
 error = Repla::Server::Validator.validate(config)
 unless error.nil?
-  STDERR.puts error
+  warn error
   exit 1
 end
 

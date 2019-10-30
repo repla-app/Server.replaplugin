@@ -77,6 +77,7 @@ unless error.nil?
   exit 1
 end
 
+Repla.clean_path
 runner = Repla::Server::Runner.new(command, config)
 trap 'SIGINT' do
   runner.stop

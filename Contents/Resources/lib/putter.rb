@@ -8,7 +8,7 @@ module Repla
       end
 
       def error(text)
-        STDERR.puts text
+        warn text
       end
     end
   end

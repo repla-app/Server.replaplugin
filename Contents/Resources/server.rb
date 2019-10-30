@@ -1,4 +1,4 @@
-#!/System/Library/Frameworks/Ruby.framework/Versions/2.3/usr/bin/ruby --disable-gems
+#!/usr/bin/env ruby --disable-gems
 
 require 'optparse'
 
@@ -73,10 +73,11 @@ abort('No command specified.') if command.nil?
 config = Repla::Server::Config.new(options)
 error = Repla::Server::Validator.validate(config)
 unless error.nil?
-  STDERR.puts error
+  warn error
   exit 1
 end
 
+Repla.clean_path
 runner = Repla::Server::Runner.new(command, config)
 trap 'SIGINT' do
   runner.stop

@@ -1,6 +1,6 @@
 language: ruby
 script: make ci
-rvm: 2.5.3
+rvm: 2.4.1
 branches:
   only:
     - master

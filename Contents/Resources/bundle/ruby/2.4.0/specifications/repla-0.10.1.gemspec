@@ -11,8 +11,8 @@ Gem::Specification.new do |s|
   s.date = "2013-07-04"
   s.description = "Bridge from Ruby to AppleScript to control Repla.".freeze
   s.email = "contact@robenkleene.com".freeze
-  s.rubygems_version = "3.0.2".freeze
+  s.rubygems_version = "2.6.11".freeze
   s.summary = "Repla helper gem".freeze
 
-  s.installed_by_version = "3.0.2" if s.respond_to? :installed_by_version
+  s.installed_by_version = "2.6.11" if s.respond_to? :installed_by_version
 end

@@ -1,4 +1,4 @@
-require 'Shellwords'
+require 'shellwords'
 require_relative '../../lib/escape'
 
 module Repla

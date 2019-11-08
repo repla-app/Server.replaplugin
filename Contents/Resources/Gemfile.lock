@@ -1,19 +1,13 @@
-GIT
-  remote: https://github.com/repla-app/repla-ruby.git
-  revision: 1ba54eb7c7cd0da3bf2f8411fcfa572d8e1c747e
-  branch: catalina
-  specs:
-    repla (0.10.1)
-
 GEM
   remote: https://rubygems.org/
   specs:
+    repla (0.10.2)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  repla!
+  repla
 
 RUBY VERSION
    ruby 2.4.1p111

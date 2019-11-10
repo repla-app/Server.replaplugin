@@ -1,0 +1,32 @@
+require 'shellwords'
+
+require_relative 'lib/test_setup'
+
+require Repla::Test::HELPER_FILE
+
+task default: ['repl:tests']
+
+namespace :repl do
+  task tests: [:clean_up]
+
+  task :test_input_controller do
+    input_controller_tests_file = File.join(__dir__,
+                                            'tc_input_controller.rb')
+    ruby Shellwords.escape(input_controller_tests_file)
+  end
+
+  task test_output_controller: [:test_input_controller] do
+    output_controller_tests_file = File.join(__dir__,
+                                             'tc_output_controller.rb')
+    ruby Shellwords.escape(output_controller_tests_file)
+  end
+
+  task test_repl: [:test_output_controller] do
+    repl_tests_file = File.join(__dir__,
+                                'tc_repl.rb')
+    ruby Shellwords.escape(repl_tests_file)
+  end
+
+  task clean_up: [:test_repl] do
+  end
+end

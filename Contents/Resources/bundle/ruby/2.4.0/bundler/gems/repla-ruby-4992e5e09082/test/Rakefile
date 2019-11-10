@@ -1,0 +1,69 @@
+require 'shellwords'
+
+require_relative 'lib/test_setup'
+
+task default: %i[repla other]
+
+task repla: ['repla:tests']
+task other: ['other:tests']
+
+namespace :repla do
+  task tests: [:clean_up]
+
+  task :test_window do
+    window_tests_file = File.join(__dir__, 'tc_window.rb')
+    ruby Shellwords.escape(window_tests_file)
+  end
+
+  task test_view: [:test_window] do
+    view_tests_file = File.join(__dir__, 'tc_view.rb')
+    ruby Shellwords.escape(view_tests_file)
+  end
+
+  task test_view_resources: [:test_view] do
+    view_resources_tests_file = File.join(__dir__,
+                                          'tc_view_resources.rb')
+    ruby Shellwords.escape(view_resources_tests_file)
+  end
+
+  task test_view_javascript: [:test_view_resources] do
+    view_javascript_tests_file = File.join(__dir__,
+                                           'tc_view_javascript.rb')
+    ruby Shellwords.escape(view_javascript_tests_file)
+  end
+
+  task test_module: [:test_view_javascript] do
+    module_tests_file = File.join(__dir__, 'tc_module.rb')
+    ruby Shellwords.escape(module_tests_file)
+  end
+
+  task clean_up: [:test_module] do
+  end
+end
+
+namespace :other do
+  data_test_rakefile = File.join(__dir__,
+                                 'data/Data.replaplugin/Contents/Resources/'\
+                                 'test/Rakefile')
+  load data_test_rakefile
+
+  dependencies_test_rakefile = File.join(__dir__,
+                                         '../lib/repla/dependencies/test/'\
+                                         'Rakefile')
+  load dependencies_test_rakefile
+
+  logger_test_rakefile = File.join(__dir__,
+                                   '../lib/repla/logger/test/Rakefile')
+  load logger_test_rakefile
+
+  repl_test_rakefile = File.join(__dir__,
+                                 '../lib/repla/repl/test/Rakefile')
+  load repl_test_rakefile
+
+  task tests: %i[test_data test_dependencies test_logger test_repl]
+
+  task test_data: ['data:tests']
+  task test_dependencies: ['dependencies:tests']
+  task test_repl: ['repl:tests']
+  task test_logger: ['logger:tests']
+end

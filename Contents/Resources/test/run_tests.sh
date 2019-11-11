@@ -1,5 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-cd "$(dirname "$0")"
+set -e
+
+cd "$(/usr/bin/dirname "$0")"
 
 rake

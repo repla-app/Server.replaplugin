@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby --disable-gems
 
-require 'Shellwords'
+require 'shellwords'
 
 HTML_FILE = File.join(__dir__, 'lib/index.html')
 

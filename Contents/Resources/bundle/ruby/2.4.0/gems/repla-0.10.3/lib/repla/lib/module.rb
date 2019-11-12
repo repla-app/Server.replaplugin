@@ -1,4 +1,4 @@
-require 'Shellwords'
+require 'shellwords'
 require_relative 'escape'
 
 # Repla
@@ -16,7 +16,11 @@ module Repla
     prefix = ENV[PATH_PREFIX]
     return if prefix.empty?
 
-    ENV['PATH'] = ENV['PATH'].delete_prefix(prefix)
+    path = ENV['PATH']
+    return if path.empty?
+
+    path = path[prefix.length..-1]
+    ENV['PATH'] = path
     ENV.delete(PATH_PREFIX)
   end
 

@@ -157,7 +157,9 @@ class TestCLI < Minitest::Test
     assert_equal(Repla::Test::INDEX_HTML_TITLE, result)
 
     # Change to jQuery
-    window.read_from_standard_input("#{Repla::Test::INDEXJQUERY_HTML_FILENAME}\n")
+    window.read_from_standard_input(
+      "#{Repla::Test::INDEXJQUERY_HTML_FILENAME}\n"
+    )
     result = nil
     Repla::Test.block_until_with_timeout(Repla::Test::TEST_TIMEOUT_TIME * 2) do
       result = window.do_javascript(javascript)

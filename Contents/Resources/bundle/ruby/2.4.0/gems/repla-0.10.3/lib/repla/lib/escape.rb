@@ -1,4 +1,4 @@
-require 'Shellwords'
+require 'shellwords'
 
 # Escaping parameters
 module Escape

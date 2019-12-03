@@ -26,11 +26,17 @@ module Repla
 
       def loaded_url=(value)
         @loaded_url = value
-        # TODO: Should watch
+        return unless should_watch && @watcher.nil?
+
+        @watcher = Watcher(self)
       end
 
       def file
         @config&.file
+      end
+
+      def should_watch
+        @config&.refresh_string.nil? && @config&.file_refresh
       end
 
       def use_file

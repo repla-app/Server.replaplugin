@@ -17,7 +17,7 @@ module Repla
 
         @logger = logger || Repla::Server::Putter.new
         @view = view || Repla::View.new
-        @loaded_url = false
+        self.loaded_url = false
         @config = config
         @url_string_found = @config.nil? ||
                             @config&.url_string.nil? ||
@@ -62,7 +62,7 @@ module Repla
 
         return if url.nil? && file.nil?
 
-        loaded_url = true
+        self.loaded_url = true
 
         if !delay.nil? && delay > 0
           Thread.new do
@@ -91,7 +91,7 @@ module Repla
         return if url.nil?
 
         @view.load_url(url, should_clear_cache: true)
-        loaded_url = true
+        self.loaded_url = true
       end
 
       def url_from_line(line)

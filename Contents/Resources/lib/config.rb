@@ -7,6 +7,7 @@ module Repla
       attr_reader :url_string
       attr_reader :file
       attr_reader :refresh_string
+      attr_reader :file_refresh
       def initialize(options)
         port = options[:port]&.to_i
         url = options[:url]&.strip
@@ -18,6 +19,7 @@ module Repla
         @file = file.nil? ? nil : File.expand_path(file)
         @refresh_string = options[:refresh_string]
         @refresh_string&.strip!
+        @file_refresh = @refresh_string.nil? || options[:file_refresh]
       end
 
       def self.get_url(url = nil, port = nil)

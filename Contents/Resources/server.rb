@@ -13,8 +13,8 @@ options = {}
 optparse = OptionParser.new do |opts|
   opts.banner = 'The server plugin runs a command and scans its output for a '\
     'URL and loads it. It will automatically refresh everytime a file '\
-    'changes in a subdirectory, but at most once per 0.25s, unless another '\
-    'refresh option in specified.'
+    'changes in a subdirectory, but at most once per 0.25s, unless a '\
+    'refresh string is specified.'
   opts.on('-p',
           '--port PORT',
           'Specify a PORT number. If a URL is also specified, then the PORT '\
@@ -47,9 +47,10 @@ optparse = OptionParser.new do |opts|
   end
   opts.on('-r',
           '--refresh-string STRING',
-          'Refresh each time STRING is output. Has no effect until a URL is '\
-          'loaded. Leading and trailing whitespace is removed from the '\
-          'STRING.') do |string|
+          'Refresh each time STRING is output. There\'s no effect until a '\
+          'URL is loaded. Leading and trailing whitespace is removed from the '\
+          'STRING. Specifying a refresh string disables refreshing when a '\
+          'file changes.') do |string|
     options[:refresh_string] = string
   end
   opts.on('-d',
@@ -62,7 +63,7 @@ optparse = OptionParser.new do |opts|
   opts.on('-n',
           '--no-refresh',
           'Don\'t refresh when a file in a subdirectory changes, even if '\
-          'refresh string hasn\'t been specified.') do |file_refresh|
+          'a refresh STRING hasn\'t been specified.') do |file_refresh|
     options[:file_refresh] = file_refresh
   end
   opts.on('-h', '--help', 'Show options help.') do

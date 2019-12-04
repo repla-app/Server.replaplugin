@@ -130,14 +130,17 @@ class TestParentLoggerURL < Minitest::Test
     parent_logger = Repla::Server::ParentLogger.new(Repla::Test::MockLogger.new,
                                                     mock_view,
                                                     config)
+    refute(parent_logger.watching)
     real_example_url = 'http://127.0.0.1:4000/'
     line_with_real_example_url = "Server address: #{real_example_url}"
     parent_logger.process_output(line_with_real_example_url)
     assert(mock_view.load_url_called)
+    assert(parent_logger.watching)
     local_url_with_port = 'http://127.0.0.1:5000'
     line_with_local_url_with_port = "Here is a URL #{local_url_with_port}"
     parent_logger.process_output(line_with_local_url_with_port)
     assert(!mock_view.load_url_failed)
+    assert(parent_logger.watching)
   end
 
   def test_delay_long
@@ -186,32 +189,38 @@ class TestParentLoggerRefresh < Minitest::Test
     parent_logger = Repla::Server::ParentLogger.new(Repla::Test::MockLogger.new,
                                                     mock_view,
                                                     config)
+    refute(parent_logger.watching)
 
     line_with_refresh_string = "The refresh string is #{refresh_string}"
     parent_logger.process_output(line_with_refresh_string)
     refute(mock_view.reload_called,
            'Refresh should not be called before loading a URL.')
+    refute(parent_logger.watching)
 
     # Load the URL
     real_example_url = 'http://127.0.0.1:4000/'
     line_with_real_example_url = "Server address: #{real_example_url}"
     parent_logger.process_output(line_with_real_example_url)
+    refute(parent_logger.watching)
 
     # Try refresh
     parent_logger.process_output(line_with_refresh_string)
     assert(mock_view.reload_called)
+    refute(parent_logger.watching)
 
     # Test second refresh
     mock_view.reload_reset
     refute(mock_view.reload_called)
     parent_logger.process_output(line_with_refresh_string)
     assert(mock_view.reload_called)
+    refute(parent_logger.watching)
 
     # Test refresh string alone
     mock_view.reload_reset
     refute(mock_view.reload_called)
     parent_logger.process_output(refresh_string)
     assert(mock_view.reload_called)
+    refute(parent_logger.watching)
   end
 
   def test_refresh_same_line

@@ -1,6 +1,7 @@
 require_relative '../bundle/bundler/setup'
 require 'repla'
 require_relative 'putter'
+require_relative 'watcher'
 
 # Repla
 module Repla
@@ -9,6 +10,7 @@ module Repla
     # Parent logger
     class ParentLogger
       attr_reader :logger
+      attr_reader :loaded_url
 
       def initialize(logger = nil, view = nil, config = nil)
         raise unless (logger.nil? && view.nil?) ||
@@ -16,11 +18,23 @@ module Repla
 
         @logger = logger || Repla::Server::Putter.new
         @view = view || Repla::View.new
-        @loaded_url = false
+        self.loaded_url = false
         @config = config
         @url_string_found = @config.nil? ||
                             @config&.url_string.nil? ||
                             @config&.url_string&.empty?
+      end
+
+      def loaded_url=(value)
+        @loaded_url = value
+        return unless @config&.file_refresh && !watching
+
+        @watcher = Watcher.new(self)
+        @watcher.start
+      end
+
+      def watching
+        !@watcher.nil?
       end
 
       def file
@@ -35,16 +49,20 @@ module Repla
         @config&.delay || DEFAULT_DELAY
       end
 
+      def process_file_event
+        @view.reload
+      end
+
       def process_output(text)
         @logger.info(text)
 
         refresh_string = @config&.refresh_string
-        if @loaded_url && !refresh_string.nil?
+        if loaded_url && !refresh_string.nil?
           found = self.class.string_found?(text, refresh_string)
           @view.reload if found
         end
 
-        return if @loaded_url
+        return if loaded_url
 
         file = nil
         url = nil
@@ -56,7 +74,7 @@ module Repla
 
         return if url.nil? && file.nil?
 
-        @loaded_url = true
+        self.loaded_url = true
 
         if !delay.nil? && delay > 0
           Thread.new do
@@ -78,14 +96,14 @@ module Repla
       def process_error(text)
         @logger.error(text)
 
-        return if @loaded_url
+        return if loaded_url
 
         url = url_from_line(text)
 
         return if url.nil?
 
         @view.load_url(url, should_clear_cache: true)
-        @loaded_url = true
+        self.loaded_url = true
       end
 
       def url_from_line(line)

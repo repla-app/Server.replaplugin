@@ -19,7 +19,12 @@ module Repla
         @file = file.nil? ? nil : File.expand_path(file)
         @refresh_string = options[:refresh_string]
         @refresh_string&.strip!
-        @file_refresh = @refresh_string.nil? || options[:file_refresh]
+        file_refresh = if options[:file_refresh].nil?
+                         true
+                       else
+                         options[:file_refresh]
+                       end
+        @file_refresh = @refresh_string.nil? && file_refresh
       end
 
       def self.get_url(url = nil, port = nil)

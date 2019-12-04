@@ -62,7 +62,7 @@ optparse = OptionParser.new do |opts|
   opts.on('-n',
           '--no-refresh',
           'Don\'t refresh when a file in a subdirectory changes, even if '\
-          'refresh flag hasn\'t been specified.') do |file_refresh|
+          'refresh string hasn\'t been specified.') do |file_refresh|
     options[:file_refresh] = file_refresh
   end
   opts.on('-h', '--help', 'Show options help.') do

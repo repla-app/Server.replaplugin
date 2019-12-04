@@ -30,6 +30,7 @@ module Repla
         return unless @config&.file_refresh && !watching
 
         @watcher = Watcher.new(self)
+        @watcher.start
       end
 
       def watching
@@ -46,6 +47,10 @@ module Repla
 
       def delay
         @config&.delay || DEFAULT_DELAY
+      end
+
+      def process_file_event
+        @view.reload
       end
 
       def process_output(text)

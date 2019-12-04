@@ -13,7 +13,7 @@ options = {}
 optparse = OptionParser.new do |opts|
   opts.banner = 'The server plugin runs a command and scans its output for a '\
     'URL and loads it. It will automatically refresh everytime a file '\
-    'changes in a subdirectory, but at most once per second, unless another '\
+    'changes in a subdirectory, but at most once per 0.25s, unless another '\
     'refresh option in specified.'
   opts.on('-p',
           '--port PORT',

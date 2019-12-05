@@ -15,11 +15,11 @@ module Repla
       end
 
       def self.customizable_express?(command)
-        /npm start/.match?(command)
+        /npm\s*start/.match?(command)
       end
 
       def self.customizable_jupyter?(command)
-        /jupyter notebook/.match?(command)
+        /jupyter\s*notebook/.match?(command)
       end
     end
   end

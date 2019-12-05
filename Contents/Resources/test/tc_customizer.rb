@@ -9,7 +9,7 @@ class TestServer < Minitest::Test
   NPM_COMMAND = 'npm start'.freeze
   def test_customizer
     command = NPM_COMMAND
-    options = Customizer.customize(command)
+    options = Repla::Server::Customizer.customize(command)
     assert_equal(3000, options[:port])
     assert_equal(NPM_COMMAND, command)
     # TEST_DELAY_OPTIONS_LONG

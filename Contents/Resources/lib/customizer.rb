@@ -5,7 +5,7 @@ module Repla
     # Customizer
     class Customizer
       def self.customize(command, options = {})
-        if customizable_express(command)
+        if customizable_express?(command)
           options[:port] = 3000 if options[:port].nil?
         elsif customizable_jupyter(command)
           command << JUPYTER_SUFFIX

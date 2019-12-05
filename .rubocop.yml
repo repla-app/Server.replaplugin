@@ -2,12 +2,18 @@ Metrics/PerceivedComplexity:
   Max: 16
 Metrics/MethodLength:
   Max: 60
+  Exclude:
+    - 'Contents/Resources/test/tc_customizer.rb'
 Metrics/AbcSize:
   Max: 60
+  Exclude:
+    - 'Contents/Resources/test/tc_customizer.rb'
 Metrics/CyclomaticComplexity:
   Max: 16
 Metrics/BlockLength:
   Max: 50
+  Exclude:
+    - 'Contents/Resources/server.rb'
 Metrics/ClassLength:
   Max: 200
 Style/SymbolProc:

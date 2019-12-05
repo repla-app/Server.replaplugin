@@ -8,7 +8,7 @@ module Repla
         command = command.dup
         if customizable_express?(command)
           options[:port] = 3000 if options[:port].nil?
-        elsif customizable_jupyter(command)
+        elsif customizable_jupyter?(command)
           command << JUPYTER_SUFFIX
         end
         [command, options]

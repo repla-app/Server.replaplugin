@@ -7,12 +7,17 @@ require_relative '../lib/customizer'
 # Test server
 class TestServer < Minitest::Test
   NPM_COMMAND = 'npm start'.freeze
+  JUPYTER_COMMAND = 'jupyter notebook'
   def test_customizer
     command = NPM_COMMAND
     command, options = Repla::Server::Customizer.customize(command)
     assert_equal(Repla::Server::EXPRESS_PORT, options[:port])
     assert_equal(NPM_COMMAND, command)
-    # command = 'jupyter notebook'
+
+    command = 'jupyter notebook'
+    command, options = Repla::Server::Customizer.customize(command)
+    assert(options.empty?)
+    assert_equal(JUPYTER_COMMAND + Repla::Server::JUPYTER_SUFFIX, command)
     # TEST_DELAY_OPTIONS_LONG
     # TEST_OPTIONS_FILE
     # TEST_OPTIONS_PORT

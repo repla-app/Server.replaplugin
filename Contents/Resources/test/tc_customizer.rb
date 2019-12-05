@@ -9,9 +9,10 @@ class TestServer < Minitest::Test
   NPM_COMMAND = 'npm start'.freeze
   def test_customizer
     command = NPM_COMMAND
-    options = Repla::Server::Customizer.customize(command)
-    assert_equal(3000, options[:port])
+    command, options = Repla::Server::Customizer.customize(command)
+    assert_equal(Repla::Server::EXPRESS_PORT, options[:port])
     assert_equal(NPM_COMMAND, command)
+    # command = 'jupyter notebook'
     # TEST_DELAY_OPTIONS_LONG
     # TEST_OPTIONS_FILE
     # TEST_OPTIONS_PORT

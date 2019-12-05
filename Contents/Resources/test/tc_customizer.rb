@@ -101,9 +101,5 @@ class TestServer < Minitest::Test
                        .customize(command)
     assert_nil(options[:port])
     assert_equal(NPM_COMMAND_PORT, command)
-
-    # command = 'bundle exec jekyll serve --watch --drafts'
-    # command = 'jupyter notebook --no-browser'
-    # command = 'python3 manage.py runserver'
-  end
+  nd
 end

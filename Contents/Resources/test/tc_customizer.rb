@@ -9,6 +9,7 @@ class TestServer < Minitest::Test
   NPM_COMMAND = 'npm start'.freeze
   NPM_COMMAND_WHITESPACE = 'npm     start'.freeze
   NPM_COMMAND_DEBUG = 'DEBUG=myapp:* npm start'.freeze
+  NPM_COMMAND_PORT = 'npm start -p 5000'.freeze
   JUPYTER_COMMAND = 'jupyter notebook'.freeze
   JUPYTER_COMMAND_WHITESPACE = 'jupyter     notebook'.freeze
   JUPYTER_COMMAND_NOBROWSER = 'jupyter notebook --no-browser'.freeze
@@ -80,13 +81,29 @@ class TestServer < Minitest::Test
     assert_nil(options[:port])
     assert_equal(NPM_COMMAND, command)
 
-    # TEST_DELAY_OPTIONS_LONG
-    # TEST_OPTIONS_FILE
-    # TEST_OPTIONS_URL
-    # TEST_OPTIONS_URL_PORT
+    command = NPM_COMMAND
+    command, options = Repla::Server::Customizer
+                       .customize(command,
+                                  TEST_OPTIONS_URL_PORT)
+    assert_equal(SERVER_PORT, options[:port])
+    assert_equal(NPM_COMMAND, command)
+
+    command = NPM_COMMAND
+    command, options = Repla::Server::Customizer
+                       .customize(command,
+                                  TEST_OPTIONS_FILE)
+    assert_nil(options[:port])
+    assert_equal(TEST_FILE, options[:file])
+    assert_equal(NPM_COMMAND, command)
+
+    command = NPM_COMMAND_PORT
+    command, options = Repla::Server::Customizer
+                       .customize(command)
+    assert_nil(options[:port])
+    assert_equal(NPM_COMMAND_PORT, command)
+
     # command = 'bundle exec jekyll serve --watch --drafts'
     # command = 'jupyter notebook --no-browser'
     # command = 'python3 manage.py runserver'
-    # command = 'npm start -p 5000'
   end
 end

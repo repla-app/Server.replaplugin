@@ -11,7 +11,17 @@ task default: ['server:tests']
 namespace :server do
   task tests: [:clean_up]
 
-  task :test_parent do
+  task :test_customizer do
+    tests_file = File.join(__dir__, 'tc_customizer.rb')
+    ruby Shellwords.escape(tests_file)
+  end
+
+  task test_validator: [:test_customizer] do
+    tests_file = File.join(__dir__, 'tc_validator.rb')
+    ruby Shellwords.escape(tests_file)
+  end
+
+  task test_parent: [:test_validator] do
     tests_file = File.join(__dir__, 'tc_parent.rb')
     ruby Shellwords.escape(tests_file)
   end

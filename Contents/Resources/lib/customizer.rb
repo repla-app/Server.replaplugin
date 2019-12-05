@@ -1,13 +1,16 @@
 module Repla
   module Server
+    EXPRESS_PORT = 3000
+    JUPYTER_SUFFIX = ' --no-browser'.freeze
     # Customizer
     class Customizer
-      def self.customize(command, options)
+      def self.customize(command, options = {})
         if customizable_express(command)
-          puts 'Express'
+          options[:port] = 3000 if options[:port].nil?
         elsif customizable_jupyter(command)
-          puts 'Jupyter'
+          command << JUPYTER_SUFFIX
         end
+        options
       end
 
       def self.customizable_express?(command)

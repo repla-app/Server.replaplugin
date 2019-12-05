@@ -6,21 +6,26 @@ require_relative '../lib/customizer'
 
 # Test server
 class TestServer < Minitest::Test
+  NPM_COMMAND = 'npm start'.freeze
   def test_customizer
-    TEST_OPTIONS_FILE
-    TEST_OPTIONS_PORT
-    TEST_OPTIONS_URL
-    TEST_OPTIONS_URL_PORT
-
-    command = 'bin/rails server'
-    command = 'bundle exec jekyll serve --watch --drafts'
-    command = 'jupyter notebook --no-browser'
-    command = 'jupyter notebook'
-    command = 'jupyter    notebook'
-    command = 'python3 manage.py runserver'
-    command = 'DEBUG=myapp:* npm start'
-    command = 'npm start'
-    command = 'npm start -p 8002'
-    command = 'npm    start'
+    command = NPM_COMMAND
+    options = Customizer.customize(command)
+    assert_equal(3000, options[:port])
+    assert_equal(NPM_COMMAND, command)
+    # TEST_DELAY_OPTIONS_LONG
+    # TEST_OPTIONS_FILE
+    # TEST_OPTIONS_PORT
+    # TEST_OPTIONS_URL
+    # TEST_OPTIONS_URL_PORT
+    # command = 'bin/rails server'
+    # command = 'bundle exec jekyll serve --watch --drafts'
+    # command = 'jupyter notebook --no-browser'
+    # command = 'jupyter notebook'
+    # command = 'jupyter    notebook'
+    # command = 'python3 manage.py runserver'
+    # command = 'DEBUG=myapp:* npm start'
+    # command = 'npm start'
+    # command = 'npm start -p 8002'
+    # command = 'npm    start'
   end
 end

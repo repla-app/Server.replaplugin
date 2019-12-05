@@ -52,15 +52,26 @@ class TestServer < Minitest::Test
     assert_equal(Repla::Server::EXPRESS_PORT, options[:port])
     assert_equal(NPM_COMMAND_DEBUG, command)
 
+    command = JUPYTER_COMMAND
+    command, options = Repla::Server::Customizer.customize(command,
+                                                           TEST_OPTIONS_PORT)
+    assert_equal(SERVER_PORT, options[:port])
+    assert_equal(JUPYTER_COMMAND + Repla::Server::JUPYTER_SUFFIX, command)
+
+    command = NPM_COMMAND
+    command, options = Repla::Server::Customizer
+                       .customize(command,
+                                  TEST_DELAY_OPTIONS_LONG)
+    assert_equal(Repla::Server::EXPRESS_PORT, options[:port])
+    assert_equal(TEST_DELAY_LENGTH_LONG, options[:delay])
+    assert_equal(NPM_COMMAND, command)
+
     # TEST_DELAY_OPTIONS_LONG
     # TEST_OPTIONS_FILE
-    # TEST_OPTIONS_PORT
     # TEST_OPTIONS_URL
     # TEST_OPTIONS_URL_PORT
     # command = 'bundle exec jekyll serve --watch --drafts'
     # command = 'jupyter notebook --no-browser'
-    # command = 'jupyter notebook'
-    # command = 'jupyter    notebook'
     # command = 'python3 manage.py runserver'
   end
 end

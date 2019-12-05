@@ -6,6 +6,7 @@ module Repla
     class Customizer
       def self.customize(command, options = {})
         command = command.dup
+        options = options.dup
         if customizable_express?(command)
           options[:port] = 3000 if options[:port].nil?
         elsif customizable_jupyter?(command)

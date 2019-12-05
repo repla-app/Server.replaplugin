@@ -7,10 +7,15 @@ require_relative '../lib/customizer'
 # Test server
 class TestServer < Minitest::Test
   def test_customizer
-    command = 'repla server "bin/rails server"'
-    command = 'bundle exec jekyll serve --watch --drafts"'
-    command = 'jupyter notebook --no-browser"'
-    command = 'python3 manage.py runserver"'
-    command = 'DEBUG=myapp:* npm start" -p 3000'
+    command = 'bin/rails server'
+    command = 'bundle exec jekyll serve --watch --drafts'
+    command = 'jupyter notebook --no-browser'
+    command = 'jupyter notebook'
+    command = 'jupyter    notebook'
+    command = 'python3 manage.py runserver'
+    command = 'DEBUG=myapp:* npm start'
+    command = 'npm start'
+    command = 'npm start -p 8002'
+    command = 'npm    start'
   end
 end

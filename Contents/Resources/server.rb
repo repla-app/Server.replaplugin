@@ -7,6 +7,7 @@ require 'repla'
 
 require_relative 'lib/runner'
 require_relative 'lib/config'
+require_relative 'lib/customizer'
 require_relative 'lib/validator'
 
 options = {}
@@ -77,6 +78,7 @@ command = ARGV[0]
 
 abort('No command specified.') if command.nil?
 
+command, options = Repla::Server::Customizer.customize(command, options)
 config = Repla::Server::Config.new(options)
 error = Repla::Server::Validator.validate(config)
 unless error.nil?

@@ -8,6 +8,7 @@ require_relative '../lib/customizer'
 class TestServer < Minitest::Test
   NPM_COMMAND = 'npm start'.freeze
   NPM_COMMAND_WHITESPACE = 'npm     start'.freeze
+  NPM_COMMAND_DEBUG = 'DEBUG=myapp:* npm start'.freeze
   JUPYTER_COMMAND = 'jupyter notebook'.freeze
   JUPYTER_COMMAND_WHITESPACE = 'jupyter     notebook'.freeze
   RAILS_COMMAND = 'bin/rails server'.freeze
@@ -17,7 +18,7 @@ class TestServer < Minitest::Test
     assert_equal(Repla::Server::EXPRESS_PORT, options[:port])
     assert_equal(NPM_COMMAND, command)
 
-    command = 'jupyter notebook'
+    command = JUPYTER_COMMAND
     command, options = Repla::Server::Customizer.customize(command)
     assert(options.empty?)
     assert_equal(JUPYTER_COMMAND + Repla::Server::JUPYTER_SUFFIX, command)
@@ -46,6 +47,11 @@ class TestServer < Minitest::Test
     assert_equal(SERVER_PORT, options[:port])
     assert_equal(NPM_COMMAND, command)
 
+    command = NPM_COMMAND_DEBUG
+    command, options = Repla::Server::Customizer.customize(command)
+    assert_equal(Repla::Server::EXPRESS_PORT, options[:port])
+    assert_equal(NPM_COMMAND_DEBUG, command)
+
     # TEST_DELAY_OPTIONS_LONG
     # TEST_OPTIONS_FILE
     # TEST_OPTIONS_PORT
@@ -56,9 +62,5 @@ class TestServer < Minitest::Test
     # command = 'jupyter notebook'
     # command = 'jupyter    notebook'
     # command = 'python3 manage.py runserver'
-    # command = 'DEBUG=myapp:* npm start'
-    # command = 'npm start'
-    # command = 'npm start -p 8002'
-    # command = 'npm    start'
   end
 end

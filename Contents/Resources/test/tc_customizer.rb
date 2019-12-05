@@ -101,5 +101,5 @@ class TestServer < Minitest::Test
                        .customize(command)
     assert_nil(options[:port])
     assert_equal(NPM_COMMAND_PORT, command)
-  nd
+  end
 end

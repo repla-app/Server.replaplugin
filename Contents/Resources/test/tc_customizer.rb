@@ -7,6 +7,11 @@ require_relative '../lib/customizer'
 # Test server
 class TestServer < Minitest::Test
   def test_customizer
+    TEST_OPTIONS_FILE
+    TEST_OPTIONS_PORT
+    TEST_OPTIONS_URL
+    TEST_OPTIONS_URL_PORT
+
     command = 'bin/rails server'
     command = 'bundle exec jekyll serve --watch --drafts'
     command = 'jupyter notebook --no-browser'

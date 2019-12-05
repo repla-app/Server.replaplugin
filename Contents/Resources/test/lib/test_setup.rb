@@ -34,6 +34,7 @@ TEST_FILE = Repla::Test::INDEXJQUERY_HTML_FILE
 TEST_FILE_INVALID = 'Invalid'.freeze
 TEST_OPTIONS_INVALID_URL_FILE = { url: SERVER_URL, file: TEST_FILE }.freeze
 TEST_OPTIONS_INVALID_PORT_FILE = { port: SERVER_PORT, file: TEST_FILE }.freeze
+TEST_OPTIONS_PORT = { port: SERVER_PORT }.freeze
 TEST_OPTIONS_INVALID_PORT_URL_FILE = { url: SERVER_URL,
                                        port: SERVER_PORT,
                                        file: TEST_FILE }.freeze

@@ -39,6 +39,13 @@ class TestServer < Minitest::Test
     assert_equal(NPM_COMMAND_WHITESPACE,
                  command)
 
+    refute_equal(Repla::Server::EXPRESS_PORT, SERVER_PORT)
+    command = NPM_COMMAND
+    command, options = Repla::Server::Customizer.customize(command,
+                                                           TEST_OPTIONS_PORT)
+    assert_equal(SERVER_PORT, options[:port])
+    assert_equal(NPM_COMMAND, command)
+
     # TEST_DELAY_OPTIONS_LONG
     # TEST_OPTIONS_FILE
     # TEST_OPTIONS_PORT

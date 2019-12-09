@@ -181,6 +181,23 @@ class TestParentLoggerURL < Minitest::Test
     # This assert isn't reliable
     # assert(elapsed < TEST_DELAY_LENGTH_LONG)
   end
+
+  def test_simple_url
+    mock_view = Repla::Test::MockView.new
+    real_example_url = 'https://www.example.com'
+    config = Repla::Server::Config.new(url: real_example_url)
+    parent_logger = Repla::Server::ParentLogger.new(Repla::Test::MockLogger.new,
+                                                    mock_view,
+                                                    config)
+    random_line = 'Test'
+    parent_logger.process_output(random_line)
+    assert(!mock_view.load_url_called)
+    Repla::Test.block_until_with_timeout(4, 0.2) { mock_view.load_url_called }
+    assert(mock_view.load_url_called)
+    now = Time.now.to_f
+    elapsed = now - mock_view.load_url_timestamp
+    assert(elapsed => TEST_DELAY_LENGTH_DEFAULT)
+  end
 end
 
 # Test parent logger refresh

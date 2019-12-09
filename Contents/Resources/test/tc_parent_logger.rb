@@ -10,7 +10,7 @@ require_relative '../lib/parent'
 # Test parent logger class
 class TestParentLoggerClass < Minitest::Test
   def test_url_from_line
-    good_url = 'http://www.example.com'
+    good_url = 'http://localhost'
     line_with_good_url = "Here is a URL #{good_url}"
     url = Repla::Server::ParentLogger.url_from_line(line_with_good_url)
     assert_equal(good_url, url)
@@ -19,6 +19,11 @@ class TestParentLoggerClass < Minitest::Test
     line_with_local_url = "#{local_url} is a local URL"
     url = Repla::Server::ParentLogger.url_from_line(line_with_local_url)
     assert_equal(local_url, url)
+
+    bad_url = 'http://www.example.com'
+    line_with_bad_url = "Here is a URL #{bad_url}"
+    url = Repla::Server::ParentLogger.url_from_line(line_with_bad_url)
+    assert_nil(url)
 
     line_with_no_url = 'This line doesn\'t have any URLs'
     url = Repla::Server::ParentLogger.url_from_line(line_with_no_url)
@@ -267,7 +272,7 @@ class TestParentLoggerURLOptionsSingle < Minitest::Test
     parent_logger = Repla::Server::ParentLogger.new(Repla::Test::MockLogger.new,
                                                     Repla::Test::MockView.new,
                                                     config)
-    good_url = 'http://www.example.com'
+    good_url = 'http://127.0.0.1'
     line_with_good_url = "Here is a URL #{good_url}"
     url = parent_logger.url_from_line(line_with_good_url)
     assert_nil(url)
@@ -313,7 +318,7 @@ class TestParentLoggerURLOptionsMultiple < Minitest::Test
     parent_logger = Repla::Server::ParentLogger.new(Repla::Test::MockLogger.new,
                                                     Repla::Test::MockView.new,
                                                     config)
-    good_url = 'http://www.example.com'
+    good_url = 'http://localhost:5000'
     line_with_good_url = "Here is a URL #{good_url}"
     url = parent_logger.url_from_line(line_with_good_url)
     assert_nil(url)
@@ -327,7 +332,7 @@ class TestParentLoggerURLOptionsMultiple < Minitest::Test
 
   def test_url_and_port
     port = 5000
-    good_url = 'http://www.example.com'
+    good_url = 'http://127.0.0.1'
     good_url_with_port = "#{good_url}:#{port}"
     options = { port: port, url: good_url }
     config = Repla::Server::Config.new(options)

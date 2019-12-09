@@ -78,6 +78,7 @@ module Repla
 
         if !delay.nil? && delay > 0
           Thread.new do
+            # This thread will not run if the main process finishes
             sleep delay
             if use_file
               @view.root_access_directory_path = Dir.pwd

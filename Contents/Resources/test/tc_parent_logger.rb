@@ -272,7 +272,7 @@ class TestParentLoggerURLOptionsSingle < Minitest::Test
     parent_logger = Repla::Server::ParentLogger.new(Repla::Test::MockLogger.new,
                                                     Repla::Test::MockView.new,
                                                     config)
-    good_url = 'http://www.example.com'
+    good_url = 'http://127.0.0.1'
     line_with_good_url = "Here is a URL #{good_url}"
     url = parent_logger.url_from_line(line_with_good_url)
     assert_nil(url)

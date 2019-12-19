@@ -24,9 +24,10 @@ module Repla
 
         return true if customizable_jupyter?(command)
 
-        return true if pwd == home
+        return true if File.realpath(pwd) == File.realpath(home)
 
-        return true if pwd == File.join(home, 'Library')
+        return true if File.realpath(pwd) == File.realpath(File.join(home,
+                                                                     'Library'))
 
         false
       end

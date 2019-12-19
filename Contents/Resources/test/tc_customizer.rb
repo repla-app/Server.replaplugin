@@ -10,6 +10,7 @@ class TestServer < Minitest::Test
   JUPYTER_COMMAND_WHITESPACE = 'jupyter     notebook'.freeze
   JUPYTER_COMMAND_NOBROWSER = 'jupyter notebook --no-browser'.freeze
   RAILS_COMMAND = 'bin/rails server'.freeze
+  TEST_HOME_DIR = '/Users/username'
 
   def test_customizer_jupyter
     command = JUPYTER_COMMAND
@@ -44,5 +45,13 @@ class TestServer < Minitest::Test
     options.delete(:file_refresh)
     assert(options.empty?)
     assert_equal(JUPYTER_COMMAND_NOBROWSER, command)
+  end
+
+  def test_customizer_file_refresh
+    options = { file_refresh: true }
+    result = Repla::Server::Customizer.disable_file_refresh?(RAILS_COMMAND,
+                                                             options,
+                                                             TEST_HOME_DIR,
+                                                             TEST_HOME_DIR)
   end
 end

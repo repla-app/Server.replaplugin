@@ -58,5 +58,38 @@ class TestServer < Minitest::Test
     command, options = customizer.customize(RAILS_COMMAND, options)
     assert(options[:file_refresh])
     assert_equal(RAILS_COMMAND, command)
+
+    customizer = Repla::Server::Customizer.new(TEST_HOME_DIR, TEST_HOME_DIR)
+    options = {}
+    command, options = customizer.customize(RAILS_COMMAND, options)
+    refute(options[:file_refresh])
+    assert_equal(RAILS_COMMAND, command)
+
+    customizer = Repla::Server::Customizer.new(TEST_LIBRARY_DIR, TEST_HOME_DIR)
+    options = {}
+    command, options = customizer.customize(RAILS_COMMAND, options)
+    refute(options[:file_refresh])
+    assert_equal(RAILS_COMMAND, command)
+
+    customizer = Repla::Server::Customizer.new(TEST_LIBRARY_DIR_CASE,
+                                               TEST_HOME_DIR)
+    options = {}
+    command, options = customizer.customize(RAILS_COMMAND, options)
+    refute(options[:file_refresh])
+    assert_equal(RAILS_COMMAND, command)
+
+    customizer = Repla::Server::Customizer.new(TEST_LIBRARY_DIR_SLASH,
+                                               TEST_HOME_DIR)
+    options = {}
+    command, options = customizer.customize(RAILS_COMMAND, options)
+    refute(options[:file_refresh])
+    assert_equal(RAILS_COMMAND, command)
+
+    customizer = Repla::Server::Customizer.new(PWD_NO_MATCH,
+                                               TEST_HOME_DIR)
+    options = {}
+    command, options = customizer.customize(RAILS_COMMAND, options)
+    assert_nil(options[:file_refresh])
+    assert_equal(RAILS_COMMAND, command)
   end
 end

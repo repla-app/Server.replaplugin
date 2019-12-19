@@ -7,9 +7,10 @@ module Repla
       def self.customize(command, options = {})
         command = command.dup
         options = options.dup
-        options[:file_refresh] = false if disable_file_refresh?(options,
-                                                                pwd,
-                                                                home)
+        options[:file_refresh] = false if disable_file_refresh?(command,
+                                                                options,
+                                                                Dir.pwd,
+                                                                Dir.home)
         command << JUPYTER_SUFFIX if customizable_jupyter?(command)
         [command, options]
       end
@@ -18,12 +19,16 @@ module Repla
         /jupyter\s*notebook$/.match?(command)
       end
 
-      def self.disable_file_refresh?(options, pwd, home)
+      def self.disable_file_refresh?(command, options, pwd, home)
         return false unless options[:file_refresh].nil?
+
+        return true if customizable_jupyter?(command)
 
         return true if pwd == home
 
         return true if pwd == File.join(home, 'Library')
+
+        false
       end
     end
   end

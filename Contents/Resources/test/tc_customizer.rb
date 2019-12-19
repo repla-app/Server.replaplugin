@@ -11,9 +11,11 @@ class TestServer < Minitest::Test
   JUPYTER_COMMAND_NOBROWSER = 'jupyter notebook --no-browser'.freeze
   RAILS_COMMAND = 'bin/rails server'.freeze
 
-  def test_customizer
+  def test_customizer_jupyter
     command = JUPYTER_COMMAND
     command, options = Repla::Server::Customizer.customize(command)
+    refute(options[:file_refresh])
+    options.delete(:file_refresh)
     assert(options.empty?)
     assert_equal(JUPYTER_COMMAND + Repla::Server::JUPYTER_SUFFIX, command)
 
@@ -24,6 +26,8 @@ class TestServer < Minitest::Test
 
     command = JUPYTER_COMMAND_WHITESPACE
     command, options = Repla::Server::Customizer.customize(command)
+    refute(options[:file_refresh])
+    options.delete(:file_refresh)
     assert(options.empty?)
     assert_equal(JUPYTER_COMMAND_WHITESPACE + Repla::Server::JUPYTER_SUFFIX,
                  command)
@@ -36,6 +40,8 @@ class TestServer < Minitest::Test
 
     command = JUPYTER_COMMAND_NOBROWSER
     command, options = Repla::Server::Customizer.customize(command)
+    refute(options[:file_refresh])
+    options.delete(:file_refresh)
     assert(options.empty?)
     assert_equal(JUPYTER_COMMAND_NOBROWSER, command)
   end

@@ -48,10 +48,12 @@ class TestServer < Minitest::Test
   end
 
   def test_customizer_file_refresh
+    customizer = Repla::Server::Customizer
     options = { file_refresh: true }
-    result = Repla::Server::Customizer.disable_file_refresh?(RAILS_COMMAND,
-                                                             options,
-                                                             TEST_HOME_DIR,
-                                                             TEST_HOME_DIR)
+    result = customizer.disable_file_refresh?(RAILS_COMMAND,
+                                              options,
+                                              TEST_HOME_DIR,
+                                              TEST_HOME_DIR)
+    refute(result)
   end
 end

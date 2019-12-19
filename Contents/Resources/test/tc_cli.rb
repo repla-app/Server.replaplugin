@@ -78,6 +78,19 @@ class TestCLI < Minitest::Test
     window.close
   end
 
+  def test_yes
+    command = "#{SYMLINK_DST} server /usr/bin/yes"
+    `#{command}`
+    window_id = nil
+    Repla::Test.block_until do
+      window_id = Repla::Test::Helper.window_id
+      !window_id.nil?
+    end
+    refute_nil(window_id)
+    window = Repla::Window.new(window_id)
+    window.close
+  end
+
   def test_file
     server_command = "#{SERVER_COMMAND_DEFAULT_PATH} -r #{SERVER_ROOT}"
     flags = "-o \"#{TEST_FILE}\""

@@ -115,4 +115,11 @@ class TestParent < Minitest::Test
     without_escape = 'Compiled successfully!'
     assert_equal(without_escape, result)
   end
+
+  def test_escape4
+    with_escape = "\e[32m[I 18:52:18.709 NotebookApp]\e(B\e[m The Jupyter"
+    result = Repla::Server::Parent.remove_escape(with_escape)
+    without_escape = '[I 18:52:18.709 NotebookApp] The Jupyter'
+    assert_equal(without_escape, result)
+  end
 end

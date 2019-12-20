@@ -78,7 +78,8 @@ command = ARGV[0]
 
 abort('No command specified.') if command.nil?
 
-command, options = Repla::Server::Customizer.customize(command, options)
+customizer = Repla::Server::Customizer.new
+command, options = customizer.customize(command, options)
 config = Repla::Server::Config.new(options)
 error = Repla::Server::Validator.validate(config)
 unless error.nil?

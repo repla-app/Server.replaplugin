@@ -1,4 +1,4 @@
-.PHONY: ci ac autocorrect lint
+.PHONY: ci ac autocorrect lint runtime recompile_fsevents bundle_update remove_symlinks
 
 ci: lint
 ac: autocorrect
@@ -11,6 +11,14 @@ autocorrect:
 
 test:
 	./Contents/Resources/test/run_tests.sh
+
+runtime:
+	# `fsevent_watch` fails notarization without the hardened runtime enabled
+	codesign --force --options runtime --sign "Developer ID Application" \
+		Contents/Resources/bundle/ruby/2.4.0/gems/rb-fsevent-0.10.3/bin/fsevent_watch
+
+recompile_fsevents:
+	cd Contents/Resources/bundle/ruby/2.4.0/gems/rb-fsevent-0.10.3/ext/ && rake
 
 bundle_update:
 	cd ./Contents/Resources/ &&\

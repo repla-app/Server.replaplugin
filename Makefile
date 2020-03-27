@@ -19,7 +19,7 @@ bundle_update:
 		bundle clean &&\
 		bundle install --standalone
 
-patch: sign_runtime recompile_fsevents remove_symlinks
+patch: remove_symlinks recompile_fsevents sign_runtime
 
 sign_runtime:
 	# `fsevent_watch` fails notarization without the hardened runtime enabled

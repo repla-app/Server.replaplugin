@@ -1,10 +1,12 @@
+require 'etc'
+
 module Repla
   module Server
     EXPRESS_PORT = 3000
     JUPYTER_SUFFIX = ' --no-browser'.freeze
     # Customizer
     class Customizer
-      def initialize(pwd = Dir.pwd, home = Dir.home)
+      def initialize(pwd = Dir.pwd, home = Etc.getpwuid.dir)
         @pwd = pwd
         @home = home
       end

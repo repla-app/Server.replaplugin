@@ -1,4 +1,4 @@
-.PHONY: ci ac autocorrect lint runtime recompile_fsevents bundle_update remove_symlinks
+.PHONY: ci ac autocorrect lint runtime recompile_fsevents bundle_update remove_symlinks loc
 
 ci: lint
 ac: autocorrect
@@ -11,6 +11,9 @@ autocorrect:
 
 test:
 	./Contents/Resources/test/run_tests.sh
+
+loc:
+	cloc --vcs=git --exclude-dir=bundle,.bundle
 
 bundle_update:
 	cd ./Contents/Resources/ &&\

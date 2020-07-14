@@ -78,7 +78,7 @@ module Repla
       end
 
       def self.remove_escape(text)
-        text.gsub(/\e[\[\(][\d;]*[mHJB]/, '')
+        text.gsub(/\e[\[\(][\d;]*[a-zA-Z]/, '')
       end
 
       def stop

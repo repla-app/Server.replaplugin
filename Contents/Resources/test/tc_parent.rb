@@ -134,7 +134,7 @@ class TestParent < Minitest::Test
   def test_escape6
     with_escape = "\e[0m\e[2K\e[1m0% compiling"
     result = Repla::Server::Parent.remove_escape(with_escape)
-    without_escape = ' compiling'
+    without_escape = '0% compiling'
     assert_equal(without_escape, result)
   end
 end

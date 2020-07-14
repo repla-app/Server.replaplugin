@@ -59,6 +59,8 @@ TEST_ESCAPE_FILE = File.join(TEST_DATA_DIR,
                              'output_with_escapes.txt')
 TEST_ESCAPE_FILE2 = File.join(TEST_DATA_DIR,
                               'output_with_escapes2.txt')
+TEST_ESCAPE_FILE3 = File.join(TEST_DATA_DIR,
+                              'output_with_escapes3.txt')
 
 module Repla
   module Test

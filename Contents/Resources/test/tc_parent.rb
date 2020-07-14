@@ -143,4 +143,12 @@ class TestParent < Minitest::Test
     without_escape = '0% compiling'
     assert_equal(without_escape, result)
   end
+
+  def test_escape4
+    with_escape = "\e[?25l\e[?25l\e[?25l\e[?25l⠋"\
+    'open and validate gatsby-configs'
+    result = Repla::Server::Parent.remove_escape(with_escape)
+    without_escape = '⠋open and validate gatsby-configs'
+    assert_equal(without_escape, result)
+  end
 end

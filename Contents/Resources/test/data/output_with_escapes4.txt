@@ -1,0 +1,98 @@
+Script started on Tue Jul 14 15:44:53 2020
+command: gatsby develop
+[?25l[?25l[?25l[?25l⠋ open and validate gatsby-configs
+[2K[1A[2K[G[32msuccess[39m open and validate gatsby-configs - 0.057s
+[?25l⠋ load plugins
+[2K[1A[2K[G[32msuccess[39m load plugins - 1.436s
+[?25l⠋ onPreInit
+[2K[1A[2K[G[32msuccess[39m onPreInit - 0.011s
+[?25l⠋ initialize cache
+[2K[1A[2K[G[32msuccess[39m initialize cache - 0.007s
+[?25l⠋ copy gatsby files
+[2K[1A[2K[G[32msuccess[39m copy gatsby files - 0.081s
+[?25l⠋ onPreBootstrap
+[2K[1A[2K[G[32msuccess[39m onPreBootstrap - 0.011s
+[?25l⠋ createSchemaCustomization
+[2K[1A[2K[G[32msuccess[39m createSchemaCustomization - 0.008s
+[?25l⠋ source and transform nodes
+[?25l[2K[1A[2K[G⠙ source and transform nodes
+[2K[1A[2K[G[32msuccess[39m source and transform nodes - 0.090s
+[?25l⠋ building schema
+[?25l[2K[1A[2K[G⠙ building schema
+[2K[1A[2K[G[32msuccess[39m building schema - 0.233s
+[?25l⠋ createPages
+[2K[1A[2K[G[32msuccess[39m createPages - 0.002s
+[?25l⠋ createPagesStatefully
+[2K[1A[2K[G[32msuccess[39m createPagesStatefully - 0.060s
+[?25l⠋ updating schema
+[2K[1A[2K[G[32msuccess[39m updating schema - 0.023s
+[?25l⠋ onPreExtractQueries
+[2K[1A[2K[G[32msuccess[39m onPreExtractQueries - 0.001s
+[?25l⠋ extract queries from components
+[?25l[2K[1A[2K[G⠙ extract queries from components
+[?25l[2K[1A[2K[G⠹ extract queries from components
+[2K[1A[2K[G[32msuccess[39m extract queries from components - 0.334s
+[?25l⠋ write out redirect data
+[2K[1A[2K[G[32msuccess[39m write out redirect data - 0.015s
+[?25l⠋ onPostBootstrap
+[?25l[2K[1A[2K[G⠋ onPostBootstrap
+⠋ Build manifest and related icons
+[?25l[2K[1A[2K[1A[2K[G⠙ onPostBootstrap
+⠋ Build manifest and related icons
+[?25l[2K[1A[2K[1A[2K[G⠙ onPostBootstrap
+⠙ Build manifest and related icons
+[?25l[2K[1A[2K[1A[2K[G⠙ onPostBootstrap
+[2K[1A[2K[G[32msuccess[39m Build manifest and related icons - 0.157s
+[?25l⠙ onPostBootstrap
+[?25l[2K[1A[2K[G[32msuccess[39m onPostBootstrap - 0.165s
+[34minfo[39m bootstrap finished - 6.500s
+[?25l[                            ]   0.001 s 0/6 0% run page queries
+[?25l[2K[1A[2K[G[====                        ]   0.030 s 1/6 17% run page queries
+[?25l[2K[1A[2K[G[============================]   0.037 s 6/6 100% run page queries
+[2K[1A[2K[G[32msuccess[39m run page queries - 0.038s - 6/6 156.68/s
+[?25l⠋ write out requires
+[2K[1A[2K[G[32msuccess[39m write out requires - 0.008s
+[?25l⠋ Building development bundle
+[?25l[2K[1A[2K[G⠙ Building development bundle
+[?25l[2K[1A[2K[G⠹ Building development bundle
+[?25l[2K[1A[2K[G⠸ Building development bundle
+[?25l[2K[1A[2K[G⠼ Building development bundle
+[?25l[2K[1A[2K[G⠴ Building development bundle
+[?25l[2K[1A[2K[G⠦ Building development bundle
+[?25l[2K[1A[2K[G⠧ Building development bundle
+[?25l[2K[1A[2K[G⠇ Building development bundle
+[?25l[2K[1A[2K[G⠏ Building development bundle
+[?25l[2K[1A[2K[G⠋ Building development bundle
+[?25l[2K[1A[2K[G⠙ Building development bundle
+[?25l[2K[1A[2K[G⠹ Building development bundle
+[?25l[2K[1A[2K[G⠸ Building development bundle
+[?25l[2K[1A[2K[G⠼ Building development bundle
+[?25l[2K[1A[2K[G⠴ Building development bundle
+[?25l[2K[1A[2K[G⠦ Building development bundle
+[2K[1A[2K[G⠀
+[?25l⠦ Building development bundle
+[?25l[2K[1A[2K[GYou can now view [1mgatsby-starter-default[22m in the browser.
+[?25l⠦ Building development bundle
+[?25l[2K[1A[2K[G⠀
+[?25l⠦ Building development bundle
+[?25l[2K[1A[2K[G  http://localhost:[1m8000[22m/
+[?25l⠦ Building development bundle
+[?25l[2K[1A[2K[G⠀
+[?25l⠦ Building development bundle
+[?25l[2K[1A[2K[GView GraphiQL, an in-browser IDE, to explore your site's data and schema
+[?25l⠦ Building development bundle
+[?25l[2K[1A[2K[G⠀
+[?25l⠦ Building development bundle
+[?25l[2K[1A[2K[G  http://localhost:[1m8000[22m/___graphql
+[?25l⠦ Building development bundle
+[?25l[2K[1A[2K[G⠀
+[?25l⠦ Building development bundle
+[?25l[2K[1A[2K[GNote that the development build is not optimized.
+[?25l⠦ Building development bundle
+[?25l[2K[1A[2K[GTo create a production build, use [36mgatsby build[39m
+[?25l⠦ Building development bundle
+[?25l[2K[1A[2K[G⠀
+[?25l⠦ Building development bundle
+[?25l[2K[1A[2K[G[32msuccess[39m Building development bundle - 3.946s
+^C[?25h[?25h[?25h[?25h[?25h[?25h[?25h[?25h[?25h[?25h
+Script done on Tue Jul 14 15:45:18 2020

@@ -110,16 +110,30 @@ class TestParent < Minitest::Test
   end
 
   def test_escape3
+    with_escape = File.read(TEST_ESCAPE_FILE3)
+    result = Repla::Server::Parent.remove_escape(with_escape)
+    without_escape = `sed "s,\x1B\[[0-9;]*[a-zA-Z],,g" < #{TEST_ESCAPE_FILE3}`
+    assert_equal(without_escape, result)
+  end
+
+  def test_escape4
     with_escape = "\e[2J\e[3J\e[H\e[32mCompiled successfully!\e[39m"
     result = Repla::Server::Parent.remove_escape(with_escape)
     without_escape = 'Compiled successfully!'
     assert_equal(without_escape, result)
   end
 
-  def test_escape4
+  def test_escape5
     with_escape = "\e[32m[I 18:52:18.709 NotebookApp]\e(B\e[m The Jupyter"
     result = Repla::Server::Parent.remove_escape(with_escape)
     without_escape = '[I 18:52:18.709 NotebookApp] The Jupyter'
+    assert_equal(without_escape, result)
+  end
+
+  def test_escape6
+    with_escape = "\e[0m\e[2K\e[1m0% compiling"
+    result = Repla::Server::Parent.remove_escape(with_escape)
+    without_escape = '0% compiling'
     assert_equal(without_escape, result)
   end
 end

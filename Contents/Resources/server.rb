@@ -75,9 +75,7 @@ end
 
 optparse.parse!
 command = ARGV[0]
-
-abort('No command specified.') if command.nil?
-# TODO: Add a default command that makes a light-weight server
+command = 'ruby -run -e httpd -- -p 0' if command.nil?
 
 customizer = Repla::Server::Customizer.new
 command, options = customizer.customize(command, options)

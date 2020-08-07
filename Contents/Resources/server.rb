@@ -75,8 +75,7 @@ end
 
 optparse.parse!
 command = ARGV[0]
-
-abort('No command specified.') if command.nil?
+command = 'ruby -run -e httpd -- -p 0' if command.nil?
 
 customizer = Repla::Server::Customizer.new
 command, options = customizer.customize(command, options)

@@ -7,6 +7,35 @@ require Repla::Test::LOG_HELPER_FILE
 SERVER_BUNDLE_COMMAND = File.expand_path(File.join(__dir__,
                                                    '../server.rb'))
 
+# Test server default
+class TestServerDefault < Minitest::Test
+  def setup
+    @pid = spawn(SERVER_BUNDLE_COMMAND, chdir: SERVER_ROOT)
+    window_id = nil
+    Repla::Test.block_until do
+      window_id = Repla::Test::Helper.window_id
+      !window_id.nil?
+    end
+    refute_nil(window_id)
+    @window = Repla::Window.new(window_id)
+  end
+
+  def teardown
+    @window.close
+    Process.kill(:INT, @pid)
+  end
+
+  def test_server_default
+    javascript = File.read(Repla::Test::TITLE_JAVASCRIPT_FILE)
+    result = nil
+    Repla::Test.block_until do
+      result = @window.do_javascript(javascript)
+      result == Repla::Test::INDEX_HTML_TITLE
+    end
+    assert_equal(Repla::Test::INDEX_HTML_TITLE, result)
+  end
+end
+
 # Test server
 class TestServer < Minitest::Test
   def setup
@@ -255,3 +284,4 @@ class TestServerPortURLString < Minitest::Test
     assert_equal(Repla::Test::INDEX_HTML_TITLE, result)
   end
 end
+

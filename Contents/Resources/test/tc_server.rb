@@ -284,4 +284,3 @@ class TestServerPortURLString < Minitest::Test
     assert_equal(Repla::Test::INDEX_HTML_TITLE, result)
   end
 end
-

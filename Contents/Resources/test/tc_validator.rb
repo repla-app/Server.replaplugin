@@ -5,8 +5,8 @@ require_relative 'lib/test_setup'
 require_relative '../lib/config'
 require_relative '../lib/validator'
 
-# Test server
-class TestServer < Minitest::Test
+# Test validator
+class TestValidator < Minitest::Test
   def test_validator
     assert_nil(Repla::Server::Validator.validate(nil))
     config = Repla::Server::Config.new(TEST_DELAY_OPTIONS_LONG)

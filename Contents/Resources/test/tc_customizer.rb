@@ -19,6 +19,17 @@ class TestServer < Minitest::Test
   def test_customizer_jupyter
     customizer = Repla::Server::Customizer.new(PWD_NO_MATCH, TEST_HOME_DIR)
 
+    command = JUPYTER_COMMAND
+    command, options = customizer.customize(command)
+    assert(options.empty?)
+    assert_equal(JUPYTER_COMMAND + Repla::Server::JUPYTER_SUFFIX, command)
+
+    command = JUPYTER_COMMAND
+    command, options = customizer.customize(command,
+                                            TEST_OPTIONS_PORT)
+    assert_equal(SERVER_PORT, options[:port])
+    assert_equal(JUPYTER_COMMAND + Repla::Server::JUPYTER_SUFFIX, command)
+
     command = RAILS_COMMAND
     command, options = customizer.customize(command)
     assert(options.empty?)
@@ -29,6 +40,13 @@ class TestServer < Minitest::Test
     assert(options.empty?)
     assert_equal(JUPYTER_COMMAND_WHITESPACE + Repla::Server::JUPYTER_SUFFIX,
                  command)
+
+    command = JUPYTER_COMMAND_NOBROWSER
+    command, options = customizer.customize(command)
+    refute(options[:file_refresh])
+    options.delete(:file_refresh)
+    assert(options.empty?)
+    assert_equal(JUPYTER_COMMAND_NOBROWSER, command)
   end
 
   def test_customizer_file_refresh

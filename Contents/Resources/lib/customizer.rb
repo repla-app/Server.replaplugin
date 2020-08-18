@@ -20,7 +20,12 @@ module Repla
           @pwd,
           @home
         )
+        command << JUPYTER_SUFFIX if Customizer.customizable_jupyter?(command)
         [command, options]
+      end
+
+      def self.customizable_jupyter?(command)
+        /jupyter\s*notebook$/.match?(command)
       end
 
       def self.disable_file_refresh?(_command, options, pwd, home)

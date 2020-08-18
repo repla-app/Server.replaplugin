@@ -17,6 +17,8 @@ class TestServer < Minitest::Test
   PWD_NO_MATCH = __dir__
 
   def test_customizer_jupyter
+    customizer = Repla::Server::Customizer.new(PWD_NO_MATCH, TEST_HOME_DIR)
+
     command = RAILS_COMMAND
     command, options = customizer.customize(command)
     assert(options.empty?)

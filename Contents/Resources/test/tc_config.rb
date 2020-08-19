@@ -16,4 +16,3 @@ class TestConfig < Minitest::Test
     assert(config.file_refresh)
   end
 end
-

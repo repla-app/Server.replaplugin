@@ -131,7 +131,9 @@ end
 class TestParentLoggerURL < Minitest::Test
   def test_multiple_urls
     mock_view = Repla::Test::MockView.new
-    config = Repla::Server::Config.new(TEST_DELAY_OPTIONS_ZERO)
+    options = TEST_DELAY_OPTIONS_ZERO.dup
+    options[:file_refresh] = true
+    config = Repla::Server::Config.new(options)
     parent_logger = Repla::Server::ParentLogger.new(Repla::Test::MockLogger.new,
                                                     mock_view,
                                                     config)

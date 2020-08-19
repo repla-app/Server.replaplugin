@@ -48,10 +48,9 @@ optparse = OptionParser.new do |opts|
   end
   opts.on('-r',
           '--refresh-string STRING',
-          'Refresh each time STRING is output. There\'s no effect until a '\
+          'Refresh each time STRING is printed. There\'s no effect until a '\
           'URL is loaded. Leading and trailing whitespace is removed from the '\
-          'STRING. Specifying a refresh string disables refreshing when a '\
-          'file changes.') do |string|
+          'STRING.') do |string|
     options[:refresh_string] = string
   end
   opts.on('-d',
@@ -61,10 +60,10 @@ optparse = OptionParser.new do |opts|
           'default DELAY is 0.5, the DELAY can be set to 0.') do |delay|
     options[:delay] = delay.to_f
   end
-  opts.on('-n',
-          '--no-refresh',
-          'Don\'t refresh when a file in a subdirectory changes, even if '\
-          'a refresh STRING hasn\'t been specified.') do |file_refresh|
+  opts.on('-f',
+          '--file-refresh',
+          'Refresh each time a file in a subdirectory changes. There\'s no '\
+          'effect until a URL is loaded.') do |file_refresh|
     options[:file_refresh] = file_refresh
   end
   opts.on('-h', '--help', 'Show options help.') do

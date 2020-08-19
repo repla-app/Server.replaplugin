@@ -28,10 +28,8 @@ module Repla
         /jupyter\s*notebook$/.match?(command)
       end
 
-      def self.disable_file_refresh?(command, options, pwd, home)
+      def self.disable_file_refresh?(_command, options, pwd, home)
         return false unless options[:file_refresh].nil?
-
-        return true if customizable_jupyter?(command)
 
         return true if File.realpath(pwd) == File.realpath(home)
 

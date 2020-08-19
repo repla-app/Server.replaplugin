@@ -48,7 +48,7 @@ optparse = OptionParser.new do |opts|
   end
   opts.on('-r',
           '--refresh-string STRING',
-          'Refresh each time STRING is outputted. There\'s no effect until a '\
+          'Refresh each time STRING is printed. There\'s no effect until a '\
           'URL is loaded. Leading and trailing whitespace is removed from the '\
           'STRING.') do |string|
     options[:refresh_string] = string
@@ -62,7 +62,8 @@ optparse = OptionParser.new do |opts|
   end
   opts.on('-f',
           '--file-refresh',
-          'Refresh when a file in a subdirectory changes.') do |file_refresh|
+          'Refresh each time a file in a subdirectory changes. There\'s no '\
+          'effect until a URL is loaded.') do |file_refresh|
     options[:file_refresh] = file_refresh
   end
   opts.on('-h', '--help', 'Show options help.') do

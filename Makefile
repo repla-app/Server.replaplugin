@@ -4,10 +4,10 @@ ci: gem_install lint
 ac: autocorrect
 
 lint:
-	rubocop
+	bundle exec rubocop
 
 autocorrect:
-	rubocop -a
+	bundle exec rubocop -a
 
 test:
 	./Contents/Resources/test/run_tests.sh

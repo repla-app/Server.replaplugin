@@ -1,4 +1,4 @@
-# Server [![Build Status](https://travis-ci.org/repla-app/Server.replaplugin.svg?branch=master)](https://travis-ci.org/repla-app/Server.replaplugin)
+# Server ![Status](https://github.com/repla-app/Server.replaplugin/actions/workflows/ci.yml/badge.svg)
 
 **Repla Server** is a plugin built-in to the [Repla macOS app](https://repla.app). It's a web development tool designed to improve your workflow in three ways:
 

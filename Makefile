@@ -1,19 +1,22 @@
 .PHONY: ci ac autocorrect lint runtime recompile_fsevents bundle_update remove_symlinks loc
 
-ci: lint
+ci: gem_install lint
 ac: autocorrect
 
 lint:
-	rubocop
+	bundle exec rubocop
 
 autocorrect:
-	rubocop -a
+	bundle exec rubocop -a
 
 test:
 	./Contents/Resources/test/run_tests.sh
 
 loc:
 	cloc --vcs=git --exclude-dir=bundle,.bundle
+
+gem_install:
+	bundle install --path vendor/bundle
 
 bundle_update:
 	cd ./Contents/Resources/ &&\
